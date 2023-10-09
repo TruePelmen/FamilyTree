@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "Kgpit7xoJrca6K41NAMdfqQBLPfvm3nQF70seHaNA6SWaKVco0pt0QIDcclEjl7ZjHNniFc5zCBxS7wHD+WE6g==",
+  "success": true,
+  "projectFilePath": "C:\\University\\ProgramEngineering\\FamilyTree_DB_Migration_Aattempt\\Repository\\FamilyTree_DB_Migration_Aattempt.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Olexa\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\Olexa\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
+    "C:\\Users\\Olexa\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
+    "C:\\Users\\Olexa\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\Olexa\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
