@@ -9,20 +9,19 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             Console.WriteLine("Hello World!");
             string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-            //string testing = GeneratingRandomValuesForDB.GetRandomFamilyTreeName();
-            //Console.WriteLine(testing);
+
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open(); // Відкриваємо підключення до бази даних
 
-                    string insertQuery = $"INSERT INTO \"Користувач\" (\"Логін\", \"Пароль\") VALUES ('{GeneratingRandomValuesForDB.GetRandomUserLogin()}', '{GeneratingRandomValuesForDB.GetRandomUserPassword()}');"; 
+                    string insertQuery = Queries.insertQuery_Користувач; 
                     using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                     {
                         int rowsAffected = command.ExecuteNonQuery();
                     }
-                    string selectQuery = "SELECT * FROM \"Користувач\"";
+                    string selectQuery = Queries.selectQuery_Користувач;
                     using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
