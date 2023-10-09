@@ -16,19 +16,19 @@ namespace FamilyTree_DB_Migration_Aattempt
                 {
                     connection.Open(); // Відкриваємо підключення до бази даних
 
-                    string insertQuery = Queries.insertQuery_Користувач; 
+                    string insertQuery = Queries.insertQuery_Медіа; 
                     using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                     {
                         int rowsAffected = command.ExecuteNonQuery();
                     }
-                    string selectQuery = Queries.selectQuery_Користувач;
+                    string selectQuery = Queries.selectQuery_Медіа;
                     using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine($"{reader.GetString(0)}, {reader.GetString(1)}");
+                                Console.WriteLine($"{reader.GetString(0)}, {reader.GetString(1)}, {reader.GetString(2)}, {reader.GetString(3)}, {reader.GetString(4)}, {reader.GetString(5)}, {reader.GetString(6)}");
                             }
                         }
                     }
