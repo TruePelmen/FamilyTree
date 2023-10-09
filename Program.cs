@@ -9,26 +9,27 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             Console.WriteLine("Hello World!");
             string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-            string testing = GeneratingRandomValuesForDB.GetRandomFamilyTreeName();
-            Console.WriteLine(testing);
+            //string testing = GeneratingRandomValuesForDB.GetRandomFamilyTreeName();
+            //Console.WriteLine(testing);
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open(); // Відкриваємо підключення до бази даних
-                    string insertQuery = $"INSERT INTO Дерево (\"Назва\") VALUES ('{GeneratingRandomValuesForDB.GetRandomFamilyTreeName()}');"; 
+
+                    string insertQuery = $"INSERT INTO \"Користувач\" (\"Логін\", \"Пароль\") VALUES ('{GeneratingRandomValuesForDB.GetRandomUserLogin()}', '{GeneratingRandomValuesForDB.GetRandomUserPassword()}');"; 
                     using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                     {
                         int rowsAffected = command.ExecuteNonQuery();
                     }
-                    string selectQuery = "SELECT * FROM Дерево";
+                    string selectQuery = "SELECT * FROM \"Користувач\"";
                     using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
                     {
                         using (NpgsqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine($"{reader.GetString(1)}");
+                                Console.WriteLine($"{reader.GetString(0)}, {reader.GetString(1)}");
                             }
                         }
                     }
