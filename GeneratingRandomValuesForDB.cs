@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using Bogus;
 using System.Threading.Tasks;
+using Npgsql;
 namespace FamilyTree_DB_Migration_Aattempt
 {
     class GeneratingRandomValuesForDB
     {
+
 
         // TABLE Дерево
         public static string[] TreeNamesArray = {
@@ -317,14 +319,16 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             return faker.Random.Bool();
         }
-        public static string lastName() { 
+        public static string lastName()
+        {
             return faker.Name.LastName();
         }
         public static string maidenName()
         {
             return faker.Name.LastName();
         }
-        public static string firstName() { 
+        public static string firstName()
+        {
             return faker.Name.FirstName();
         }
         public static string GenerateRandomDeathOrBirthDate()
@@ -412,7 +416,51 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         // TABLE Дерево_Особа
 
+        // TABLE Зв'язок
+        public static string GetRandomConnectionType()
+        {
+            string[] a = { "батько-дитина", "мати-дитина", "подружжя" };
+            return a[new Random().Next(a.Length)];
+        }
 
+        // TABLE Користувач_Дерево
+        public static string GetRandomAccessType()
+        {
+            string[] a = { "редагування", "перегляд" };
+            return a[new Random().Next(a.Length)];
+        }
+        public static string GetRandomUserLoginFromDB()
+        {
+            string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
+            List<string> a = new List<string>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
 
+                    string selectQuery = Queries.selectQuery_Користувач;
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine($"{reader.GetString(0)}");
+                                a.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close(); // Закриваємо підключення до бази даних
+                }
+                return a[new Random().Next(a.Count)];
+            }
+        }
     }
 }
