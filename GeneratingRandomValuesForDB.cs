@@ -400,5 +400,19 @@ namespace FamilyTree_DB_Migration_Aattempt
             Random random = new Random();
             return random.Next(0, 149); // Вік від 0 до 149 років
         }
+        // TAble Спеціальний_запис
+        public static int GenerateRandomRecordType()
+        {
+            // Ваш код для генерації випадкового значення типу запису
+            // Наприклад, ви можете використовувати Random для вибору ідентифікатора типу запису зі списку
+            Random random = new Random();
+            int[] recordTypes = { 1, 2, 3, 4 }; // Приклад значень типу запису
+
+            return recordTypes[random.Next(recordTypes.Length)];
+        }
+        // TABLE Дерево_Особа
+
+
+
     }
 }
