@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Bogus;
 using System.Threading.Tasks;
 namespace FamilyTree_DB_Migration_Aattempt
 {
     class GeneratingRandomValuesForDB
     {
+
         // TABLE Дерево
         public static string[] TreeNamesArray = {
             "Сім'я Іванових",
@@ -278,6 +280,60 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             return new Random().Next(2) == 0;
         }
+        //TABLE Особа
+        public static Faker faker = new Faker();
+        public static string GetRandomGender()
+        {
+            List<string> genders = new List<string> { "чоловік", "жінка" };
+            Random random = new Random();
+            int index = random.Next(genders.Count);
+            return genders[index];
+        }
+        public static string GetRandomNameVariants()
+        {
+            List<string> nameVariants = new List<string>
+            {
+            "Іван",
+            "Марія",
+            "Петро",
+            "Ольга",
+            "Василь",
+            "Тетяна"
+            // Додайте більше імен за бажанням
+            };
+            Random random = new Random();
+            int nameCount = random.Next(1, 4); // Виберіть випадкову кількість варіантів імен (від 1 до 3)
+            List<string> selectedNames = new List<string>();
 
+            for (int i = 0; i < nameCount; i++)
+            {
+                int index = random.Next(nameVariants.Count);
+                selectedNames.Add(nameVariants[index]);
+            }
+
+            return string.Join(", ", selectedNames);
+        }
+        public static bool isMainPerson()
+        {
+            return faker.Random.Bool();
+        }
+        public static string lastName() { 
+            return faker.Name.LastName();
+        }
+        public static string maidenName()
+        {
+            return faker.Name.LastName();
+        }
+        public static string firstName() { 
+            return faker.Name.FirstName();
+        }
+        public static string GenerateRandomDeathOrBirthDate()
+        {
+            // Генеруємо випадкову дату у проміжку від 1930 до 2022 року
+            int year = new Random().Next(1930, 2023);
+            int month = new Random().Next(1, 13);
+            int day = new Random().Next(1, DateTime.DaysInMonth(year, month));
+            return $"{year}-{month}-{day}";
+        }
     }
 }

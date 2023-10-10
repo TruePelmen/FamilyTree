@@ -17,3 +17,4 @@ C:\University\ProgramEngineering\FamilyTree_DB_Migration_Aattempt\Repository\obj
 C:\University\ProgramEngineering\FamilyTree_DB_Migration_Aattempt\Repository\obj\Debug\net5.0\ref\FamilyTree_DB_Migration_Aattempt.dll
 C:\University\ProgramEngineering\FamilyTree_DB_Migration_Aattempt\Repository\obj\Debug\net5.0\FamilyTree_DB_Migration_Aattempt.pdb
 C:\University\ProgramEngineering\FamilyTree_DB_Migration_Aattempt\Repository\obj\Debug\net5.0\FamilyTree_DB_Migration_Aattempt.genruntimeconfig.cache
+C:\University\ProgramEngineering\FamilyTree_DB_Migration_Aattempt\Repository\bin\Debug\net5.0\Bogus.dll

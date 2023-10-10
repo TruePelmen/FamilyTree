@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Kgpit7xoJrca6K41NAMdfqQBLPfvm3nQF70seHaNA6SWaKVco0pt0QIDcclEjl7ZjHNniFc5zCBxS7wHD+WE6g==",
+  "dgSpecHash": "rJjwfcr/a/vkj4H6ndgcmdZvQYiNJjHlJmiCl7pvDX51nR4bZjPy/xFw24upZ8+99gt+l/y1t+0htYFaiIXtaw==",
   "success": true,
   "projectFilePath": "C:\\University\\ProgramEngineering\\FamilyTree_DB_Migration_Aattempt\\Repository\\FamilyTree_DB_Migration_Aattempt.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Olexa\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\Olexa\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\Olexa\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
     "C:\\Users\\Olexa\\.nuget\\packages\\system.buffers\\4.5.1\\system.buffers.4.5.1.nupkg.sha512",
