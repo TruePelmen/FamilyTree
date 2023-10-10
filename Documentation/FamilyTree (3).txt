@@ -1,0 +1,174 @@
+CREATE DOMAIN ТипДоступу varchar
+  CONSTRAINT ТипДоступу_cons  CHECK (VALUE IN ('редагування', 'перегляд'));
+
+CREATE DOMAIN ТипМедіа varchar
+  CONSTRAINT media_type_constraints
+     CHECK (VALUE IN ('зображення', 'аудіо', 'документ'));
+
+CREATE DOMAIN ТипЗапису varchar
+  CONSTRAINT ТипЗапису_cons
+    CHECK (VALUE IN ('метрична книга', 'сповідний розпис', 'ревізька казка', 'перепис населення'));
+
+CREATE DOMAIN ТипПодії varchar
+  CONSTRAINT ТипПодії_cons
+    CHECK (VALUE IN ('народження', 'одруження', 'смерть', 'інша подія'));
+
+CREATE DOMAIN ТипЗвязку varchar
+  CONSTRAINT ТипЗвязку_cons
+     CHECK (VALUE IN ('батько-дитина', 'мати-дитина', 'подружжя'));
+
+CREATE DOMAIN Стать varchar
+  CONSTRAINT Стать_cons  CHECK (VALUE IN ('чоловік', 'жінка')); 
+
+CREATE TABLE Дерево(
+	id serial NOT NULL, 
+	Назва varchar NOT NULL,
+	CONSTRAINT Дерево_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Дерево_Особа(
+  id serial NOT NULL,
+  id_дерева integer NOT NULL,
+  id_особи integer NOT NULL,
+  CONSTRAINT Дерево_Особа_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Звязок(
+  id serial NOT NULL,
+  id_особи1 integer NOT NULL,
+  id_особи2 integer NOT NULL,
+  Тип_звязку ТипЗвязку NOT NULL,
+  CONSTRAINT Звязок_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Користувач(
+	Логін varchar NOT NULL, 
+	Пароль varchar NOT NULL,
+	CONSTRAINT Користувач_pkey PRIMARY KEY(Логін)
+);
+
+CREATE TABLE Користувач_Дерево(
+  id serial NOT NULL,
+  логін_користувача varchar NOT NULL,
+  id_дерева integer NOT NULL,
+  Тип_доступу ТипДоступу NOT NULL,
+  CONSTRAINT Користувач_Дерево_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Медіа(
+  id serial NOT NULL,
+  Тип_медіа ТипМедіа NOT NULL,
+  Шлях_до_файлу varchar NOT NULL,
+  Позначені_особи integer,
+  Опис varchar,
+  Дата date,
+  Місце varchar,
+  Головне_фото bool,
+  CONSTRAINT Медіа_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Медіа_Особа(
+  id serial NOT NULL,
+  id_особи integer NOT NULL,
+  id_медіа integer NOT NULL,
+  CONSTRAINT Медіа_Особа_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Медіа_Подія(
+  id serial NOT NULL,
+  id_події integer,
+  id_медіа integer NOT NULL,
+  CONSTRAINT Медіа_Подія_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Особа(
+  id serial NOT NULL,
+  Головна_особа bool NOT NULL,
+  Стать Стать NOT NULL,
+  Прізвище varchar NOT NULL,
+  Дівоче_прізвище varchar,
+  Імя varchar,
+  Інші_варіанти_імені varchar,
+  Дата_народження date,
+  Дата_смерті date,
+  CONSTRAINT Особа_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Подія(
+  id serial NOT NULL,
+  Тип_події ТипПодії NOT NULL,
+  Дата_події date,
+  Місце_події varchar,
+  Особа_id integer NOT NULL,
+  Опис varchar,
+  Вік integer,
+  CONSTRAINT Подія_pkey PRIMARY KEY(id)
+);
+
+CREATE TABLE Спеціальний_запис(
+  id integer NOT NULL,
+  Тип_запису ТипЗапису NOT NULL,
+  Номер_будинку integer,
+  Священик varchar,
+  Запис varchar NOT NULL,
+  Подія_id integer NOT NULL,
+  CONSTRAINT Спеціальний_запис_pkey PRIMARY KEY(id)
+);
+
+ALTER TABLE Подія
+  ADD CONSTRAINT Подія_Особа_id_fkey
+    FOREIGN KEY (Особа_id) REFERENCES Особа (id);
+
+ALTER TABLE Спеціальний_запис
+  ADD CONSTRAINT Спеціальний_запис_Подія_id_fkey
+    FOREIGN KEY (Подія_id) REFERENCES Подія (id);
+
+ALTER TABLE Звязок
+  ADD CONSTRAINT Звязок_id_особи1_fkey
+    FOREIGN KEY (id_особи1) REFERENCES Особа (id);
+
+ALTER TABLE Звязок
+  ADD CONSTRAINT Звязок_id_особи2_fkey
+    FOREIGN KEY (id_особи2) REFERENCES Особа (id);
+
+ALTER TABLE Користувач_Дерево
+  ADD CONSTRAINT Користувач_Дерев_id_користувача_fkey
+    FOREIGN KEY (логін_користувача) REFERENCES Користувач (Логін);
+
+ALTER TABLE Користувач_Дерево
+  ADD CONSTRAINT Користувач_Дерево_id_дерева_fkey
+    FOREIGN KEY (id_дерева) REFERENCES Дерево (id);
+
+ALTER TABLE Дерево_Особа
+  ADD CONSTRAINT Дерево_Особа_id_дерева_fkey
+    FOREIGN KEY (id_дерева) REFERENCES Дерево (id);
+
+ALTER TABLE Дерево_Особа
+  ADD CONSTRAINT Дерево_Особа_id_особи_fkey
+    FOREIGN KEY (id_особи) REFERENCES Особа (id);
+
+ALTER TABLE Медіа_Подія
+  ADD CONSTRAINT Медіа_Подія_id_події_fkey
+    FOREIGN KEY (id_події) REFERENCES Подія (id);
+
+ALTER TABLE Медіа_Подія
+  ADD CONSTRAINT Медіа_Подія_id_медіа_fkey
+    FOREIGN KEY (id_медіа) REFERENCES Медіа (id);
+
+ALTER TABLE Медіа_Особа
+  ADD CONSTRAINT Медіа_Особа_id_медіа_fkey
+    FOREIGN KEY (id_медіа) REFERENCES Медіа (id);
+
+ALTER TABLE Медіа_Особа
+  ADD CONSTRAINT Медіа_Особа_id_особи_fkey
+    FOREIGN KEY (id_особи) REFERENCES Особа (id);
+ALTER TABLE Подія
+  ADD CONSTRAINT Вік_cons CHECK (Вік >= 0 and Вік <= 150);
+
+ALTER TABLE Спеціальний_запис
+  ADD CONSTRAINT Номер_будинку_cons CHECK (Номер_будинку > 0);
+
+CREATE SEQUENCE Спеціальний_запис_id_seq;
+
+ALTER TABLE Спеціальний_запис
+ALTER COLUMN id SET DEFAULT nextval('Спеціальний_запис_id_seq'::regclass);
