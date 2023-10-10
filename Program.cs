@@ -15,7 +15,7 @@ namespace FamilyTree_DB_Migration_Aattempt
                 try
                 {
                     connection.Open(); // Відкриваємо підключення до бази даних                                  
-                    string insertQuery = Queries.insertQuery_Особа;
+                    string insertQuery = Queries.insertQuery_Подія;
                     Console.WriteLine(insertQuery);
                     using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                     {

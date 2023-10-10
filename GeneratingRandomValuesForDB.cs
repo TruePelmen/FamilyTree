@@ -335,5 +335,70 @@ namespace FamilyTree_DB_Migration_Aattempt
             int day = new Random().Next(1, DateTime.DaysInMonth(year, month));
             return $"{year}-{month}-{day}";
         }
+        // TABLE Подія
+        public static string GenerateRandomEventType()
+        {
+            // Ваш код для генерації випадкового значення типу події
+            // Наприклад, ви можете використовувати Random для вибору ідентифікатора типу події зі списку
+            Random random = new Random();
+            string[] eventTypes = { "народження", "одруження", "смерть", "інша подія" }; // Приклад значень типу події
+
+            return eventTypes[random.Next(eventTypes.Length)];
+        }
+        public static int GenerateRandomPersonId()
+        {
+            // Ваш код для генерації випадкового ідентифікатора особи (Особа_id)
+            // Наприклад, ви можете використовувати Random для вибору ідентифікатора з потрібного діапазону
+            Random random = new Random();
+            return random.Next(152, 180);
+        }
+        public static string GenerateRandomDescription()
+        {
+            // Ваш код для генерації випадкового опису події
+            // Наприклад, ви можете мати список можливих описів та вибирати з нього випадково
+            List<string> descriptions = new List<string>
+            {
+                "Зустріч з давнім другом",
+                "Весілля родича",
+                "Подорож до гори",
+                "Важливий бізнес-зустріч",
+                "Випускний вечір",
+                "Спортивний турнір",
+                "Вечірка на пляжі",
+                "Екскурсія в музей",
+                "Конференція в області IT",
+                "Зустріч з вчителькою",
+                "День народження друга",
+                "Освітня лекція",
+                "Творчий вечір",
+                "Захід для благодійності",
+                "Виставка мистецтва",
+                "Фестиваль музики",
+                "Сімейний обід",
+                "Захід з нагородами",
+                "Кінопоказ у кінотеатрі",
+                "Гастрономічний фестиваль",
+                "Виставка технологій",
+                "Театральний спектакль",
+                "Похід в ліс",
+                "Робочий семінар",
+                "Туристичний похід",
+                "Пікнік у парку",
+                "Спортивний матч",
+                "Прем'єра кінофільму",
+                "Виставка книг",
+                "Вечір мистецтва"
+            };
+
+            Random random = new Random();
+            int index = random.Next(descriptions.Count);
+            return descriptions[index];
+        }
+        public static int GenerateRandomAge()
+        {
+            // Ваш код для генерації випадкового віку
+            Random random = new Random();
+            return random.Next(0, 149); // Вік від 0 до 149 років
+        }
     }
 }
