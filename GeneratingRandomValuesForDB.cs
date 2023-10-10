@@ -429,38 +429,68 @@ namespace FamilyTree_DB_Migration_Aattempt
             string[] a = { "редагування", "перегляд" };
             return a[new Random().Next(a.Length)];
         }
-        public static string GetRandomUserLoginFromDB()
-        {
-            string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-            List<string> a = new List<string>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
+        //public static string GetRandomUserLoginFromDB()
+        //{
+        //    string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
+        //    List<string> a = new List<string>();
+        //    using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+        //    {
+        //        try
+        //        {
 
-                    string selectQuery = Queries.selectQuery_Користувач;
-                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                    {
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                Console.WriteLine($"{reader.GetString(0)}");
-                                a.Add(reader.GetString(0));
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close(); // Закриваємо підключення до бази даних
-                }
-                return a[new Random().Next(a.Count)];
-            }
+        //            string selectQuery = Queries.selectQuery_Користувач;
+        //            using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+        //            {
+        //                using (NpgsqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        Console.WriteLine($"{reader.GetString(0)}");
+        //                        a.Add(reader.GetString(0));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine($"Error: {ex.Message}");
+        //        }
+        //        finally
+        //        {
+        //            connection.Close(); // Закриваємо підключення до бази даних
+        //        }
+        //        return a[new Random().Next(a.Count)];
+        //    }
+        //}
+
+
+        // TABLE Спеціальний_запис
+        public static string GetRandomRecordType()
+        {
+            string[] a = { "метрична книга", "сповідний розпис", "ревізька казка", "перепис населення" };
+            return a[new Random().Next(a.Length)];
+        }
+        public static string GetRandomVicar()
+        {
+            string[] priestNames = new string[]
+            {
+                "Олександр",
+                "Михайло",
+                "Андрій",
+                "Іван",
+                "Максим",
+                "Дмитро",
+                "Сергій",
+                "Петро",
+                "Артем",
+                "Олег",
+                "Володимир",
+                "Ярослав",
+                "Богдан",
+                "Роман",
+                "Юрій"
+            };
+            return priestNames[new Random().Next(priestNames.Length)];
         }
     }
 }
