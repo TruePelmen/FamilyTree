@@ -429,35 +429,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         public static string GetRandomUserLoginFromDB()
         {
-            string connectionString = "Host=localhost;Port=5432;Database=FamilyTree;Username=postgres;Password=19724Kll;";
-            List<string> a = new List<string>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM \"Користувач\"";
-                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                    {
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                a.Add(reader.GetString(0));
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close(); // Закриваємо підключення до бази даних
-                }
-                return a[new Random().Next(a.Count)];
-            }
+            return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
         }
         public static string GetRandomRecordType()
         {
