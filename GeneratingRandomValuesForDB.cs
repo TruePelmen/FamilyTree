@@ -429,8 +429,40 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         public static string GetRandomUserLoginFromDB()
         {
-            return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
+           return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
         }
+        //    using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+        //    {
+        //        try
+        //        {
+
+        //            string selectQuery = Queries.selectQuery_Користувач;
+        //            using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+        //            {
+        //                using (NpgsqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        Console.WriteLine($"{reader.GetString(0)}");
+        //                        a.Add(reader.GetString(0));
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine($"Error: {ex.Message}");
+        //        }
+        //        finally
+        //        {
+        //            connection.Close(); // Закриваємо підключення до бази даних
+        //        }
+        //        return a[new Random().Next(a.Count)];
+        //    }
+        //}
+
+
+        // TABLE Спеціальний_запис
         public static string GetRandomRecordType()
         {
             string[] a = { "метрична книга", "сповідний розпис", "ревізька казка", "перепис населення" };

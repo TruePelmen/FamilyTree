@@ -9,7 +9,7 @@ namespace FamilyTree_DB_Migration_Aattempt
     class Queries
     {
         public static string connectionString = "Host=localhost;Port=5432;Database=FamilyTree;Username=postgres;Password=-------;";
-
+       
         public static void InsertData(string connectionString, string insertQuery, Dictionary<string, object> parameters)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -126,7 +126,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Дерево_Особа (\"id_дерева\", \"id_особи\") " +
                                 "VALUES (@treeId, @personId)";
-            Dictionary<string, object> parameters = new Dictionary<string, object> {
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
                 { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId", new Random().Next(1, SelectCount("Особа") + 1) }};
             InsertData(connectionString, insertQuery, parameters);
@@ -135,7 +135,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Звязок (\"id_особи1\", \"id_особи2\", \"Тип_звязку\") " +
                                 "VALUES (@personId1, @personId2, @connectionType)";
-            Dictionary<string, object> parameters = new Dictionary<string, object> {
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
                 { "@personId1", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId2", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@connectionType", GeneratingRandomValuesForDB.GetRandomConnectionType() }};
@@ -154,7 +154,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Медіа_Подія (\"id_події\", \"id_медіа\") " +
                                 "VALUES (@eventId, @mediaId)";
-            Dictionary<string, object> parameters = new Dictionary<string, object> {
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
                 { "@eventId", new Random().Next(1, SelectCount("Подія") + 1) },
                 { "@mediaId", new Random().Next(1, SelectCount("Медіа") + 1) }};
             InsertData(connectionString, insertQuery, parameters);
@@ -163,7 +163,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Користувач_Дерево (\"логін_користувача\", \"id_дерева\", \"Тип_доступу\") " +
                                 "VALUES (@userLogin, @treeId, @accessType)";
-            Dictionary<string, object> parameters = new Dictionary<string, object> {
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
                 { "@userLogin", GeneratingRandomValuesForDB.GetRandomUserLoginFromDB() },
                 { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@accessType", GeneratingRandomValuesForDB.GetRandomAccessType() }};
@@ -330,7 +330,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             });
             return count;
         }
-        public static List<string> SelectUserNameList()
+        public static List<string> SelectUserNameList() 
         {
             List<string> list = new List<string>();
             string selectQuery = "SELECT * FROM \"Користувач\"";
