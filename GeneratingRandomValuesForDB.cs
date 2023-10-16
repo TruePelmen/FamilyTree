@@ -44,7 +44,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         };
         public static string GetRandomFamilyTreeName()
         {
-            return TreeNamesArray[new Random().Next(0, 29)];
+            return TreeNamesArray[new Random().Next(0, TreeNamesArray.Length)];
         }
         // TABLE Користувач
         public static string[] UsersLoginsArray =
@@ -114,11 +114,11 @@ namespace FamilyTree_DB_Migration_Aattempt
             "1234StrongPwd"};
         public static string GetRandomUserLogin()
         {
-            return UsersLoginsArray[new Random().Next(0, 29)];
+            return UsersLoginsArray[new Random().Next(0, UsersLoginsArray.Length)] + $"{new Random().Next(1, 100)}";
         }
         public static string GetRandomUserPassword()
         {
-            return UsersPasswordsArray[new Random().Next(0, 29)];
+            return UsersPasswordsArray[new Random().Next(0, UsersPasswordsArray.Length)];
         }
         // TABLE Медіа
         public static string[] MediaTypeArray = { "зображення", "аудіо", "документ" };
@@ -254,11 +254,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         };
         public static string GetRandomMediaType()
         {
-            return MediaTypeArray[new Random().Next(0, 2)];
+            return MediaTypeArray[new Random().Next(0, MediaTypeArray.Length)];
         }
         public static string GetRandomPath()
         {
-            return PathesArray[new Random().Next(0, 29)];
+            return PathesArray[new Random().Next(0, PathesArray.Length)];
         }
         public static int GetRandomNumberOfMarkedPeople()
         {
@@ -266,15 +266,15 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         public static string GetRandomDescription()
         {
-            return DescriptionsArray[new Random().Next(0, 29)];
+            return DescriptionsArray[new Random().Next(0, DescriptionsArray.Length)];
         }
         public static string GetRandomDate()
         {
-            return DatesArray[new Random().Next(0, 29)];
+            return DatesArray[new Random().Next(0, DatesArray.Length)];
         }
         public static string GetRandomPlace()
         {
-            return PlacesArray[new Random().Next(0, 29)];
+            return PlacesArray[new Random().Next(0, PlacesArray.Length)];
         }
         public static bool MainPhoto()
         {
@@ -413,12 +413,14 @@ namespace FamilyTree_DB_Migration_Aattempt
             return recordTypes[random.Next(recordTypes.Length)];
         }
         // TABLE Дерево_Особа
+
         // TABLE Зв'язок
         public static string GetRandomConnectionType()
         {
             string[] a = { "батько-дитина", "мати-дитина", "подружжя" };
             return a[new Random().Next(a.Length)];
         }
+
         // TABLE Користувач_Дерево
         public static string GetRandomAccessType()
         {
@@ -427,37 +429,8 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         public static string GetRandomUserLoginFromDB()
         {
-            string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-            List<string> a = new List<string>();
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    string selectQuery = Queries.selectQuery_Користувач;
-                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                    {
-                        using (NpgsqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                Console.WriteLine($"{reader.GetString(1)}");
-                                a.Add(reader.GetString(0));
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close(); // Закриваємо підключення до бази даних
-                }
-                return a[new Random().Next(a.Count)];
-            }
+            return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
         }
-        //TABLE Спеціальний_запис
         public static string GetRandomRecordType()
         {
             string[] a = { "метрична книга", "сповідний розпис", "ревізька казка", "перепис населення" };
