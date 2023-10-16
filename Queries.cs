@@ -7,8 +7,6 @@ namespace FamilyTree_DB_Migration_Aattempt
 {
     class Queries
     {
-        // Domains like emuns
-
         // INSERT Queries
         public static string insertQuery_Користувач = $"INSERT INTO \"Користувач\" (\"Логін\", \"Пароль\") VALUES ('{GeneratingRandomValuesForDB.GetRandomUserLogin()}', '{GeneratingRandomValuesForDB.GetRandomUserPassword()}');";
         public static string insertQuery_Дерево = $"INSERT INTO Дерево (\"Назва\") VALUES ('{GeneratingRandomValuesForDB.GetRandomFamilyTreeName()}');";
@@ -19,8 +17,9 @@ namespace FamilyTree_DB_Migration_Aattempt
         public static string insertQuery_Звязок = $"INSERT INTO Звязок (\"id_особи1\", \"id_особи2\", \"Тип_звязку\") VALUES ('{new Random().Next(152, 179)}', '{new Random().Next(152, 179)}','{GeneratingRandomValuesForDB.GetRandomConnectionType()}');";
         public static string insertQuery_Медіа_Особа = $"INSERT INTO Медіа_Особа (\"id_особи\", \"id_медіа\") VALUES ('{new Random().Next(152, 179)}', '{new Random().Next(15)}');";
         public static string insertQuery_Медіа_Подія = $"INSERT INTO Медіа_Подія (\"id_події\", \"id_медіа\") VALUES ('{new Random().Next(31)}', '{new Random().Next(15)}');";
-        //public static string insertQuery_Користувач_Дерево = $"INSERT INTO Користувач_Дерево (\"логін_користувача\", \"id_дерева\", \"Тип_доступу\") VALUES ('{GeneratingRandomValuesForDB.GetRandomUserLoginFromDB()}', '{new Random().Next(18)}','{GeneratingRandomValuesForDB.GetRandomConnectionType()}');";
+        public static string insertQuery_Користувач_Дерево = $"INSERT INTO Користувач_Дерево (\"логін_користувача\", \"id_дерева\", \"Тип_доступу\") VALUES ('{GeneratingRandomValuesForDB.GetRandomUserLoginFromDB()}', '{new Random().Next(18)}','{GeneratingRandomValuesForDB.GetRandomConnectionType()}');";
         public static string insertQuery_Спеціальний_запис = $"INSERT INTO Спеціальний_запис (\"Тип_запису\", \"Номер_будинку\", \"Священик\", \"Запис\", \"Подія_id\") VALUES ('{GeneratingRandomValuesForDB.GetRandomRecordType()}', '{new Random().Next(156)}', '{GeneratingRandomValuesForDB.GetRandomVicar()}', '{GeneratingRandomValuesForDB.GetRandomDescription()}', {new Random().Next(31)});";
+        
         // SELECT Queries
         public static string selectQuery_Дерево = "SELECT * FROM \"Дерево\"";   
         public static string selectQuery_Користувач = "SELECT * FROM \"Користувач\"";

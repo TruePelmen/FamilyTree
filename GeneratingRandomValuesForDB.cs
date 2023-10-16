@@ -9,8 +9,6 @@ namespace FamilyTree_DB_Migration_Aattempt
 {
     class GeneratingRandomValuesForDB
     {
-
-
         // TABLE Дерево
         public static string[] TreeNamesArray = {
             "Сім'я Іванових",
@@ -415,56 +413,51 @@ namespace FamilyTree_DB_Migration_Aattempt
             return recordTypes[random.Next(recordTypes.Length)];
         }
         // TABLE Дерево_Особа
-
         // TABLE Зв'язок
         public static string GetRandomConnectionType()
         {
             string[] a = { "батько-дитина", "мати-дитина", "подружжя" };
             return a[new Random().Next(a.Length)];
         }
-
         // TABLE Користувач_Дерево
         public static string GetRandomAccessType()
         {
             string[] a = { "редагування", "перегляд" };
             return a[new Random().Next(a.Length)];
         }
-        //public static string GetRandomUserLoginFromDB()
-        //{
-        //    string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-        //    List<string> a = new List<string>();
-        //    using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-        //    {
-        //        try
-        //        {
-
-        //            string selectQuery = Queries.selectQuery_Користувач;
-        //            using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-        //            {
-        //                using (NpgsqlDataReader reader = command.ExecuteReader())
-        //                {
-        //                    while (reader.Read())
-        //                    {
-        //                        Console.WriteLine($"{reader.GetString(0)}");
-        //                        a.Add(reader.GetString(0));
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine($"Error: {ex.Message}");
-        //        }
-        //        finally
-        //        {
-        //            connection.Close(); // Закриваємо підключення до бази даних
-        //        }
-        //        return a[new Random().Next(a.Count)];
-        //    }
-        //}
-
-
-        // TABLE Спеціальний_запис
+        public static string GetRandomUserLoginFromDB()
+        {
+            string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
+            List<string> a = new List<string>();
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    string selectQuery = Queries.selectQuery_Користувач;
+                    using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        using (NpgsqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine($"{reader.GetString(1)}");
+                                a.Add(reader.GetString(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close(); // Закриваємо підключення до бази даних
+                }
+                return a[new Random().Next(a.Count)];
+            }
+        }
+        //TABLE Спеціальний_запис
         public static string GetRandomRecordType()
         {
             string[] a = { "метрична книга", "сповідний розпис", "ревізька казка", "перепис населення" };

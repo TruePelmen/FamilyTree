@@ -9,13 +9,13 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             Console.WriteLine("Hello World!");
             string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
-
+            string insertQuery = Queries.insertQuery_Користувач_Дерево;
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open(); // Відкриваємо підключення до бази даних                                  
-                    string insertQuery = Queries.insertQuery_Спеціальний_запис;
+                    
                     Console.WriteLine(insertQuery);
                     using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
                     {
