@@ -7,43 +7,33 @@ namespace FamilyTree_DB_Migration_Aattempt
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            for (int i = 0; i < 30; i++)
             {
-                try
-                {
-                    connection.Open(); // Відкриваємо підключення до бази даних                                  
-                    string insertQuery = Queries.insertQuery_Користувач_Дерево;
-                    Console.WriteLine(insertQuery);
-                    using (NpgsqlCommand command = new NpgsqlCommand(insertQuery, connection))
-                    {
-                        int rowsAffected = command.ExecuteNonQuery();
-                    }
-
-                    //string selectQuery = Queries.selectQuery_Дерево;
-                    //using (NpgsqlCommand command = new NpgsqlCommand(selectQuery, connection))
-                    //{
-                    //    using (NpgsqlDataReader reader = command.ExecuteReader())
-                    //    {
-                    //        while (reader.Read())
-                    //        {
-                    //            Console.WriteLine($"{reader.GetString(0)}, {reader.GetString(1)}, {reader.GetString(2)}, {reader.GetString(3)}, {reader.GetString(4)}, {reader.GetString(5)}, {reader.GetString(6)}");
-                    //        }
-                    //    }
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                finally
-                {
-                    connection.Close(); // Закриваємо підключення до бази даних
-                }
-
+                Queries.insertQuery_Дерево();
+                Queries.InsertQuery_Користувач();
+                Queries.InsertQuery_Медіа();
+                Queries.InsertQuery_Особа();
+                Queries.InsertQuery_Подія();
+                Queries.InsertQuery_Спеціальний_запис();
+                Queries.InsertQuery_Дерево_Особа();
+                Queries.InsertQuery_Медіа_Особа();
+                Queries.InsertQuery_Медіа_Подія();
+                Queries.InsertQuery_Користувач_Дерево();
+                Queries.InsertQuery_Звязок();
             }
+            Queries.SelectДерево();
+            Queries.SelectКористувач();
+            Queries.SelectМедіа();
+            Queries.SelectОсоба();
+            Queries.SelectПодія();
+            Queries.SelectСпеціальний_запис();
+            Queries.SelectДерево_Особа();
+            Queries.SelectМедіа_Особа();
+            Queries.SelectМедіа_Подія();
+            Queries.SelectКористувач_Дерево();
+            Queries.SelectЗвязок();
+
         }
     }
 }
