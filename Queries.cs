@@ -181,7 +181,6 @@ namespace FamilyTree_DB_Migration_Aattempt
                 { "@id", new Random().Next(1, SelectCount("Подія") + 1) } };
             InsertData(connectionString, insertQuery, parameters);
         }
-
         // SELECT Queries
         public static void SelectДерево()
         {

@@ -429,7 +429,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
         public static string GetRandomUserLoginFromDB()
         {
-            return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
+           return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
         }
         public static string GetRandomRecordType()
         {
