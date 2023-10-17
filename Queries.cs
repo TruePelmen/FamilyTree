@@ -60,6 +60,41 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             }
         }
+        public static void DeleteCertainData(string connectionString, string deleteQuery, Dictionary<string, object> parameters)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (NpgsqlCommand command = new NpgsqlCommand(deleteQuery, connection))
+                    {
+                        // Виконати SQL-запит
+                        foreach (var param in parameters)
+                        {
+                            command.Parameters.AddWithValue(param.Key, param.Value);
+                        }
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Дані були успішно видалені.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Не вдалося знайти дані для видалення.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close(); // Закриваємо підключення до бази даних
+                }
+            }
+        }
         public static void DeleteAllData(string connectionString, string deleteQuery)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -370,19 +405,20 @@ namespace FamilyTree_DB_Migration_Aattempt
             });
             return list;
         }
-        public static List<int> SelectPersonIDList()
+        public static List<int> SelectIDList(string table_name)
         {
             List<int> list = new List<int>();
-            string selectQuery = "SELECT * FROM \"Особа\"";
+            string selectQuery = "SELECT * FROM \"" + table_name + "\"";
             SelectData(connectionString, selectQuery, reader =>
             {
                 while (reader.Read())
                 {
-                    list.Add(Int32.Parse(reader.GetString(0)));
+                    list.Add(reader.GetInt32(0));
                 }
             });
             return list;
         }
+            
         // DELETE Queries
         // DELETE all data from a table
         public static void DELETE_ALL_FROM_Користувач_Query()
@@ -440,7 +476,14 @@ namespace FamilyTree_DB_Migration_Aattempt
             string deleteQuery = "DELETE FROM \"Подія\";";
             DeleteAllData(connectionString, deleteQuery);
         }
-            // DELETE the certain row from a table
-
+        // DELETE the certain row from a table
+        public static void DeleteQuery_Медіа_Подія()
+        {
+            string deleteQuery = "DELETE FROM Медіа_Подія WHERE id = @eventIdМедіа_Подія";
+            Dictionary<string, object> parameters = new Dictionary<string, object> {
+                { "@eventIdМедіа_Подія", GeneratingRandomValuesForDB.GetRandomID("Медіа_Подія") }
+            };
+            DeleteCertainData(connectionString, deleteQuery, parameters);
+        }
     }
 }
