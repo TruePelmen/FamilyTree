@@ -412,7 +412,6 @@ namespace FamilyTree_DB_Migration_Aattempt
 
             return recordTypes[random.Next(recordTypes.Length)];
         }
-        // TABLE Дерево_Особа
 
         // TABLE Зв'язок
         public static string GetRandomConnectionType()

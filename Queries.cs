@@ -2,8 +2,7 @@
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Runtime;
+
 namespace FamilyTree_DB_Migration_Aattempt
 {
     class Queries
