@@ -8,8 +8,12 @@ namespace FamilyTree_DB_Migration_Aattempt
 {
     class Queries
     {
+<<<<<<< HEAD
         public static string connectionString = "Host=localhost;Port=5432;Database=FamilyTree;Username=postgres;Password=yhy121352;";
 
+=======
+        public static string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";  
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
         public static void InsertData(string connectionString, string insertQuery, Dictionary<string, object> parameters)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -61,13 +65,18 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             }
         }
+<<<<<<< HEAD
         public static void UpdateData(string connectionString, string updateQuery, Dictionary<string, object> parameters)
+=======
+        public static void DeleteAllData(string connectionString, string deleteQuery)
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
+<<<<<<< HEAD
                     using (NpgsqlCommand command = new NpgsqlCommand(updateQuery, connection))
                     {
                         if (parameters != null)
@@ -78,6 +87,20 @@ namespace FamilyTree_DB_Migration_Aattempt
                             }
                         }
                         int rowsAffected = command.ExecuteNonQuery();
+=======
+                    using (NpgsqlCommand command = new NpgsqlCommand(deleteQuery, connection))
+                    {
+                        // Виконати SQL-запит
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Дані були успішно видалені.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Не вдалося знайти дані для видалення.");
+                        }
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                     }
                 }
                 catch (Exception ex)
@@ -86,11 +109,18 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
                 finally
                 {
+<<<<<<< HEAD
                     connection.Close();
                 }
             }
         }
 
+=======
+                    connection.Close(); // Закриваємо підключення до бази даних
+                }
+            }
+        }
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
         // INSERT Queries
         public static void InsertQuery_Користувач()
         {
@@ -154,7 +184,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Дерево_Особа (\"id_дерева\", \"id_особи\") " +
                                 "VALUES (@treeId, @personId)";
+<<<<<<< HEAD
             Dictionary<string, object> parameters = new Dictionary<string, object> {
+=======
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId", new Random().Next(1, SelectCount("Особа") + 1) }};
             InsertData(connectionString, insertQuery, parameters);
@@ -163,7 +197,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Звязок (\"id_особи1\", \"id_особи2\", \"Тип_звязку\") " +
                                 "VALUES (@personId1, @personId2, @connectionType)";
+<<<<<<< HEAD
             Dictionary<string, object> parameters = new Dictionary<string, object> {
+=======
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@personId1", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId2", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@connectionType", GeneratingRandomValuesForDB.GetRandomConnectionType() }};
@@ -182,7 +220,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Медіа_Подія (\"id_події\", \"id_медіа\") " +
                                 "VALUES (@eventId, @mediaId)";
+<<<<<<< HEAD
             Dictionary<string, object> parameters = new Dictionary<string, object> {
+=======
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@eventId", new Random().Next(1, SelectCount("Подія") + 1) },
                 { "@mediaId", new Random().Next(1, SelectCount("Медіа") + 1) }};
             InsertData(connectionString, insertQuery, parameters);
@@ -191,7 +233,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             string insertQuery = "INSERT INTO Користувач_Дерево (\"логін_користувача\", \"id_дерева\", \"Тип_доступу\") " +
                                 "VALUES (@userLogin, @treeId, @accessType)";
+<<<<<<< HEAD
             Dictionary<string, object> parameters = new Dictionary<string, object> {
+=======
+            Dictionary<string, object> parameters = new Dictionary<string, object> { 
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@userLogin", GeneratingRandomValuesForDB.GetRandomUserLoginFromDB() },
                 { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@accessType", GeneratingRandomValuesForDB.GetRandomAccessType() }};
@@ -344,7 +390,10 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             });
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
         public static int SelectCount(string table_name)
         {
             int count = 0;
@@ -358,7 +407,11 @@ namespace FamilyTree_DB_Migration_Aattempt
             });
             return count;
         }
+<<<<<<< HEAD
         public static List<string> SelectUserNameList()
+=======
+        public static List<string> SelectUserNameList() 
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
         {
             List<string> list = new List<string>();
             string selectQuery = "SELECT * FROM \"Користувач\"";
@@ -371,6 +424,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             });
             return list;
         }
+<<<<<<< HEAD
         public static void UpdateКористувач(string login, string newPassword)
         {
             string updateQuery = "UPDATE \"Користувач\" SET \"Пароль\" = @newPassword WHERE \"Логін\" = @login";
@@ -405,5 +459,63 @@ namespace FamilyTree_DB_Migration_Aattempt
             UpdateData(connectionString, updateQuery, null);
         }
 
+=======
+        // DELETE Queries
+        public static void DELETE_ALL_FROM_Користувач_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Користувач\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Дерево_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Дерево\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Дерево_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Дерево_Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Звязок_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Звязок\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Користувач_Дерево_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Користувач_Дерево\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа_Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Подія_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа_Подія\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Спеціальний_запис_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Спеціальний_запис\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Подія_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Подія\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+>>>>>>> 53e059f241ab0f531496228560e6197c69110d88
     }
 }
