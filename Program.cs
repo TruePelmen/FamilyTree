@@ -98,6 +98,9 @@ namespace FamilyTree_DB_Migration_Aattempt
 
             //SELECT all tables
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b0fa83831072e8029a887d0c9cab490d0136eb69
             Console.WriteLine("Користувач: ");
             Queries.SelectКористувач();
             Console.WriteLine("Медіа: ");
@@ -118,6 +121,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             Queries.SelectКористувач_Дерево();
             Console.WriteLine("Звязок: ");
             Queries.SelectЗвязок();
+<<<<<<< HEAD
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
 =======
         //    Console.WriteLine("Користувач: ");
@@ -141,6 +145,8 @@ namespace FamilyTree_DB_Migration_Aattempt
         //    Console.WriteLine("Звязок: ");
         //    Queries.SelectЗвязок();
 >>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
+=======
+>>>>>>> b0fa83831072e8029a887d0c9cab490d0136eb69
         }
     }
 }
