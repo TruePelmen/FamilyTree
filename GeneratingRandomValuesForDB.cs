@@ -431,6 +431,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         {
             return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
         }
+        public static int GetRandomID(string table_name)
+        {
+            List<int> id = Queries.SelectIDList(table_name);
+            return id[new Random().Next(id.Count)];
+        }
         public static string GetRandomRecordType()
         {
             string[] a = { "метрична книга", "сповідний розпис", "ревізька казка", "перепис населення" };
