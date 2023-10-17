@@ -8,8 +8,7 @@ namespace FamilyTree_DB_Migration_Aattempt
 {
     class Queries
     {
-        public static string connectionString = "Host=localhost;Port=5432;Database=FamilyTree;Username=postgres;Password=-------;";
-       
+        public static string connectionString = "Host=localhost;Port=5432;Database=FamilyTreeAttempt;Username=postgres;Password=123321123;";  
         public static void InsertData(string connectionString, string insertQuery, Dictionary<string, object> parameters)
         {
             using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -61,8 +60,37 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             }
         }
-
-
+        public static void DeleteAllData(string connectionString, string deleteQuery)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    using (NpgsqlCommand command = new NpgsqlCommand(deleteQuery, connection))
+                    {
+                        // Виконати SQL-запит
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Дані були успішно видалені.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Не вдалося знайти дані для видалення.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    connection.Close(); // Закриваємо підключення до бази даних
+                }
+            }
+        }
         // INSERT Queries
         public static void InsertQuery_Користувач()
         {
@@ -316,7 +344,6 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             });
         }
-
         public static int SelectCount(string table_name)
         {
             int count = 0;
@@ -342,6 +369,62 @@ namespace FamilyTree_DB_Migration_Aattempt
                 }
             });
             return list;
+        }
+        // DELETE Queries
+        public static void DELETE_ALL_FROM_Користувач_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Користувач\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Дерево_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Дерево\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Дерево_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Дерево_Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Звязок_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Звязок\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Користувач_Дерево_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Користувач_Дерево\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа_Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Медіа_Подія_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Медіа_Подія\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Особа_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Особа\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Спеціальний_запис_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Спеціальний_запис\";";
+            DeleteAllData(connectionString, deleteQuery);
+        }
+        public static void DELETE_ALL_FROM_Подія_Query()
+        {
+            string deleteQuery = "DELETE FROM \"Подія\";";
+            DeleteAllData(connectionString, deleteQuery);
         }
     }
 }
