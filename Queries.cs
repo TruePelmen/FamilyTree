@@ -370,7 +370,21 @@ namespace FamilyTree_DB_Migration_Aattempt
             });
             return list;
         }
+        public static List<int> SelectPersonIDList()
+        {
+            List<int> list = new List<int>();
+            string selectQuery = "SELECT * FROM \"Особа\"";
+            SelectData(connectionString, selectQuery, reader =>
+            {
+                while (reader.Read())
+                {
+                    list.Add(Int32.Parse(reader.GetString(0)));
+                }
+            });
+            return list;
+        }
         // DELETE Queries
+        // DELETE all data from a table
         public static void DELETE_ALL_FROM_Користувач_Query()
         {
             string deleteQuery = "DELETE FROM \"Користувач\";";
@@ -426,5 +440,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             string deleteQuery = "DELETE FROM \"Подія\";";
             DeleteAllData(connectionString, deleteQuery);
         }
+            // DELETE the certain row from a table
+
     }
 }
