@@ -175,7 +175,7 @@ namespace FamilyTree_DB_Migration_Aattempt
                 { "@eventType", GeneratingRandomValuesForDB.GenerateRandomEventType() },
                 { "@eventDate", DateTime.Parse(GeneratingRandomValuesForDB.GetRandomDate()) },
                 { "@eventPlace", GeneratingRandomValuesForDB.GetRandomPlace() },
-                { "@personId", new Random().Next(1, SelectCount("Особа") + 1) },
+                { "@personId", GeneratingRandomValuesForDB.GetRandomID("Особа") },
                 { "@eventDescription", GeneratingRandomValuesForDB.GetRandomDescription() },
                 { "@eventAge", GeneratingRandomValuesForDB.GenerateRandomAge() }};
             InsertData(connectionString, insertQuery, parameters);
@@ -188,9 +188,14 @@ namespace FamilyTree_DB_Migration_Aattempt
             Dictionary<string, object> parameters = new Dictionary<string, object> {
 =======
             Dictionary<string, object> parameters = new Dictionary<string, object> { 
+<<<<<<< HEAD
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId", new Random().Next(1, SelectCount("Особа") + 1) }};
+=======
+                { "@treeId", GeneratingRandomValuesForDB.GetRandomID("Дерево") },
+                { "@personId", GeneratingRandomValuesForDB.GetRandomID("Особа") }};
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
             InsertData(connectionString, insertQuery, parameters);
         }
         public static void InsertQuery_Звязок()
@@ -201,9 +206,14 @@ namespace FamilyTree_DB_Migration_Aattempt
             Dictionary<string, object> parameters = new Dictionary<string, object> {
 =======
             Dictionary<string, object> parameters = new Dictionary<string, object> { 
+<<<<<<< HEAD
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@personId1", new Random().Next(1, SelectCount("Дерево") + 1) },
                 { "@personId2", new Random().Next(1, SelectCount("Дерево") + 1) },
+=======
+                { "@personId1", GeneratingRandomValuesForDB.GetRandomID("Особа") },
+                { "@personId2", GeneratingRandomValuesForDB.GetRandomID("Особа") },
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
                 { "@connectionType", GeneratingRandomValuesForDB.GetRandomConnectionType() }};
             InsertData(connectionString, insertQuery, parameters);
         }
@@ -212,8 +222,8 @@ namespace FamilyTree_DB_Migration_Aattempt
             string insertQuery = "INSERT INTO Медіа_Особа (\"id_особи\", \"id_медіа\") " +
                                 "VALUES (@personId, @mediaId)";
             Dictionary<string, object> parameters = new Dictionary<string, object> {
-                { "@personId", new Random().Next(1, SelectCount("Дерево") + 1) },
-                { "@mediaId", new Random().Next(1, SelectCount("Медіа") + 1) } };
+                { "@personId", GeneratingRandomValuesForDB.GetRandomID("Особа") },
+                { "@mediaId", GeneratingRandomValuesForDB.GetRandomID("Медіа") } };
             InsertData(connectionString, insertQuery, parameters);
         }
         public static void InsertQuery_Медіа_Подія()
@@ -224,9 +234,14 @@ namespace FamilyTree_DB_Migration_Aattempt
             Dictionary<string, object> parameters = new Dictionary<string, object> {
 =======
             Dictionary<string, object> parameters = new Dictionary<string, object> { 
+<<<<<<< HEAD
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@eventId", new Random().Next(1, SelectCount("Подія") + 1) },
                 { "@mediaId", new Random().Next(1, SelectCount("Медіа") + 1) }};
+=======
+                { "@eventId", GeneratingRandomValuesForDB.GetRandomID("Подія") },
+                { "@mediaId", GeneratingRandomValuesForDB.GetRandomID("Медіа") }};
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
             InsertData(connectionString, insertQuery, parameters);
         }
         public static void InsertQuery_Користувач_Дерево()
@@ -239,7 +254,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             Dictionary<string, object> parameters = new Dictionary<string, object> { 
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
                 { "@userLogin", GeneratingRandomValuesForDB.GetRandomUserLoginFromDB() },
-                { "@treeId", new Random().Next(1, SelectCount("Дерево") + 1) },
+                { "@treeId", GeneratingRandomValuesForDB.GetRandomID("Дерево") },
                 { "@accessType", GeneratingRandomValuesForDB.GetRandomAccessType() }};
             InsertData(connectionString, insertQuery, parameters);
         }
@@ -252,7 +267,7 @@ namespace FamilyTree_DB_Migration_Aattempt
                 { "@number",  new Random().Next(156)},
                 { "@priest",  GeneratingRandomValuesForDB.GetRandomVicar()},
                 { "@record", GeneratingRandomValuesForDB.GetRandomDescription() },
-                { "@id", new Random().Next(1, SelectCount("Подія") + 1) } };
+                { "@id", GeneratingRandomValuesForDB.GetRandomID("Подія") } };
             InsertData(connectionString, insertQuery, parameters);
         }
         // SELECT Queries
@@ -425,6 +440,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             return list;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public static void UpdateКористувач(string login, string newPassword)
         {
             string updateQuery = "UPDATE \"Користувач\" SET \"Пароль\" = @newPassword WHERE \"Логін\" = @login";
@@ -460,7 +476,23 @@ namespace FamilyTree_DB_Migration_Aattempt
         }
 
 =======
+=======
+        public static List<int> SelectPersonIDList()
+        {
+            List<int> list = new List<int>();
+            string selectQuery = "SELECT * FROM \"Особа\"";
+            SelectData(connectionString, selectQuery, reader =>
+            {
+                while (reader.Read())
+                {
+                    list.Add(Int32.Parse(reader.GetString(0)));
+                }
+            });
+            return list;
+        }
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
         // DELETE Queries
+        // DELETE all data from a table
         public static void DELETE_ALL_FROM_Користувач_Query()
         {
             string deleteQuery = "DELETE FROM \"Користувач\";";
@@ -516,6 +548,11 @@ namespace FamilyTree_DB_Migration_Aattempt
             string deleteQuery = "DELETE FROM \"Подія\";";
             DeleteAllData(connectionString, deleteQuery);
         }
+<<<<<<< HEAD
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
+=======
+            // DELETE the certain row from a table
+
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
     }
 }

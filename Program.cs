@@ -8,6 +8,7 @@ namespace FamilyTree_DB_Migration_Aattempt
         static void Main(string[] args)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
                      
             Queries.UpdateКористувач_Дерево("alice_88", "редагування");
             
@@ -38,19 +39,22 @@ namespace FamilyTree_DB_Migration_Aattempt
             //Queries.SelectЗвязок();
 
 =======
+=======
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
             for (int i = 0; i < 30; i++)
             {
                 //Queries.insertQuery_Дерево();
                 //Queries.InsertQuery_Користувач();
                 //Queries.InsertQuery_Медіа();
                 //Queries.InsertQuery_Особа();
-                Queries.InsertQuery_Подія();
+                //Queries.InsertQuery_Подія();
                 //Queries.InsertQuery_Спеціальний_запис();
-                Queries.InsertQuery_Дерево_Особа();
-                Queries.InsertQuery_Медіа_Особа();
-                Queries.InsertQuery_Медіа_Подія();
+                //Queries.InsertQuery_Дерево_Особа();
+                //Queries.InsertQuery_Медіа_Особа();
+                //Queries.InsertQuery_Медіа_Подія();
                 //Queries.InsertQuery_Користувач_Дерево();
-                Queries.InsertQuery_Звязок();
+                //Queries.InsertQuery_Звязок();
             }
             //SELECT all tables
             //Console.WriteLine("Дерево: ");
@@ -93,6 +97,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             //Queries.SelectДерево();
 
             //SELECT all tables
+<<<<<<< HEAD
             Console.WriteLine("Користувач: ");
             Queries.SelectКористувач();
             Console.WriteLine("Медіа: ");
@@ -114,6 +119,28 @@ namespace FamilyTree_DB_Migration_Aattempt
             Console.WriteLine("Звязок: ");
             Queries.SelectЗвязок();
 >>>>>>> 53e059f241ab0f531496228560e6197c69110d88
+=======
+        //    Console.WriteLine("Користувач: ");
+        //    Queries.SelectКористувач();
+        //    Console.WriteLine("Медіа: ");
+        //    Queries.SelectМедіа();
+        //    Console.WriteLine("Особа: ");
+        //    Queries.SelectОсоба();
+        //    Console.WriteLine("Подія: ");
+        //    Queries.SelectПодія();
+        //    Console.WriteLine("Спеціальний_запис: ");
+        //    Queries.SelectСпеціальний_запис();
+        //    Console.WriteLine("Дерево_Особа: ");
+        //    Queries.SelectДерево_Особа();
+        //    Console.WriteLine("Медіа_Особа: ");
+        //    Queries.SelectМедіа_Особа();
+        //    Console.WriteLine("Медіа_Подія: ");
+        //    Queries.SelectМедіа_Подія();
+        //    Console.WriteLine("Користувач_Дерево: ");
+        //    Queries.SelectКористувач_Дерево();
+        //    Console.WriteLine("Звязок: ");
+        //    Queries.SelectЗвязок();
+>>>>>>> 7ce157b989ed3a3f4f216bce01377b116df1bb13
         }
     }
 }

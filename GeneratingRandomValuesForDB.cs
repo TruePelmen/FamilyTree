@@ -352,7 +352,7 @@ namespace FamilyTree_DB_Migration_Aattempt
             // Ваш код для генерації випадкового ідентифікатора особи (Особа_id)
             // Наприклад, ви можете використовувати Random для вибору ідентифікатора з потрібного діапазону
             Random random = new Random();
-            return random.Next(152, 180);
+            return random.Next(241, 269);
         }
         public static string GenerateRandomDescription()
         {
@@ -430,6 +430,11 @@ namespace FamilyTree_DB_Migration_Aattempt
         public static string GetRandomUserLoginFromDB()
         {
             return Queries.SelectUserNameList()[new Random().Next(Queries.SelectUserNameList().Count)];
+        }
+        public static int GetRandomID(string table_name)
+        {
+            List<int> id = Queries.SelectIDList(table_name);
+            return id[new Random().Next(id.Count)];
         }
         public static string GetRandomRecordType()
         {
