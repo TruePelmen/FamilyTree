@@ -42,19 +42,38 @@
                     <TextBlock Text="Логін"                             
                                Margin="0,35,0,0"
                                Style="{StaticResource text}"/>
-                     <uc:MyTextBox x:Name="txtUser"
-                        Margin="0,5,0,0"
-                        >
+                     <uc:MyTextBox 
+                         x:Name="txtUser" 
+                         LostFocus="txtUser_LostFocus"
+                         GotFocus="txtUser_GotFocus">
                       </uc:MyTextBox>
+                    <TextBlock x:Name="emptyField1"
+                               Text="Заповніть поле!"
+                               Foreground="Red"
+                               Visibility="Hidden"/>
                     <TextBlock Text="Пароль"
                                 Style="{StaticResource text}"                            
-                                Margin="0,15,0,0"/>
+                                Margin="0,5,0,0"/>
                     <PasswordBox x:Name="txtPass"
-                                  Margin="0,5,0,0">
+                                 Margin="0,5,0,0"
+                                 LostFocus="txtPass_LostFocus"
+                                 GotFocus="txtPass_GotFocus">
                         </PasswordBox>
+                    <TextBlock x:Name="emptyField2"
+                               Text="Заповніть поле!"
+                               Foreground="Red"
+                               Visibility="Hidden"/>
+
+                    <TextBlock x:Name="errorLogin"
+                               Text="Неправильний логін або пароль"
+                               Margin="0,20,0,0"
+                               Style="{StaticResource text}"
+                               Visibility="Hidden"
+                               Foreground="Red"
+                               />
                     <Button x:Name="btnLogin"                          
                             Content="Увійти"                           
-                            Margin="0,30,0,0"
+                            Margin="0,20,0,0"
                             Click="btnLogin_Click" 
                             Style="{StaticResource buttonMainGreen}">
                     </Button>

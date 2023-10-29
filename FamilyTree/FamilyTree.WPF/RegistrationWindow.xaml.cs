@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FamilyTree.BLL.Services;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Input;
 
 namespace FamilyTree.WPF
 {
@@ -53,6 +44,18 @@ namespace FamilyTree.WPF
             maleOption.IsSelected = false;
             femaleOption.IsSelected = true;
         }
+        private void ContinueButton_Click(object sender, RoutedEventArgs e)
+        {
+            string lastName = lastNameTextBox.Text;
+            string firstName = firstNameTextBox.Text;
+            string gender = maleOption.IsSelected? "Чоловік" : "Жінка";
+            string dateOfBirth = dateOfBirthTextBox.Text;
+            string login = loginTextBox.Text;
+            string password = passwordBox.Password;
+            string confirmPassword = confirmPasswordBox.Password;
+            UserService userService = new UserService();
+            userService.AddUser(login, password);
 
+        }
     }
 }

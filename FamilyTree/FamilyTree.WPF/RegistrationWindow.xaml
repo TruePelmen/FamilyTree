@@ -30,6 +30,7 @@
             </StackPanel>
         </Border>
 
+
         <Border Grid.Column="1" Padding="20" MouseDown="Border_MouseDown" Background="#ffffff" CornerRadius="0 25 25 0">
             <Grid>
                 <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
@@ -60,19 +61,17 @@
                     <TextBlock Grid.Row="5" Text="Пароль" Style="{StaticResource text}"/>
                     <TextBlock Grid.Row="6" Text="Підтвердіть пароль" Style="{StaticResource text}"/>
 
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="3" Hint="01/01/2000"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="4" Hint=""/>
-                    <PasswordBox Grid.Column="1" Grid.Row="5"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="6"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко" x:Name="lastNameTextBox"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван" x:Name="firstNameTextBox"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="3" Hint="01/01/2000" x:Name="dateOfBirthTextBox"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="5" x:Name="passwordBox"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox"/>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0 10">
                         <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption"/>
                         <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption"/>
                     </StackPanel>
-
-
 
                     <Grid Grid.Column="1" Grid.Row="7" Margin="0 40 0 0">
                         <Grid.ColumnDefinitions>
@@ -81,7 +80,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Click="Back_Click" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" />
-                        <Button Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
+                        <Button Click="ContinueButton_Click" Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
                     </Grid>
 
                 </Grid>

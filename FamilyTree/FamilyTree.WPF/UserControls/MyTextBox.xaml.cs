@@ -29,6 +29,10 @@ namespace FamilyTree.WPF.UserControls
             get { return (string)GetValue(HintProperty); }
             set { SetValue(HintProperty, value); }
         }
+        public string Text
+        {
+            get { return textBox.Text; }
+        }
 
         public static readonly DependencyProperty HintProperty = DependencyProperty.Register("Hint", typeof(string), typeof(MyTextBox));
 

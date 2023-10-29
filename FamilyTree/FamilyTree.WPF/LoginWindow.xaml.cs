@@ -1,18 +1,6 @@
-﻿using FamilyTree.DAL.Context;
-using FamilyTree.DAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FamilyTree.BLL.Services;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FamilyTree.WPF
 {
@@ -21,18 +9,12 @@ namespace FamilyTree.WPF
     /// </summary>
     public partial class LoginWindow : Window
     {
+
         public LoginWindow()
         {
             InitializeComponent();
-            //using (var db = new FamilyTreeContext())
-            //{
-            //    var newItem = new Користувач();
-            //    newItem.Логін = "Іван";
-            //    newItem.Пароль = "123";
-            //    db.Користувачі.Add(newItem);
-            //    var count = db.SaveChanges();
-            //}
         }
+        
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -51,14 +33,62 @@ namespace FamilyTree.WPF
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
+            errorLogin.Visibility = Visibility.Hidden;
+            if (!checkIsNotEmpty())
+            {
+                string username = txtUser.Text;
+                string password = txtPass.Password;
+                UserService userService = new UserService();
+                bool isAuthenticated = userService.AuthenticateUser(username, password);
+                if (isAuthenticated)
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    errorLogin.Visibility = Visibility.Visible;
+                }
+            }
         }
+
 
         private void Register_Click(object sender, MouseButtonEventArgs e)
         {
-            // Відкриваємо нове вікно (RegistrationWindow)
             RegistrationWindow registrationWindow = new RegistrationWindow();
             registrationWindow.Show();
             this.Close();
+        }
+
+        private void txtUser_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtUser.Text == string.Empty)
+            {
+                emptyField1.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void txtPass_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (txtPass.Password == string.Empty)
+            {
+                emptyField2.Visibility = Visibility.Visible;
+            }
+        }
+        private bool checkIsNotEmpty()
+        {
+            return txtUser.Text == string.Empty || txtPass.Password == string.Empty;
+        }
+
+        private void txtPass_GotFocus(object sender, RoutedEventArgs e)
+        {
+            emptyField2.Visibility = Visibility.Hidden;
+        }
+
+        private void txtUser_GotFocus(object sender, RoutedEventArgs e)
+        {
+            emptyField1.Visibility = Visibility.Hidden;
         }
     }
 }
