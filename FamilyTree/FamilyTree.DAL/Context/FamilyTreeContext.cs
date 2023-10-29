@@ -3,267 +3,306 @@ using System.Collections.Generic;
 using FamilyTree.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace FamilyTree.DAL.Context
+namespace FamilyTree.DAL.Context;
+
+public partial class FamilyTreeContext : DbContext
 {
-    public partial class FamilyTreeContext : DbContext
+    public FamilyTreeContext()
     {
-        public FamilyTreeContext()
-        {
-        }
-
-        public FamilyTreeContext(DbContextOptions<FamilyTreeContext> options)
-            : base(options)
-        {
-        }
-
-        public virtual DbSet<Дерево> Деревоs { get; set; }
-
-        public virtual DbSet<ДеревоОсоба> ДеревоОсобаs { get; set; }
-
-        public virtual DbSet<Звязок> Звязокs { get; set; }
-
-        public virtual DbSet<Користувач> Користувачі { get; set; }
-
-        public virtual DbSet<КористувачДерево> КористувачДеревоs { get; set; }
-
-        public virtual DbSet<Медіа> Медіаs { get; set; }
-
-        public virtual DbSet<МедіаОсоба> МедіаОсобаs { get; set; }
-
-        public virtual DbSet<МедіаПодія> МедіаПодіяs { get; set; }
-
-        public virtual DbSet<Особа> Особаs { get; set; }
-
-        public virtual DbSet<Подія> Подіяs { get; set; }
-
-        public virtual DbSet<СпеціальнийЗапис> СпеціальнийЗаписs { get; set; }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=FamilyTree;Username=postgres;Password=-----");
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Дерево>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Дерево_pkey");
-
-                entity.ToTable("Дерево");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.Назва).HasColumnType("character varying");
-            });
-
-            modelBuilder.Entity<ДеревоОсоба>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Дерево_Особа_pkey");
-
-                entity.ToTable("Дерево_Особа");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IdДерева).HasColumnName("id_дерева");
-                entity.Property(e => e.IdОсоби).HasColumnName("id_особи");
-
-                entity.HasOne(d => d.IdДереваNavigation).WithMany(p => p.ДеревоОсобаs)
-                    .HasForeignKey(d => d.IdДерева)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Дерево_Особа_id_дерева_fkey");
-
-                entity.HasOne(d => d.IdОсобиNavigation).WithMany(p => p.ДеревоОсобаs)
-                    .HasForeignKey(d => d.IdОсоби)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Дерево_Особа_id_особи_fkey");
-            });
-
-            modelBuilder.Entity<Звязок>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Звязок_pkey");
-
-                entity.ToTable("Звязок");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IdОсоби1).HasColumnName("id_особи1");
-                entity.Property(e => e.IdОсоби2).HasColumnName("id_особи2");
-                entity.Property(e => e.ТипЗвязку)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Тип_звязку");
-
-                entity.HasOne(d => d.IdОсоби1Navigation).WithMany(p => p.ЗвязокIdОсоби1Navigations)
-                    .HasForeignKey(d => d.IdОсоби1)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Звязок_id_особи1_fkey");
-
-                entity.HasOne(d => d.IdОсоби2Navigation).WithMany(p => p.ЗвязокIdОсоби2Navigations)
-                    .HasForeignKey(d => d.IdОсоби2)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Звязок_id_особи2_fkey");
-            });
-
-            modelBuilder.Entity<Користувач>(entity =>
-            {
-                entity.HasKey(e => e.Логін).HasName("Користувач_pkey");
-
-                entity.ToTable("Користувач");
-
-                entity.Property(e => e.Логін).HasColumnType("character varying");
-                entity.Property(e => e.Пароль).HasColumnType("character varying");
-            });
-
-            modelBuilder.Entity<КористувачДерево>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Користувач_Дерево_pkey");
-
-                entity.ToTable("Користувач_Дерево");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IdДерева).HasColumnName("id_дерева");
-                entity.Property(e => e.ЛогінКористувача)
-                    .HasColumnType("character varying")
-                    .HasColumnName("логін_користувача");
-                entity.Property(e => e.ТипДоступу)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Тип_доступу");
-
-                entity.HasOne(d => d.IdДереваNavigation).WithMany(p => p.КористувачДеревоs)
-                    .HasForeignKey(d => d.IdДерева)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Користувач_Дерево_id_дерева_fkey");
-
-                entity.HasOne(d => d.ЛогінКористувачаNavigation).WithMany(p => p.КористувачДеревоs)
-                    .HasForeignKey(d => d.ЛогінКористувача)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Користувач_Дерев_id_користувача_fkey");
-            });
-
-            modelBuilder.Entity<Медіа>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Медіа_pkey");
-
-                entity.ToTable("Медіа");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.ГоловнеФото).HasColumnName("Головне_фото");
-                entity.Property(e => e.Місце).HasColumnType("character varying");
-                entity.Property(e => e.Опис).HasColumnType("character varying");
-                entity.Property(e => e.ПозначеніОсоби).HasColumnName("Позначені_особи");
-                entity.Property(e => e.ТипМедіа)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Тип_медіа");
-                entity.Property(e => e.ШляхДоФайлу)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Шлях_до_файлу");
-            });
-
-            modelBuilder.Entity<МедіаОсоба>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Медіа_Особа_pkey");
-
-                entity.ToTable("Медіа_Особа");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IdМедіа).HasColumnName("id_медіа");
-                entity.Property(e => e.IdОсоби).HasColumnName("id_особи");
-
-                entity.HasOne(d => d.IdМедіаNavigation).WithMany(p => p.МедіаОсобаs)
-                    .HasForeignKey(d => d.IdМедіа)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Медіа_Особа_id_медіа_fkey");
-
-                entity.HasOne(d => d.IdОсобиNavigation).WithMany(p => p.МедіаОсобаs)
-                    .HasForeignKey(d => d.IdОсоби)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Медіа_Особа_id_особи_fkey");
-            });
-
-            modelBuilder.Entity<МедіаПодія>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Медіа_Подія_pkey");
-
-                entity.ToTable("Медіа_Подія");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.IdМедіа).HasColumnName("id_медіа");
-                entity.Property(e => e.IdПодії).HasColumnName("id_події");
-
-                entity.HasOne(d => d.IdМедіаNavigation).WithMany(p => p.МедіаПодіяs)
-                    .HasForeignKey(d => d.IdМедіа)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Медіа_Подія_id_медіа_fkey");
-
-                entity.HasOne(d => d.IdПодіїNavigation).WithMany(p => p.МедіаПодіяs)
-                    .HasForeignKey(d => d.IdПодії)
-                    .HasConstraintName("Медіа_Подія_id_події_fkey");
-            });
-
-            modelBuilder.Entity<Особа>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Особа_pkey");
-
-                entity.ToTable("Особа");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.Імя).HasColumnType("character varying");
-                entity.Property(e => e.ІншіВаріантиІмені)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Інші_варіанти_імені");
-                entity.Property(e => e.ГоловнаОсоба).HasColumnName("Головна_особа");
-                entity.Property(e => e.ДатаНародження).HasColumnName("Дата_народження");
-                entity.Property(e => e.ДатаСмерті).HasColumnName("Дата_смерті");
-                entity.Property(e => e.ДівочеПрізвище)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Дівоче_прізвище");
-                entity.Property(e => e.Прізвище).HasColumnType("character varying");
-                entity.Property(e => e.Стать).HasColumnType("character varying");
-            });
-
-            modelBuilder.Entity<Подія>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Подія_pkey");
-
-                entity.ToTable("Подія");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-                entity.Property(e => e.ДатаПодії).HasColumnName("Дата_події");
-                entity.Property(e => e.МісцеПодії)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Місце_події");
-                entity.Property(e => e.Опис).HasColumnType("character varying");
-                entity.Property(e => e.ОсобаId).HasColumnName("Особа_id");
-                entity.Property(e => e.ТипПодії)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Тип_події");
-
-                entity.HasOne(d => d.Особа).WithMany(p => p.Подіяs)
-                    .HasForeignKey(d => d.ОсобаId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Подія_Особа_id_fkey");
-            });
-
-            modelBuilder.Entity<СпеціальнийЗапис>(entity =>
-            {
-                entity.HasKey(e => e.Id).HasName("Спеціальний_запис_pkey");
-
-                entity.ToTable("Спеціальний_запис");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-                entity.Property(e => e.Запис).HasColumnType("character varying");
-                entity.Property(e => e.НомерБудинку).HasColumnName("Номер_будинку");
-                entity.Property(e => e.ПодіяId).HasColumnName("Подія_id");
-                entity.Property(e => e.Священик).HasColumnType("character varying");
-                entity.Property(e => e.ТипЗапису)
-                    .HasColumnType("character varying")
-                    .HasColumnName("Тип_запису");
-
-                entity.HasOne(d => d.Подія).WithMany(p => p.СпеціальнийЗаписs)
-                    .HasForeignKey(d => d.ПодіяId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("Спеціальний_запис_Подія_id_fkey");
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
+
+    public FamilyTreeContext(DbContextOptions<FamilyTreeContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Event> Events { get; set; }
+
+    public virtual DbSet<MediaEvent> MediaEvents { get; set; }
+
+    public virtual DbSet<MediaPerson> MediaPeople { get; set; }
+
+    public virtual DbSet<Media> Media { get; set; }
+
+    public virtual DbSet<Person> People { get; set; }
+
+    public virtual DbSet<Relationship> Relationships { get; set; }
+
+    public virtual DbSet<SpecialRecord> SpecialRecords { get; set; }
+
+    public virtual DbSet<Tree> Trees { get; set; }
+
+    public virtual DbSet<TreePerson> TreePeople { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<UserTree> UserTrees { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=localhost;Database=FamilyTree;Username=postgres;Password=yhy121352");
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Event>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("event_pkey");
+
+            entity.ToTable("Event");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('event_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.Age).HasColumnName("age");
+            entity.Property(e => e.Description)
+                .HasColumnType("character varying")
+                .HasColumnName("description");
+            entity.Property(e => e.EventDate).HasColumnName("event_date");
+            entity.Property(e => e.EventPlace)
+                .HasColumnType("character varying")
+                .HasColumnName("event_place");
+            entity.Property(e => e.EventType)
+                .HasColumnType("character varying")
+                .HasColumnName("event_type");
+            entity.Property(e => e.PersonId).HasColumnName("person_id");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.Events)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("event_person_id_fkey");
+        });
+
+        modelBuilder.Entity<MediaEvent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_event_pkey");
+
+            entity.ToTable("Media_Event");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('media_event_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.EventId).HasColumnName("event_id");
+            entity.Property(e => e.MediaId).HasColumnName("media_id");
+
+            entity.HasOne(d => d.Event).WithMany(p => p.MediaEvents)
+                .HasForeignKey(d => d.EventId)
+                .HasConstraintName("media_event_event_id_fkey");
+
+            entity.HasOne(d => d.Media).WithMany(p => p.MediaEvents)
+                .HasForeignKey(d => d.MediaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("media_event_media_id_fkey");
+        });
+
+        modelBuilder.Entity<MediaPerson>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_person_pkey");
+
+            entity.ToTable("Media_Person");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('media_person_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.MediaId).HasColumnName("media_id");
+            entity.Property(e => e.PersonId).HasColumnName("person_id");
+
+            entity.HasOne(d => d.Media).WithMany(p => p.MediaPeople)
+                .HasForeignKey(d => d.MediaId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("media_person_media_id_fkey");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.MediaPeople)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("media_person_person_id_fkey");
+        });
+
+        modelBuilder.Entity<Media>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("media_pkey");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('media_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Description)
+                .HasColumnType("character varying")
+                .HasColumnName("description");
+            entity.Property(e => e.FilePath)
+                .HasColumnType("character varying")
+                .HasColumnName("file_path");
+            entity.Property(e => e.MainPhoto).HasColumnName("main_photo");
+            entity.Property(e => e.MediaType)
+                .HasColumnType("character varying")
+                .HasColumnName("media_type");
+            entity.Property(e => e.Place)
+                .HasColumnType("character varying")
+                .HasColumnName("place");
+            entity.Property(e => e.TaggedPerson).HasColumnName("tagged_person");
+        });
+
+        modelBuilder.Entity<Person>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("person_pkey");
+
+            entity.ToTable("Person");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('person_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.BirthDate).HasColumnName("birth_date");
+            entity.Property(e => e.DeathDate).HasColumnName("death_date");
+            entity.Property(e => e.FirstName)
+                .HasColumnType("character varying")
+                .HasColumnName("first_name");
+            entity.Property(e => e.Gender)
+                .HasColumnType("character varying")
+                .HasColumnName("gender");
+            entity.Property(e => e.LastName)
+                .HasColumnType("character varying")
+                .HasColumnName("last_name");
+            entity.Property(e => e.MaidenName)
+                .HasColumnType("character varying")
+                .HasColumnName("maiden_name");
+            entity.Property(e => e.OtherNameVariants)
+                .HasColumnType("character varying")
+                .HasColumnName("other_name_variants");
+            entity.Property(e => e.PrimaryPerson).HasColumnName("primary_person");
+        });
+
+        modelBuilder.Entity<Relationship>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("relationship_pkey");
+
+            entity.ToTable("Relationship");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('relationship_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.PersonId1).HasColumnName("person_id1");
+            entity.Property(e => e.PersonId2).HasColumnName("person_id2");
+            entity.Property(e => e.RelationshipType)
+                .HasColumnType("character varying")
+                .HasColumnName("relationship_type");
+
+            entity.HasOne(d => d.PersonId1Navigation).WithMany(p => p.RelationshipPersonId1Navigations)
+                .HasForeignKey(d => d.PersonId1)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("relationship_person_id1_fkey");
+
+            entity.HasOne(d => d.PersonId2Navigation).WithMany(p => p.RelationshipPersonId2Navigations)
+                .HasForeignKey(d => d.PersonId2)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("relationship_person_id2_fkey");
+        });
+
+        modelBuilder.Entity<SpecialRecord>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("special_record_pkey");
+
+            entity.ToTable("Special_record");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('special_record_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.EventId).HasColumnName("event_id");
+            entity.Property(e => e.HouseNumber).HasColumnName("house_number");
+            entity.Property(e => e.Priest)
+                .HasColumnType("character varying")
+                .HasColumnName("priest");
+            entity.Property(e => e.Record)
+                .HasColumnType("character varying")
+                .HasColumnName("record");
+            entity.Property(e => e.RecordType)
+                .HasColumnType("character varying")
+                .HasColumnName("record_type");
+
+            entity.HasOne(d => d.Event).WithMany(p => p.SpecialRecords)
+                .HasForeignKey(d => d.EventId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("special_record_event_id_fkey");
+        });
+
+        modelBuilder.Entity<Tree>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("tree_pkey");
+
+            entity.ToTable("Tree");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('tree_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<TreePerson>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("tree_person_pkey");
+
+            entity.ToTable("Tree_Person");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('tree_person_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.PersonId).HasColumnName("person_id");
+            entity.Property(e => e.TreeId).HasColumnName("tree_id");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.TreePeople)
+                .HasForeignKey(d => d.PersonId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("tree_person_person_id_fkey");
+
+            entity.HasOne(d => d.Tree).WithMany(p => p.TreePeople)
+                .HasForeignKey(d => d.TreeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("tree_person_tree_id_fkey");
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.Login).HasName("users_pkey");
+
+            entity.Property(e => e.Login)
+                .HasColumnType("character varying")
+                .HasColumnName("login");
+            entity.Property(e => e.Password)
+                .HasColumnType("character varying")
+                .HasColumnName("password");
+        });
+
+        modelBuilder.Entity<UserTree>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("user_tree_pkey");
+
+            entity.ToTable("User_Tree");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('user_tree_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.AccessType)
+                .HasColumnType("character varying")
+                .HasColumnName("access_type");
+            entity.Property(e => e.TreeId).HasColumnName("tree_id");
+            entity.Property(e => e.UserLogin)
+                .HasColumnType("character varying")
+                .HasColumnName("user_login");
+
+            entity.HasOne(d => d.Tree).WithMany(p => p.UserTrees)
+                .HasForeignKey(d => d.TreeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("user_tree_tree_id_fkey");
+
+            entity.HasOne(d => d.UserLoginNavigation).WithMany(p => p.UserTrees)
+                .HasForeignKey(d => d.UserLogin)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("user_tree_user_login_fkey");
+        });
+        modelBuilder.HasSequence("special_record_id_seq");
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }
