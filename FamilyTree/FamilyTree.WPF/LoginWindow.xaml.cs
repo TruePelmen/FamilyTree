@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FamilyTree.DAL.Context;
+using FamilyTree.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,14 @@ namespace FamilyTree.WPF
         public LoginWindow()
         {
             InitializeComponent();
+            //using (var db = new FamilyTreeContext())
+            //{
+            //    var newItem = new Користувач();
+            //    newItem.Логін = "Іван";
+            //    newItem.Пароль = "123";
+            //    db.Користувачі.Add(newItem);
+            //    var count = db.SaveChanges();
+            //}
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -41,8 +51,8 @@ namespace FamilyTree.WPF
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
         }
+
         private void Register_Click(object sender, MouseButtonEventArgs e)
         {
             // Відкриваємо нове вікно (RegistrationWindow)

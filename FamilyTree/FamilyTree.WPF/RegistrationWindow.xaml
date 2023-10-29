@@ -4,13 +4,89 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FamilyTree.WPF"
-        mc:Ignorable="d"
-        Height="550" Width="442"
-        WindowStyle="None"
-        ResizeMode="NoResize"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:uc="clr-namespace:FamilyTree.WPF.UserControls"
+        mc:Ignorable="d" Height="650" Width="800" Background="Transparent" 
+        WindowStyle="None" 
         WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
         AllowsTransparency="True">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Background="#144509" Padding="30" CornerRadius="25 0 0 25">
+            <StackPanel VerticalAlignment="Center">
+                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\logo_white.png" Margin="0 0 0 40" Width="160" Height="160"/>
+
+                <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="24" Text="Давайте знайомитись" Foreground="White"/>
+                <TextBlock TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Margin="0 20 0 20" Foreground="White" Text="Реєстрація - перший крок у дослідженні вашого сімейного минулого"/>
+
+                
+                    <fa:ImageAwesome Icon="AngleRight" Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
+                
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Padding="20" MouseDown="Border_MouseDown" Background="#ffffff" CornerRadius="0 25 25 0">
+            <Grid>
+                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
+                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 7 40 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnMinimize_Click"/>
+
+                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Прізвище" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="1" Text="Ім'я" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="2" Text="Стать" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="3" Text="Дата народження" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="4" Text="Логін" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="5" Text="Пароль" Style="{StaticResource text}"/>
+                    <TextBlock Grid.Row="6" Text="Підтвердіть пароль" Style="{StaticResource text}"/>
+
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="3" Hint="01/01/2000"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="4" Hint=""/>
+                    <PasswordBox Grid.Column="1" Grid.Row="5"/>
+                    <PasswordBox Grid.Column="1" Grid.Row="6"/>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0 10">
+                        <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption"/>
+                        <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption"/>
+                    </StackPanel>
+
+
+
+                    <Grid Grid.Column="1" Grid.Row="7" Margin="0 40 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Click="Back_Click" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" />
+                        <Button Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
+                    </Grid>
+
+                </Grid>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>
