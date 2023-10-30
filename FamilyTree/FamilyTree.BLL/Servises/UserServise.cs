@@ -28,6 +28,10 @@ namespace FamilyTree.BLL.Services
         {
             return _userRepository.GetById(login);
         }
+        public bool FindUserByLogin(string login)
+        {
+            return GetUserByLogin(login) != null;
+        }
 
         // Додати нового користувача
         public void AddUser(string login, string password)

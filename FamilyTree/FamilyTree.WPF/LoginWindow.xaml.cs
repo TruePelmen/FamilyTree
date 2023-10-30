@@ -1,6 +1,10 @@
 ﻿using FamilyTree.BLL.Services;
+using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace FamilyTree.WPF
 {
@@ -9,7 +13,7 @@ namespace FamilyTree.WPF
     /// </summary>
     public partial class LoginWindow : Window
     {
-
+        private DispatcherTimer timer;
         public LoginWindow()
         {
             InitializeComponent();
@@ -30,16 +34,31 @@ namespace FamilyTree.WPF
         {
             Application.Current.Shutdown();
         }
+        private void ShowErrorLoginMessage()
+        {
+            messageTextBlock.Text = "Неправильний логін або пароль";
+            messageTextBlock.Visibility = Visibility.Visible; 
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Start();
+            timer.Tick += (sender, e) =>
+            {
+                messageTextBlock.Visibility = Visibility.Hidden;
+                timer.Stop();
+            };
+        }
+        private void ShowEmptyFieldMessage()
+        {
+            messageTextBlock.Text = "Заповніть усі обов'язкові поля";
+            messageTextBlock.Visibility = Visibility.Visible;
+        }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            errorLogin.Visibility = Visibility.Hidden;
             if (!checkIsNotEmpty())
             {
-                string username = txtUser.Text;
-                string password = txtPass.Password;
                 UserService userService = new UserService();
-                bool isAuthenticated = userService.AuthenticateUser(username, password);
+                bool isAuthenticated = userService.AuthenticateUser(txtUser.Text, txtPass.Password);
                 if (isAuthenticated)
                 {
                     MainWindow mainWindow = new MainWindow();
@@ -48,8 +67,14 @@ namespace FamilyTree.WPF
                 }
                 else
                 {
-                    errorLogin.Visibility = Visibility.Visible;
+                    ShowErrorLoginMessage();
                 }
+            }
+            else
+            {
+                ShowEmptyFieldMessage();
+                if (txtUser.Text == string.Empty) { txtUser.ErrorBorder(); }
+                if (txtPass.Password == string.Empty) { txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0)); }
             }
         }
 
@@ -65,7 +90,8 @@ namespace FamilyTree.WPF
         {
             if (txtUser.Text == string.Empty)
             {
-                emptyField1.Visibility = Visibility.Visible;
+                ShowEmptyFieldMessage();
+                txtUser.ErrorBorder();
             }
         }
 
@@ -73,7 +99,8 @@ namespace FamilyTree.WPF
         {
             if (txtPass.Password == string.Empty)
             {
-                emptyField2.Visibility = Visibility.Visible;
+                ShowEmptyFieldMessage();
+                txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
             }
         }
         private bool checkIsNotEmpty()
@@ -83,12 +110,20 @@ namespace FamilyTree.WPF
 
         private void txtPass_GotFocus(object sender, RoutedEventArgs e)
         {
-            emptyField2.Visibility = Visibility.Hidden;
-        }
+            txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (txtUser.Text != string.Empty)
+            {
+                messageTextBlock.Visibility = Visibility.Hidden;
+            }
 
+        }
         private void txtUser_GotFocus(object sender, RoutedEventArgs e)
         {
-            emptyField1.Visibility = Visibility.Hidden;
+            txtUser.NormalBorder();
+            if (txtPass.Password != string.Empty)
+            {
+                messageTextBlock.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

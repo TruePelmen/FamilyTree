@@ -24,9 +24,9 @@
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="24" Text="Давайте знайомитись" Foreground="White"/>
                 <TextBlock TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Margin="0 20 0 20" Foreground="White" Text="Реєстрація - перший крок у дослідженні вашого сімейного минулого"/>
 
-                
-                    <fa:ImageAwesome Icon="AngleRight" Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
-                
+
+                <fa:ImageAwesome Icon="AngleRight" Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
+
             </StackPanel>
         </Border>
 
@@ -61,13 +61,27 @@
                     <TextBlock Grid.Row="5" Text="Пароль" Style="{StaticResource text}"/>
                     <TextBlock Grid.Row="6" Text="Підтвердіть пароль" Style="{StaticResource text}"/>
 
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко" x:Name="lastNameTextBox"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван" x:Name="firstNameTextBox"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="3" Hint="01/01/2000" x:Name="dateOfBirthTextBox"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="5" x:Name="passwordBox"/>
-                    <PasswordBox Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко" x:Name="lastNameTextBox" LostFocus="lastNameTextBox_LostFocus" GotFocus="lastNameTextBox_GotFocus"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван" x:Name="firstNameTextBox" LostFocus="firstNameTextBox_LostFocus" GotFocus="firstNameTextBox_GotFocus"/>
+                    <DatePicker x:Name="dateOfBirth"  Style="{StaticResource MaterialDesignFilledDatePicker}"
+                                 Background="#EEF0F2"
+                                 Foreground="Black"
+                                 Padding="10 10"
+                                 Margin="0 10"
+                                 Grid.Column="1" Grid.Row="3" FontSize="12">
+                    </DatePicker>
 
+                    <uc:MyTextBox  Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox" LostFocus="loginTextBox_LostFocus" GotFocus="loginTextBox_GotFocus"/>
+                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="5" x:Name="passwordBox" LostFocus="passwordBox_LostFocus" GotFocus="passwordBox_GotFocus"/>
+                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox" LostFocus="confirmPasswordBox_LostFocus" GotFocus="confirmPasswordBox_GotFocus" PasswordChanged="confirmPasswordBox_PasswordChanged"/>
+
+                    <TextBlock x:Name="messageField"
+                               Grid.Column="1" Grid.Row="7"
+                                Text="Заповніть усі обов'язкові поля"
+                                Foreground="Red"
+                                HorizontalAlignment="Center"
+                                Visibility="Hidden"
+                                Style="{StaticResource text}" Height="80"/>
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0 10">
                         <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption"/>
                         <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption"/>

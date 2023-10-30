@@ -13,6 +13,6 @@
         <TextBlock Margin="10 0" VerticalAlignment="Center" Foreground="#868686" IsHitTestVisible="False" Panel.ZIndex="1"
                Text="{Binding Path=Hint,ElementName=myTextBox}"
                Visibility="{Binding ElementName=textBox, Path=Text.IsEmpty, Converter={StaticResource MyBoolToVisibilityConverter}}" />
-        <TextBox Name="textBox" />
+        <TextBox Name="textBox" Style="{StaticResource textBox}" TextChanged="textBox_TextChanged"/>
     </Grid>
 </UserControl>

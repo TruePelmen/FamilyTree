@@ -42,38 +42,30 @@
                     <TextBlock Text="Логін"                             
                                Margin="0,35,0,0"
                                Style="{StaticResource text}"/>
-                     <uc:MyTextBox 
+                    <uc:MyTextBox 
                          x:Name="txtUser" 
                          LostFocus="txtUser_LostFocus"
                          GotFocus="txtUser_GotFocus">
-                      </uc:MyTextBox>
-                    <TextBlock x:Name="emptyField1"
-                               Text="Заповніть поле!"
-                               Foreground="Red"
-                               Visibility="Hidden"/>
+                    </uc:MyTextBox>
                     <TextBlock Text="Пароль"
                                 Style="{StaticResource text}"                            
                                 Margin="0,5,0,0"/>
                     <PasswordBox x:Name="txtPass"
                                  Margin="0,5,0,0"
                                  LostFocus="txtPass_LostFocus"
-                                 GotFocus="txtPass_GotFocus">
-                        </PasswordBox>
-                    <TextBlock x:Name="emptyField2"
-                               Text="Заповніть поле!"
-                               Foreground="Red"
-                               Visibility="Hidden"/>
-
-                    <TextBlock x:Name="errorLogin"
+                                 GotFocus="txtPass_GotFocus"
+                                 Style="{StaticResource passwordBox}">
+                    </PasswordBox>
+                    <TextBlock x:Name="messageTextBlock"
                                Text="Неправильний логін або пароль"
-                               Margin="0,20,0,0"
+                               Margin="0,15,0,15"
                                Style="{StaticResource text}"
                                Visibility="Hidden"
+                               TextWrapping="WrapWithOverflow"
                                Foreground="Red"
                                />
                     <Button x:Name="btnLogin"                          
-                            Content="Увійти"                           
-                            Margin="0,20,0,0"
+                            Content="Увійти" 
                             Click="btnLogin_Click" 
                             Style="{StaticResource buttonMainGreen}">
                     </Button>
