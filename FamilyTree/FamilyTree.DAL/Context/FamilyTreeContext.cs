@@ -310,7 +310,15 @@ public partial class FamilyTreeContext : DbContext
                 .HasConstraintName("user_tree_user_login_fkey");
         });
         modelBuilder.HasSequence("special_record_id_seq");
-
+        modelBuilder.HasSequence("media_id_seq");
+        modelBuilder.HasSequence("user_tree_id_seq");
+        modelBuilder.HasSequence("tree_person_id_seq");
+        modelBuilder.HasSequence("tree_id_seq");
+        modelBuilder.HasSequence("relationship_id_seq");
+        modelBuilder.HasSequence("person_id_seq");
+        modelBuilder.HasSequence("event_id_seq");
+        modelBuilder.HasSequence("media_event_id_seq");
+        modelBuilder.HasSequence("media_person_id_seq");
         OnModelCreatingPartial(modelBuilder);
     }
 
