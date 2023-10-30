@@ -39,9 +39,19 @@ public partial class FamilyTreeContext : DbContext
     public virtual DbSet<UserTree> UserTrees { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=FamilyTree;Username=postgres;Password=yhy121352");
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            string connectionString = Environment.GetEnvironmentVariable("FamilyTreeDbConnection");
 
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("Рядок підключення до бази даних не знайдено.");
+            }
+
+            optionsBuilder.UseNpgsql(connectionString);
+        }
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>(entity =>

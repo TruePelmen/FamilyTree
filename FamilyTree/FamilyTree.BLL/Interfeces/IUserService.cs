@@ -9,8 +9,8 @@ namespace FamilyTree.BLL.Interfeces
 {
     public interface IUserService
     {
-        IEnumerable<Користувач> GetAllUsers();
-        Користувач GetUserByLogin(string login);
+        IEnumerable<User> GetAllUsers();
+        User GetUserByLogin(string login);
         void AddUser(string login, string password);
         void UpdateUser(string login, string password);
         void DeleteUser(string login);

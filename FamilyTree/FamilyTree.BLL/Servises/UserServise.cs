@@ -10,21 +10,21 @@ namespace FamilyTree.BLL.Services
 {
     public class UserService : IUserService
     {
-        private IGenericRepository<Користувач> _userRepository;
+        private IGenericRepository<User> _userRepository;
 
         public UserService()
         {
-            _userRepository = new GenericRepository<Користувач>();
+            _userRepository = new GenericRepository<User>();
         }
 
         // Отримати всіх користувачів
-        public IEnumerable<Користувач> GetAllUsers()
+        public IEnumerable<User> GetAllUsers()
         {
             return _userRepository.GetAll();
         }
 
         // Отримати користувача за логіном
-        public Користувач GetUserByLogin(string login)
+        public User GetUserByLogin(string login)
         {
             return _userRepository.GetById(login);
         }
@@ -34,9 +34,9 @@ namespace FamilyTree.BLL.Services
         {
             // Генерувати хеш пароля перед збереженням
             password = BCrypt.Net.BCrypt.HashPassword(password);
-            Користувач user = new Користувач();
-            user.Логін = login;
-            user.Пароль = password;
+            User user = new User();
+            user.Login = login;
+            user.Password = password;
             _userRepository.Add(user);
             _userRepository.Save();
         }
@@ -44,9 +44,9 @@ namespace FamilyTree.BLL.Services
         // Оновити інформацію про користувача
         public void UpdateUser(string login, string password)
         {
-            Користувач user = new Користувач();
-            user.Логін = login;
-            user.Пароль = password;
+            User user = new User();
+            user.Login = login;
+            user.Password = password;
             _userRepository.Update(user);
             _userRepository.Save();
         }
@@ -60,9 +60,8 @@ namespace FamilyTree.BLL.Services
 
         public bool AuthenticateUser(string login, string password)
         {
-             Користувач user = _userRepository.GetById(login);
-
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Пароль))
+            User user = _userRepository.GetById(login);
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
                 return true;
             }
