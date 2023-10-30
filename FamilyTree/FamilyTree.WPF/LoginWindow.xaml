@@ -1,10 +1,10 @@
 ﻿<Window x:Class="FamilyTree.WPF.LoginWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FamilyTree.WPF"
-        xmlns:uc="clr-namespace:FamilyTree.WPF.UserControls"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:FamilyTree.WPF"
+	xmlns:uc="clr-namespace:FamilyTree.WPF.UserControls"
         mc:Ignorable="d"
         Height="650" Width="442"
         WindowStyle="None"
@@ -43,19 +43,17 @@
                                Margin="0,35,0,0"
                                Style="{StaticResource text}"/>
                     <uc:MyTextBox 
-                         x:Name="txtUser" 
+                         x:Name="userTextBox" 
                          LostFocus="txtUser_LostFocus"
-                         GotFocus="txtUser_GotFocus">
-                    </uc:MyTextBox>
+                         GotFocus="txtUser_GotFocus"></uc:MyTextBox>
                     <TextBlock Text="Пароль"
                                 Style="{StaticResource text}"                            
                                 Margin="0,5,0,0"/>
-                    <PasswordBox x:Name="txtPass"
+                    <PasswordBox x:Name="passwordTextBox"
                                  Margin="0,5,0,0"
                                  LostFocus="txtPass_LostFocus"
                                  GotFocus="txtPass_GotFocus"
-                                 Style="{StaticResource passwordBox}">
-                    </PasswordBox>
+                                 Style="{StaticResource passwordBox}"></PasswordBox>
                     <TextBlock x:Name="messageTextBlock"
                                Text="Неправильний логін або пароль"
                                Margin="0,15,0,15"
@@ -66,9 +64,8 @@
                                />
                     <Button x:Name="btnLogin"                          
                             Content="Увійти" 
-                            Click="btnLogin_Click" 
-                            Style="{StaticResource buttonMainGreen}">
-                    </Button>
+                            Click="BtnLogin_Click" 
+                            Style="{StaticResource buttonMainGreen}"></Button>
                     <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         Margin="0,15,0,0">

@@ -33,11 +33,6 @@ namespace FamilyTree.WPF.UserControls
         {
             get { return textBox.Text; }
         }
-        public event TextChangedEventHandler TextChanged;
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextChanged?.Invoke(this, e);
-        }
         public void ErrorBorder()
         {
             textBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));

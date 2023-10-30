@@ -1,16 +1,12 @@
 ﻿using FamilyTree.BLL.Services;
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace FamilyTree.WPF
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
         private DispatcherTimer timer;
@@ -39,7 +35,7 @@ namespace FamilyTree.WPF
             messageTextBlock.Text = "Неправильний логін або пароль";
             messageTextBlock.Visibility = Visibility.Visible; 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromSeconds(2);
             timer.Start();
             timer.Tick += (sender, e) =>
             {
@@ -53,12 +49,12 @@ namespace FamilyTree.WPF
             messageTextBlock.Visibility = Visibility.Visible;
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (!checkIsNotEmpty())
             {
                 UserService userService = new UserService();
-                bool isAuthenticated = userService.AuthenticateUser(txtUser.Text, txtPass.Password);
+                bool isAuthenticated = userService.AuthenticateUser(userTextBox.Text, passwordTextBox.Password);
                 if (isAuthenticated)
                 {
                     MainWindow mainWindow = new MainWindow();
@@ -73,8 +69,8 @@ namespace FamilyTree.WPF
             else
             {
                 ShowEmptyFieldMessage();
-                if (txtUser.Text == string.Empty) { txtUser.ErrorBorder(); }
-                if (txtPass.Password == string.Empty) { txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0)); }
+                if (userTextBox.Text == string.Empty) { userTextBox.ErrorBorder(); }
+                if (passwordTextBox.Password == string.Empty) { passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0)); }
             }
         }
 
@@ -88,30 +84,30 @@ namespace FamilyTree.WPF
 
         private void txtUser_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtUser.Text == string.Empty)
+            if (userTextBox.Text == string.Empty)
             {
                 ShowEmptyFieldMessage();
-                txtUser.ErrorBorder();
+                userTextBox.ErrorBorder();
             }
         }
 
         private void txtPass_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (txtPass.Password == string.Empty)
+            if (passwordTextBox.Password == string.Empty)
             {
                 ShowEmptyFieldMessage();
-                txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
             }
         }
         private bool checkIsNotEmpty()
         {
-            return txtUser.Text == string.Empty || txtPass.Password == string.Empty;
+            return userTextBox.Text == string.Empty || passwordTextBox.Password == string.Empty;
         }
 
         private void txtPass_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtPass.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
-            if (txtUser.Text != string.Empty)
+            passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (userTextBox.Text != string.Empty)
             {
                 messageTextBlock.Visibility = Visibility.Hidden;
             }
@@ -119,8 +115,8 @@ namespace FamilyTree.WPF
         }
         private void txtUser_GotFocus(object sender, RoutedEventArgs e)
         {
-            txtUser.NormalBorder();
-            if (txtPass.Password != string.Empty)
+            userTextBox.NormalBorder();
+            if (passwordTextBox.Password != string.Empty)
             {
                 messageTextBlock.Visibility = Visibility.Hidden;
             }
