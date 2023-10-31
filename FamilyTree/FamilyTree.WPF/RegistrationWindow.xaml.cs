@@ -39,18 +39,18 @@ namespace FamilyTree.WPF
         private void InitializeUI()
         {
             maleOption.IsSelected = true;
-            loginTextBox.textBox.TextChanged += LoginTextBox_TextChanged;
+            loginTextBox.textBox.TextChanged += LoginTextBoxTextChanged;
         }
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void BtnMinimizeClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-        private void LoginTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void LoginTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
             if (CheckLoginUniqueness())
             {
@@ -79,15 +79,14 @@ namespace FamilyTree.WPF
             if (maleOption.IsSelected) { return "male"; }
             else { return "female"; }
         }
-        private DateOnly ParseDate()
+        private DateOnly? ParseDate()
         {
             string dateString = dateOfBirth.SelectedDate.ToString();
             string dateWithoutTime = dateString.Split(' ')[0];
             return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
-
         }
 
-        private void ContinueButton_Click(object sender, RoutedEventArgs e)
+        private void ContinueButtonClick(object sender, RoutedEventArgs e)
         {
             if (CheckFormValidity())
             {
@@ -106,7 +105,8 @@ namespace FamilyTree.WPF
             return string.IsNullOrWhiteSpace(lastNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(firstNameTextBox.Text) ||
                 string.IsNullOrWhiteSpace(passwordBox.Password) ||
-                string.IsNullOrWhiteSpace(confirmPasswordBox.Password);
+                string.IsNullOrWhiteSpace(confirmPasswordBox.Password) ||
+                string.IsNullOrWhiteSpace(dateOfBirth.SelectedDate.ToString());
         }
         private bool CheckFormValidity()
         {
@@ -132,43 +132,42 @@ namespace FamilyTree.WPF
             return isValid;
         }
 
-        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        private void BorderMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void BackClick(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new LoginWindow(_userService);
-
+            LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
             Close();
         }
 
-        private void lastNameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void LastNameTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxLostFocus(lastNameTextBox);
         }
 
-        private void firstNameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void FirstNameTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxLostFocus(firstNameTextBox);
         }
 
-        private void loginTextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void LoginTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxLostFocus(loginTextBox);
         }
 
-        private void passwordBox_LostFocus(object sender, RoutedEventArgs e)
+        private void PasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
             HandlePasswordBoxLostFocus(passwordBox);
         }
 
-        private void confirmPasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        private void ConfirmPasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
             HandlePasswordBoxLostFocus(confirmPasswordBox);
-            passwordBox.PasswordChanged += confirmPasswordBox_PasswordChanged;
+            passwordBox.PasswordChanged += ConfirmPasswordBoxPasswordChanged;
         }
 
         private void HandleTextBoxLostFocus(MyTextBox textBox)
@@ -189,27 +188,27 @@ namespace FamilyTree.WPF
             }
         }
 
-        private void lastNameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void LastNameTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxGotFocus(lastNameTextBox);
         }
 
-        private void firstNameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void FirstNameTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxGotFocus(firstNameTextBox);
         }
 
-        private void loginTextBox_GotFocus(object sender, RoutedEventArgs e)
+        private void LoginTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
             HandleTextBoxGotFocus(loginTextBox);
         }
 
-        private void passwordBox_GotFocus(object sender, RoutedEventArgs e)
+        private void PasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
             HandlePasswordBoxGotFocus(passwordBox);
         }
 
-        private void confirmPasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        private void ConfirmPasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
             HandlePasswordBoxGotFocus(confirmPasswordBox);
         }
@@ -232,13 +231,31 @@ namespace FamilyTree.WPF
             }
         }
 
-        private void confirmPasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        private void ConfirmPasswordBoxPasswordChanged(object sender, RoutedEventArgs e)
         {
             if (!string.Equals(passwordBox.Password, confirmPasswordBox.Password))
             {
                 ShowMessage(ErrorMessagePasswordMismatch);
             }
             else
+            {
+                messageField.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void DateOfBirthLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(dateOfBirth.SelectedDate.ToString()))
+            {
+                dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                ShowMessage(ErrorMessageRequiredField);
+            }
+        }
+
+        private void DateOfBirthGotFocus(object sender, RoutedEventArgs e)
+        {
+            dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (!CheckFieldEmpty())
             {
                 messageField.Visibility = Visibility.Hidden;
             }

@@ -25,8 +25,7 @@ namespace FamilyTree.WPF
         {
             base.OnStartup(e);
             DependencyContainer.Initialize();
-            var userService = DependencyContainer.ServiceProvider.GetRequiredService<IUserService>();
-            LoginWindow loginWindow = new LoginWindow(userService);
+            LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
 
         }

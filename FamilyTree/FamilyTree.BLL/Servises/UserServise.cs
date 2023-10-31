@@ -17,12 +17,21 @@ namespace FamilyTree.BLL.Services
             _userRepository = userRepository;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         // Отримати всіх користувачів
         public IEnumerable<User> GetAllUsers()
         {
             return _userRepository.GetAll();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         // Отримати користувача за логіном
         public User GetUserByLogin(string login)
         {

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FamilyTree.DAL.Interfaces;
-using FamilyTree.DAL.Repositories;
+﻿using FamilyTree.DAL.Repositories;
 using FamilyTree.BLL.Interfeces;
 using FamilyTree.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
 using FamilyTree.BLL.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace FamilyTree.WPF
 {
@@ -36,6 +31,9 @@ namespace FamilyTree.WPF
 
             services.AddTransient<ITreePersonService, TreePersonService>();
             services.AddTransient<IGenericRepository<TreePerson>, GenericRepository<TreePerson>>();
+
+            services.AddSingleton<LoginWindow>();
+            services.AddSingleton<RegistrationWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

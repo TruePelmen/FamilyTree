@@ -3,6 +3,7 @@ using FamilyTree.BLL.Interfeces;
 using FamilyTree.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -20,18 +21,18 @@ namespace FamilyTree.WPF
             _userService = userService;
         }
         
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
 
-        private void btnMinimize_Click(object sender, RoutedEventArgs e)
+        private void BtnMinimizeClick(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
         }
 
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
@@ -54,16 +55,14 @@ namespace FamilyTree.WPF
             messageTextBlock.Visibility = Visibility.Visible;
         }
 
-        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
-            if (!checkIsNotEmpty())
+            if (!CheckIsNotEmpty())
             {
                 bool isAuthenticated = _userService.AuthenticateUser(userTextBox.Text, passwordTextBox.Password);
                 if (isAuthenticated)
                 {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    this.Close();
+                    CreateMainWindow();
                 }
                 else
                 {
@@ -79,16 +78,14 @@ namespace FamilyTree.WPF
         }
 
 
-        private void Register_Click(object sender, MouseButtonEventArgs e)
+        private void RegisterClick(object sender, MouseButtonEventArgs e)
         {
-            RegistrationWindow registrationWindow = new RegistrationWindow(_userService, DependencyContainer.ServiceProvider.GetRequiredService<ITreeService>(),
-                DependencyContainer.ServiceProvider.GetRequiredService<IUserTreeService>(), DependencyContainer.ServiceProvider.GetRequiredService<IPersonService>(),
-                DependencyContainer.ServiceProvider.GetRequiredService<ITreePersonService>());
+            RegistrationWindow registrationWindow = DependencyContainer.ServiceProvider.GetRequiredService<RegistrationWindow>();
             registrationWindow.Show();
             this.Close();
         }
 
-        private void txtUser_LostFocus(object sender, RoutedEventArgs e)
+        private void TxtUserLostFocus(object sender, RoutedEventArgs e)
         {
             if (userTextBox.Text == string.Empty)
             {
@@ -97,7 +94,7 @@ namespace FamilyTree.WPF
             }
         }
 
-        private void txtPass_LostFocus(object sender, RoutedEventArgs e)
+        private void TxtPassLostFocus(object sender, RoutedEventArgs e)
         {
             if (passwordTextBox.Password == string.Empty)
             {
@@ -105,12 +102,12 @@ namespace FamilyTree.WPF
                 passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
             }
         }
-        private bool checkIsNotEmpty()
+        private bool CheckIsNotEmpty()
         {
             return userTextBox.Text == string.Empty || passwordTextBox.Password == string.Empty;
         }
 
-        private void txtPass_GotFocus(object sender, RoutedEventArgs e)
+        private void TxtPassGotFocus(object sender, RoutedEventArgs e)
         {
             passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
             if (userTextBox.Text != string.Empty)
@@ -119,13 +116,19 @@ namespace FamilyTree.WPF
             }
 
         }
-        private void txtUser_GotFocus(object sender, RoutedEventArgs e)
+        private void TxtUserGotFocus(object sender, RoutedEventArgs e)
         {
             userTextBox.NormalBorder();
             if (passwordTextBox.Password != string.Empty)
             {
                 messageTextBlock.Visibility = Visibility.Hidden;
             }
+        }
+        private void CreateMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

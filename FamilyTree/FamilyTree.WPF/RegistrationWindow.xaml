@@ -24,10 +24,10 @@
                 <fa:ImageAwesome Icon="AngleRight" Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
             </StackPanel>
         </Border>
-        <Border Grid.Column="1" Padding="20" MouseDown="Border_MouseDown" Background="#ffffff" CornerRadius="0 25 25 0">
+        <Border Grid.Column="1" Padding="20" MouseDown="BorderMouseDown" Background="#ffffff" CornerRadius="0 25 25 0">
             <Grid>
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnClose_Click"/>
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 7 40 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="btnMinimize_Click"/>
+                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
+                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 7 40 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 10 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="150"/>
@@ -50,18 +50,18 @@
                     <TextBlock Grid.Row="4" Text="Логін" Style="{StaticResource text}"/>
                     <TextBlock Grid.Row="5" Text="Пароль" Style="{StaticResource text}"/>
                     <TextBlock Grid.Row="6" Text="Підтвердіть пароль" Style="{StaticResource text}"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко" x:Name="lastNameTextBox" LostFocus="lastNameTextBox_LostFocus" GotFocus="lastNameTextBox_GotFocus"/>
-                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван" x:Name="firstNameTextBox" LostFocus="firstNameTextBox_LostFocus" GotFocus="firstNameTextBox_GotFocus"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="0" Hint="Петренко" x:Name="lastNameTextBox" LostFocus="LastNameTextBoxLostFocus" GotFocus="LastNameTextBoxGotFocus"/>
+                    <uc:MyTextBox Grid.Column="1" Grid.Row="1" Hint="Іван" x:Name="firstNameTextBox" LostFocus="FirstNameTextBoxLostFocus" GotFocus="FirstNameTextBoxGotFocus"/>
                     <DatePicker x:Name="dateOfBirth"  Style="{StaticResource MaterialDesignFilledDatePicker}"
                                  Background="#EEF0F2"
                                  Foreground="Black"
                                  Padding="10 10"
-                                 Margin="0 10"
-                                 SelectedDate="01.01.2000"
-                                 Grid.Column="1" Grid.Row="3" FontSize="12"></DatePicker>
-                    <uc:MyTextBox  Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox" LostFocus="loginTextBox_LostFocus" GotFocus="loginTextBox_GotFocus"/>
-                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="5" x:Name="passwordBox" LostFocus="passwordBox_LostFocus" GotFocus="passwordBox_GotFocus"/>
-                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox" LostFocus="confirmPasswordBox_LostFocus" GotFocus="confirmPasswordBox_GotFocus" PasswordChanged="confirmPasswordBox_PasswordChanged"/>
+                                 LostFocus="DateOfBirthLostFocus"
+                                 GotFocus="DateOfBirthGotFocus"
+                                 Grid.Column="1" Grid.Row="3" FontSize="12" HorizontalAlignment="Right" Width="213"/>
+                    <uc:MyTextBox  Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox" LostFocus="LoginTextBoxLostFocus" GotFocus="LoginTextBoxGotFocus"/>
+                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="5" x:Name="passwordBox" LostFocus="PasswordBoxLostFocus" GotFocus="PasswordBoxGotFocus"/>
+                    <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox" LostFocus="ConfirmPasswordBoxLostFocus" GotFocus="ConfirmPasswordBoxGotFocus" PasswordChanged="ConfirmPasswordBoxPasswordChanged"/>
                     <TextBlock x:Name="messageField"
                                Grid.Column="1" Grid.Row="7"
                                 Text="Заповніть усі обов'язкові поля"
@@ -80,8 +80,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Click="Back_Click" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" />
-                        <Button Click="ContinueButton_Click" Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
+                        <Button Click="BackClick" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" />
+                        <Button Click="ContinueButtonClick" Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
                     </Grid>
                 </Grid>
             </Grid>
