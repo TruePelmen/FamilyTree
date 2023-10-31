@@ -6,7 +6,12 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Autofac;
+using FamilyTree.DAL.Repositories;
+using FamilyTree.BLL.Services;
+using Microsoft.Extensions.DependencyInjection;
+using FamilyTree.DAL.Interfaces.Repositories;
+using FamilyTree.DAL.Models;
+
 
 
 namespace FamilyTree.WPF
@@ -16,6 +21,14 @@ namespace FamilyTree.WPF
     /// </summary>
     public partial class App : Application
     {
-       
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            DependencyContainer.Initialize();
+            var userService = DependencyContainer.ServiceProvider.GetRequiredService<IUserService>();
+            LoginWindow loginWindow = new LoginWindow(userService);
+            loginWindow.Show();
+
+        }
     }
 }

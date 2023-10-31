@@ -1,5 +1,7 @@
-﻿using FamilyTree.BLL.Services;
+﻿using FamilyTree.BLL.Interfeces;
+using FamilyTree.BLL.Services;
 using FamilyTree.WPF.UserControls;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,16 +12,16 @@ namespace FamilyTree.WPF
 {
     public partial class RegistrationWindow : Window
     {
-        private readonly UserService userService = new UserService();
-
+        private readonly IUserService _userService;
         private const string ErrorMessageRequiredField = "Заповніть усі обов'язкові поля";
         private const string ErrorMessagePasswordMismatch = "Паролі не співпадають";
         private const string ErrorMessageDuplicateLogin = "Користувач з таким логіном вже існує";
 
-        public RegistrationWindow()
+        public RegistrationWindow(IUserService userService)
         {
             InitializeComponent();
             InitializeUI();
+            _userService = userService;
         }
 
         private void InitializeUI()
@@ -52,7 +54,7 @@ namespace FamilyTree.WPF
 
         private bool CheckLoginUniqueness()
         {
-            return !userService.FindUserByLogin(loginTextBox.Text);
+            return !_userService.FindUserByLogin(loginTextBox.Text);
         }
 
         private void ShowMessage(string message)
@@ -65,7 +67,7 @@ namespace FamilyTree.WPF
         {
             if (CheckFormValidity())
             {
-                userService.AddUser(loginTextBox.Text, passwordBox.Password);
+                _userService.AddUser(loginTextBox.Text, passwordBox.Password);
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 Close();
@@ -106,7 +108,8 @@ namespace FamilyTree.WPF
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            LoginWindow loginWindow = new LoginWindow();
+            LoginWindow loginWindow = new LoginWindow(_userService);
+
             loginWindow.Show();
             Close();
         }

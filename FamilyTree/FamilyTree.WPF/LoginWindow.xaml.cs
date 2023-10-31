@@ -1,4 +1,6 @@
-﻿using FamilyTree.BLL.Services;
+﻿using FamilyTree.BLL.Interfeces;
+using FamilyTree.BLL.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -10,9 +12,11 @@ namespace FamilyTree.WPF
     public partial class LoginWindow : Window
     {
         private DispatcherTimer timer;
-        public LoginWindow()
+        private readonly IUserService _userService;
+        public LoginWindow(IUserService userService)
         {
             InitializeComponent();
+            _userService = userService;
         }
         
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -53,8 +57,7 @@ namespace FamilyTree.WPF
         {
             if (!checkIsNotEmpty())
             {
-                UserService userService = new UserService();
-                bool isAuthenticated = userService.AuthenticateUser(userTextBox.Text, passwordTextBox.Password);
+                bool isAuthenticated = _userService.AuthenticateUser(userTextBox.Text, passwordTextBox.Password);
                 if (isAuthenticated)
                 {
                     MainWindow mainWindow = new MainWindow();
@@ -77,7 +80,7 @@ namespace FamilyTree.WPF
 
         private void Register_Click(object sender, MouseButtonEventArgs e)
         {
-            RegistrationWindow registrationWindow = new RegistrationWindow();
+            RegistrationWindow registrationWindow = new RegistrationWindow(_userService);
             registrationWindow.Show();
             this.Close();
         }
