@@ -11,7 +11,7 @@ public partial class SpecialRecord
 
     public int? HouseNumber { get; set; }
 
-    public string? Priest { get; set; }
+    public string Priest { get; set; }
 
     public string Record { get; set; } = null!;
 

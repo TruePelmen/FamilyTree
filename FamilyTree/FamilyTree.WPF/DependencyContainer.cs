@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac.Core;
 using FamilyTree.DAL.Interfaces;
 using FamilyTree.DAL.Repositories;
 using FamilyTree.BLL.Interfeces;
