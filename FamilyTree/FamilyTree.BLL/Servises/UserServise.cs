@@ -12,9 +12,9 @@ namespace FamilyTree.BLL.Services
     {
         private IGenericRepository<User> _userRepository;
 
-        public UserService()
+        public UserService(IGenericRepository<User> userRepository)
         {
-            _userRepository = new GenericRepository<User>();
+            _userRepository = userRepository;
         }
 
         // Отримати всіх користувачів
