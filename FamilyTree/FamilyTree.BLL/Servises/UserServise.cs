@@ -14,7 +14,7 @@ namespace FamilyTree.BLL.Services
 
         public UserService(IGenericRepository<User> userRepository)
         {
-           _userRepository = userRepository;
+            _userRepository = userRepository;
         }
 
         // Отримати всіх користувачів
