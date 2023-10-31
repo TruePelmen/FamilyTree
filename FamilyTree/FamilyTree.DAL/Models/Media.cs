@@ -13,11 +13,11 @@ public partial class Media
 
     public int? TaggedPerson { get; set; }
 
-    public string? Description { get; set; }
+    public string Description { get; set; }
 
     public DateOnly? Date { get; set; }
 
-    public string? Place { get; set; }
+    public string Place { get; set; }
 
     public bool? MainPhoto { get; set; }
 

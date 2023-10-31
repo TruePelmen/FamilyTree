@@ -11,6 +11,7 @@ namespace FamilyTree.BLL.Interfeces
     {
         IEnumerable<User> GetAllUsers();
         User GetUserByLogin(string login);
+        bool FindUserByLogin(string login);
         void AddUser(string login, string password);
         void UpdateUser(string login, string password);
         void DeleteUser(string login);
