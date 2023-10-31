@@ -1,6 +1,6 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
-using System;
+using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
 
 namespace FamilyTree.BLL.Services
@@ -52,7 +52,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeleteMediaEvent(int id)
         {
-            _mediaEventRepository.Remove(id);
+            _mediaEventRepository.Remove(GetMediaEventById(id));
             _mediaEventRepository.Save();
         }
     }

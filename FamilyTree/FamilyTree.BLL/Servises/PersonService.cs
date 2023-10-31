@@ -1,7 +1,8 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
-using System;
+using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
+using System;
 
 namespace FamilyTree.BLL.Services
 {
@@ -24,11 +25,11 @@ namespace FamilyTree.BLL.Services
             return _personRepository.GetById(id);
         }
 
-        public void AddPerson(string name, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
+        public int AddPerson(bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
         {
             Person person = new Person
             {
-                Name = name,
+                PrimaryPerson = primaryPersone,
                 LastName = lastname,
                 Gender = gender,
                 MaidenName = maidenName,
@@ -40,15 +41,16 @@ namespace FamilyTree.BLL.Services
 
             _personRepository.Add(person);
             _personRepository.Save();
+            return person.Id;
         }
 
-        public void UpdatePerson(int id, string name, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
+        public void UpdatePerson(int id, bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
         {
             Person person = _personRepository.GetById(id);
 
             if (person != null)
             {
-                person.Name = name;
+                person.PrimaryPerson= primaryPersone;
                 person.LastName = lastname;
                 person.Gender = gender;
                 person.MaidenName = maidenName;
@@ -64,7 +66,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeletePerson(int id)
         {
-            _personRepository.Remove(id);
+            _personRepository.Remove(GetPersonById(id));
             _personRepository.Save();
         }
     }

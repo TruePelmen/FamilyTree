@@ -1,8 +1,11 @@
-﻿using FamilyTree.BLL.Interfeces;
+﻿using FamilyTree.BLL.Interfaces;
+using FamilyTree.BLL.Interfeces;
 using FamilyTree.BLL.Services;
 using FamilyTree.WPF.UserControls;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,15 +16,24 @@ namespace FamilyTree.WPF
     public partial class RegistrationWindow : Window
     {
         private readonly IUserService _userService;
+        private readonly ITreePersonService _treePersonService;
+        private readonly ITreeService _treeService;
+        private readonly IUserTreeService _userTreeService;
+        private readonly IPersonService _personService;
         private const string ErrorMessageRequiredField = "Заповніть усі обов'язкові поля";
         private const string ErrorMessagePasswordMismatch = "Паролі не співпадають";
         private const string ErrorMessageDuplicateLogin = "Користувач з таким логіном вже існує";
 
-        public RegistrationWindow(IUserService userService)
+        public RegistrationWindow(IUserService userService, ITreeService treeService, IUserTreeService userTreeService,
+            IPersonService personService, ITreePersonService treePersonService)
         {
             InitializeComponent();
             InitializeUI();
             _userService = userService;
+            _treeService = treeService;
+            _userTreeService = userTreeService;
+            _personService = personService;
+            _treePersonService = treePersonService;
         }
 
         private void InitializeUI()
@@ -54,7 +66,7 @@ namespace FamilyTree.WPF
 
         private bool CheckLoginUniqueness()
         {
-            return !_userService.FindUserByLogin(loginTextBox.Text);
+            return ! _userService.FindUserByLogin(loginTextBox.Text);
         }
 
         private void ShowMessage(string message)
@@ -62,26 +74,45 @@ namespace FamilyTree.WPF
             messageField.Text = message;
             messageField.Visibility = Visibility.Visible;
         }
+        private string DetermineGender()
+        {
+            if (maleOption.IsSelected) { return "male"; }
+            else { return "female"; }
+        }
+        private DateOnly ParseDate()
+        {
+            string dateString = dateOfBirth.SelectedDate.ToString();
+            string dateWithoutTime = dateString.Split(' ')[0];
+            return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+
+        }
 
         private void ContinueButton_Click(object sender, RoutedEventArgs e)
         {
             if (CheckFormValidity())
             {
                 _userService.AddUser(loginTextBox.Text, passwordBox.Password);
+                int treeId = _treeService.AddTree("Дерево " + lastNameTextBox.Text);
+                _userTreeService.AddUserTree(loginTextBox.Text, treeId, "edit");
+                int personId = _personService.AddPerson(true, lastNameTextBox.Text, DetermineGender(), null, firstNameTextBox.Text, null, ParseDate(), null);
+                _treePersonService.AddTreePerson(treeId, personId);
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 Close();
             }
         }
-
+        private bool CheckFieldEmpty()
+        {
+            return string.IsNullOrWhiteSpace(lastNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(firstNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(passwordBox.Password) ||
+                string.IsNullOrWhiteSpace(confirmPasswordBox.Password);
+        }
         private bool CheckFormValidity()
         {
             bool isValid = true;
 
-            if (string.IsNullOrWhiteSpace(lastNameTextBox.Text) ||
-                string.IsNullOrWhiteSpace(firstNameTextBox.Text) ||
-                string.IsNullOrWhiteSpace(passwordBox.Password) ||
-                string.IsNullOrWhiteSpace(confirmPasswordBox.Password))
+            if (CheckFieldEmpty())
             {
                 isValid = false;
                 ShowMessage(ErrorMessageRequiredField);
@@ -137,6 +168,7 @@ namespace FamilyTree.WPF
         private void confirmPasswordBox_LostFocus(object sender, RoutedEventArgs e)
         {
             HandlePasswordBoxLostFocus(confirmPasswordBox);
+            passwordBox.PasswordChanged += confirmPasswordBox_PasswordChanged;
         }
 
         private void HandleTextBoxLostFocus(MyTextBox textBox)
@@ -185,7 +217,7 @@ namespace FamilyTree.WPF
         private void HandleTextBoxGotFocus(MyTextBox textBox)
         {
             textBox.NormalBorder();
-            if (CheckFormValidity())
+            if (!CheckFieldEmpty())
             {
                 messageField.Visibility = Visibility.Hidden;
             }
@@ -194,7 +226,7 @@ namespace FamilyTree.WPF
         private void HandlePasswordBoxGotFocus(PasswordBox passwordBox)
         {
             passwordBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
-            if (CheckFormValidity())
+            if (!CheckFieldEmpty())
             {
                 messageField.Visibility = Visibility.Hidden;
             }

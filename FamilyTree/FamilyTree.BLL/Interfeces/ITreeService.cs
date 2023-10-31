@@ -9,7 +9,7 @@ namespace FamilyTree.BLL.Interfaces
     {
         IEnumerable<Tree> GetAllTrees();
         Tree GetTreeById(int id);
-        void AddTree(string name);
+        int AddTree(string name);
         void UpdateTree(int id, string name);
         void DeleteTree(int id);
     }

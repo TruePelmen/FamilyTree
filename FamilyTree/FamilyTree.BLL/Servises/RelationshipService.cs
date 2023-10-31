@@ -1,4 +1,5 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
+using FamilyTree.BLL.Interfaces;
 using FamilyTree.DAL.Models;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeleteRelationship(int id)
         {
-            _relationshipRepository.Remove(id);
+            _relationshipRepository.Remove(GetRelationshipById(id));
             _relationshipRepository.Save();
         }
     }

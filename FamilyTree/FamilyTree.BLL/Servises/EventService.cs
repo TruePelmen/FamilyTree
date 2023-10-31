@@ -1,6 +1,7 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
 using System;
+using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
 
 namespace FamilyTree.BLL.Services
@@ -60,7 +61,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeleteEvent(int id)
         {
-            _eventRepository.Remove(id);
+            _eventRepository.Remove(GetEventById(id));
             _eventRepository.Save();
         }
     }

@@ -1,6 +1,6 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
-using System;
+using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
 
 namespace FamilyTree.BLL.Services
@@ -52,7 +52,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeleteTreePerson(int id)
         {
-            _treePersonRepository.Remove(id);
+            _treePersonRepository.Remove(GetTreePersonById(id));
             _treePersonRepository.Save();
         }
     }

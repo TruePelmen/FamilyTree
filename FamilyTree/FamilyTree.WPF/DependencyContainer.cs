@@ -10,6 +10,7 @@ using FamilyTree.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
+using FamilyTree.BLL.Interfaces;
 
 namespace FamilyTree.WPF
 {
@@ -23,6 +24,18 @@ namespace FamilyTree.WPF
 
             services.AddTransient<IUserService, UserService>(); 
             services.AddTransient<IGenericRepository<User>, GenericRepository<User>>();
+
+            services.AddTransient<ITreeService, TreeService>();
+            services.AddTransient<IGenericRepository<Tree>, GenericRepository<Tree>>();
+
+            services.AddTransient<IUserTreeService, UserTreeService>();
+            services.AddTransient<IGenericRepository<UserTree>, GenericRepository<UserTree>>();
+
+            services.AddTransient<IPersonService, PersonService>();
+            services.AddTransient<IGenericRepository<Person>, GenericRepository<Person>>();
+
+            services.AddTransient<ITreePersonService, TreePersonService>();
+            services.AddTransient<IGenericRepository<TreePerson>, GenericRepository<TreePerson>>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

@@ -1,6 +1,6 @@
 ﻿using FamilyTree.DAL.Interfaces.Repositories;
 using FamilyTree.DAL.Models;
-using System;
+using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
 
 namespace FamilyTree.BLL.Services
@@ -58,7 +58,7 @@ namespace FamilyTree.BLL.Services
 
         public void DeleteSpecialRecord(int id)
         {
-            _specialRecordRepository.Remove(id);
+            _specialRecordRepository.Remove(GetSpecialRecordById(id));
             _specialRecordRepository.Save();
         }
     }

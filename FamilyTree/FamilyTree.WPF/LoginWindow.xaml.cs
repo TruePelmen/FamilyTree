@@ -1,4 +1,5 @@
-﻿using FamilyTree.BLL.Interfeces;
+﻿using FamilyTree.BLL.Interfaces;
+using FamilyTree.BLL.Interfeces;
 using FamilyTree.BLL.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -80,7 +81,9 @@ namespace FamilyTree.WPF
 
         private void Register_Click(object sender, MouseButtonEventArgs e)
         {
-            RegistrationWindow registrationWindow = new RegistrationWindow(_userService);
+            RegistrationWindow registrationWindow = new RegistrationWindow(_userService, DependencyContainer.ServiceProvider.GetRequiredService<ITreeService>(),
+                DependencyContainer.ServiceProvider.GetRequiredService<IUserTreeService>(), DependencyContainer.ServiceProvider.GetRequiredService<IPersonService>(),
+                DependencyContainer.ServiceProvider.GetRequiredService<ITreePersonService>());
             registrationWindow.Show();
             this.Close();
         }
