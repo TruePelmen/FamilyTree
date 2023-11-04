@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="FamilyTree.WPF.UserControls.Tree"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
+             mc:Ignorable="d" >
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+    <Grid Background="White">
+        <StackPanel x:Name="mainPanel" HorizontalAlignment="Left" Margin="10,10,0,0">
+                <StackPanel x:Name="staticPanel" HorizontalAlignment="Center">
+                    <StackPanel x:Name="parentPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <local:PersonCard x:Name="maleFather" Height="100" Width="180" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:PersonCard>
+                        <Grid Width="22">
+                            <Line X1="0" Y1="80" X2="22" Y2="80" Stroke="Black" StrokeThickness="1"/>
+                            <Line X1="11" Y1="80" X2="11" Y2="101" Stroke="Black" StrokeThickness="1"/>
+                        </Grid>
+                        <local:PersonCard x:Name="maleMother" Height="100" Width="180" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:PersonCard>
+                        <StackPanel Width="72"></StackPanel>
+                        <local:PersonCard x:Name="femaleFather" Height="100" Width="180" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:PersonCard>
+                        <Grid  Width="22">
+                            <Line X1="0" Y1="80" X2="22" Y2="80" Stroke="Black" StrokeThickness="1"/>
+                            <Line X1="11" Y1="80" X2="11" Y2="101" Stroke="Black" StrokeThickness="1"/>
+                        </Grid>
+                        <local:PersonCard x:Name="femaleMother" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:PersonCard>
+                    </StackPanel>
+                    <DockPanel Height="20" HorizontalAlignment="Center">
+                        <Line Y1="0" Y2="20" Stroke="Black" StrokeThickness="1"/>
+                        <Grid Width="453.5"></Grid>
+                        <Line Y1="0" Y2="20" Stroke="Black" StrokeThickness="1"/>
+                    </DockPanel>
+                    <StackPanel x:Name="focusPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <local:FocusPersonCard x:Name="maleFocus"  Height="215" Width="310" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:FocusPersonCard>
+                        <Grid  Width="140">
+                            <Line X1="0" Y1="170" X2="140" Y2="170" Stroke="Black" StrokeThickness="1"/>
+                            <Line X1="70" Y1="170" X2="70" Y2="216" Stroke="Black" StrokeThickness="1"/>
+                        </Grid>
+                        <local:FocusPersonCard x:Name="femaleFocus" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:FocusPersonCard>
+                    </StackPanel>
+                    <StackPanel x:Name="childrenLinesPanel"  HorizontalAlignment="Center">
+                        <Grid x:Name="childrenLines"  Height="55">
+                            
+                        </Grid>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel x:Name="childrenPanel" Orientation="Horizontal" HorizontalAlignment="Center">
+                </StackPanel>
+        </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

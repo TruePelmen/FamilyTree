@@ -8,9 +8,9 @@ namespace FamilyTree.BLL.Services
 {
     public class RelationshipService : IRelationshipService
     {
-        private IGenericRepository<Relationship> _relationshipRepository;
+        private IRelationshipRepository _relationshipRepository;
 
-        public RelationshipService(IGenericRepository<Relationship> relationshipRepository)
+        public RelationshipService(IRelationshipRepository relationshipRepository)
         {
             _relationshipRepository = relationshipRepository;
         }
@@ -24,7 +24,22 @@ namespace FamilyTree.BLL.Services
         {
             return _relationshipRepository.GetById(id);
         }
-
+        public int GetMotherIdByPersonId(int id)
+        {
+            return _relationshipRepository.GetParentIdByPersonId(id, "mother-child");
+        }
+        public int GetFatherIdByPersonId(int id)
+        {
+            return _relationshipRepository.GetParentIdByPersonId(id, "father-child");
+        }
+        public int GetSpouseIdByPersonId(int id)
+        {
+            return _relationshipRepository.GetSpouseIdByPersonId(id);
+        }
+        public IEnumerable<int> GetChildrenIdByPersonId(int id)
+        {
+            return _relationshipRepository.GetChildrenIdByPersonId(id);
+        }
         public void AddRelationship(int personId1, int personId2, string relationshipType)
         {
             Relationship newRelationship = new Relationship

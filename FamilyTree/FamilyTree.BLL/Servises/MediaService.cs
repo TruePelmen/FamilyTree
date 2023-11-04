@@ -1,28 +1,33 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using System;
-using FamilyTree.BLL.Interfaces;
-using System.Collections.Generic;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class MediaService : IMediaService
     {
-        private IGenericRepository<Media> _mediaRepository;
+        private readonly IMediaRepository mediaRepository;
 
-        public MediaService(IGenericRepository<Media> mediaRepository)
+        public MediaService(IMediaRepository mediaRepository)
         {
-            _mediaRepository = mediaRepository;
+            this.mediaRepository = mediaRepository;
         }
 
         public IEnumerable<Media> GetAllMedia()
         {
-            return _mediaRepository.GetAll();
+            return this.mediaRepository.GetAll();
         }
 
         public Media GetMediaById(int id)
         {
-            return _mediaRepository.GetById(id);
+            return this.mediaRepository.GetById(id);
+        }
+
+        public Media GetMainPhotoByPersonId(int id)
+        {
+           return this.mediaRepository.GetMainPhotoByPersonId(id);
         }
 
         public void AddMedia(string mediaType, string filePath, int? taggedPerson, string? description, DateOnly? date, string? place, bool? mainPhoto)
@@ -38,13 +43,13 @@ namespace FamilyTree.BLL.Services
                 MainPhoto = mainPhoto
             };
 
-            _mediaRepository.Add(media);
-            _mediaRepository.Save();
+            this.mediaRepository.Add(media);
+            this.mediaRepository.Save();
         }
 
         public void UpdateMedia(int id, string mediaType, string filePath, int? taggedPerson, string? description, DateOnly? date, string? place, bool? mainPhoto)
         {
-            Media media = _mediaRepository.GetById(id);
+            Media media = this.mediaRepository.GetById(id);
 
             if (media != null)
             {
@@ -56,15 +61,15 @@ namespace FamilyTree.BLL.Services
                 media.Place = place;
                 media.MainPhoto = mainPhoto;
 
-                _mediaRepository.Update(media);
-                _mediaRepository.Save();
+                this.mediaRepository.Update(media);
+                this.mediaRepository.Save();
             }
         }
 
         public void DeleteMedia(int id)
         {
-            _mediaRepository.Remove(GetMediaById(id));
-            _mediaRepository.Save();
+            this.mediaRepository.Remove(this.GetMediaById(id));
+            this.mediaRepository.Save();
         }
     }
 }

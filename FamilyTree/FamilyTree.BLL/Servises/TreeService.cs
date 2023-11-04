@@ -3,16 +3,19 @@ using FamilyTree.DAL.Models;
 using FamilyTree.BLL.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FamilyTree.BLL.Services
 {
     public class TreeService : ITreeService
     {
         private IGenericRepository<Tree> _treeRepository;
+        private ITreePersonService _treePersonService;
 
-        public TreeService(IGenericRepository<Tree> treeRepository)
+        public TreeService(IGenericRepository<Tree> treeRepository, ITreePersonService treePersonService)
         {
             _treeRepository = treeRepository;
+            _treePersonService = treePersonService;
         }
 
         public IEnumerable<Tree> GetAllTrees()
@@ -23,6 +26,15 @@ namespace FamilyTree.BLL.Services
         public Tree GetTreeById(int id)
         {
             return _treeRepository.GetById(id);
+        }
+        public int GetPrimaryPersonId(int treeId)
+        {
+            var primaryPerson = _treePersonService.GetTreePeopleByTreeId(treeId).FirstOrDefault(person => person.PrimaryPerson);
+            if (primaryPerson != null)
+            {
+                return primaryPerson.Id;
+            }
+            return -1; 
         }
 
         public int AddTree(string name)

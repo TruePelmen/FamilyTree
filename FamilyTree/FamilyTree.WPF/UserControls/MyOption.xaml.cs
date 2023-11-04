@@ -1,47 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿// <copyright file="MyOption.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FamilyTree.WPF.UserControls
 {
+    using System.Windows;
+    using System.Windows.Controls;
+
+    /// <summary>
+    /// Custom user control "MyOption" for displaying a choice option.
+    /// </summary>
     public partial class MyOption : UserControl
     {
-        public MyOption()
-        {
-            InitializeComponent();
-        }
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
+        /// <summary>
+        /// Property to set or get the text content of this element.
+        /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MyOption));
 
-
-        public FontAwesome.WPF.FontAwesomeIcon Icon
-        {
-            get { return (FontAwesome.WPF.FontAwesomeIcon)GetValue(IconProperty); }
-            set { SetValue(IconProperty, value); }
-        }
-        public bool IsSelected
-        {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
-        }
+        /// <summary>
+        /// Property to set or get the value indicating the selection state of this element.
+        /// </summary>
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyOption));
+
+        /// <summary>
+        /// Property to set or get the FontAwesome icon that will be displayed next to the text of this element.
+        /// </summary>
         public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(FontAwesome.WPF.FontAwesomeIcon), typeof(MyOption));
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyOption"/> class.
+        /// </summary>
+        public MyOption()
+        {
+            this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Gets or sets the text content of this element.
+        /// </summary>
+        public string Text
+        {
+            get { return (string)this.GetValue(TextProperty); }
+            set { this.SetValue(TextProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the FontAwesome icon that will be displayed next to the text of this element.
+        /// </summary>
+        public FontAwesome.WPF.FontAwesomeIcon Icon
+        {
+            get { return (FontAwesome.WPF.FontAwesomeIcon)this.GetValue(IconProperty); }
+            set { this.SetValue(IconProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this option is selected.
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return (bool)this.GetValue(IsSelectedProperty); }
+            set { this.SetValue(IsSelectedProperty, value); }
+        }
     }
 }

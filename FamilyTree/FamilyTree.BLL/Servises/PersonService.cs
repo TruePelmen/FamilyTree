@@ -3,28 +3,62 @@ using FamilyTree.DAL.Models;
 using FamilyTree.BLL.Interfaces;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace FamilyTree.BLL.Services
 {
     public class PersonService : IPersonService
     {
-        private IGenericRepository<Person> _personRepository;
+        private IPersonRepository _personRepository;
+        private IEventService _eventService;
+        private IMediaService _mediaService;
 
-        public PersonService(IGenericRepository<Person> personRepository)
+        public PersonService(IPersonRepository personRepository, IEventService eventService, IMediaService mediaService)
         {
             _personRepository = personRepository;
+            _eventService = eventService;
+            _mediaService = mediaService;
         }
 
         public IEnumerable<Person> GetAllPeople()
         {
             return _personRepository.GetAll();
         }
-
         public Person GetPersonById(int id)
         {
             return _personRepository.GetById(id);
         }
+        public PersonCardInformation GetFullInformarionAboutPerson(int id)
+        {
+            PersonCardInformation person = GetShortInformationAboutPerson(id);
 
+            var birthEvent = _eventService.GetAllEventsByPersonIdAndEventType(id, "Birth").FirstOrDefault();
+            if (birthEvent != null)
+            {
+                person.BirthPlace = birthEvent.EventPlace;
+            }
+            var deathEvent = _eventService.GetAllEventsByPersonIdAndEventType(id, "Death").FirstOrDefault();
+            if (deathEvent != null)
+            {
+                person.DeathPlace = deathEvent.EventPlace;
+            }
+            return person;
+        }
+
+        public PersonCardInformation GetShortInformationAboutPerson(int id)
+        {
+            PersonCardInformation person = new PersonCardInformation();
+            person.Person = _personRepository.GetById(id);
+
+            var mainPhoto = _mediaService.GetMainPhotoByPersonId(id);
+
+            if (mainPhoto != null)
+            {
+                person.MainPhoto = mainPhoto.FilePath;
+            }
+
+            return person;
+        }
         public int AddPerson(bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
         {
             Person person = new Person

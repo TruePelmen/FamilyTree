@@ -45,7 +45,7 @@
                     <uc:MyTextBox 
                          x:Name="userTextBox" 
                          LostFocus="TxtUserLostFocus"
-                         GotFocus="TxtUserGotFocus"></uc:MyTextBox>
+                         GotFocus="TxtUserGotFocus"/>
                     <TextBlock Text="Пароль"
                                 Style="{StaticResource text}"                            
                                 Margin="0,5,0,0"/>

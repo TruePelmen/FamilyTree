@@ -8,7 +8,7 @@
              mc:Ignorable="d" Name="myOption">
 
     <StackPanel Orientation="Horizontal">
-        <RadioButton Style="{StaticResource roundButton}" IsChecked="{Binding IsSelected, ElementName=myOption}" GroupName="Gender">
+        <RadioButton x:Name="button"  Style="{StaticResource roundButton}" IsChecked="{Binding IsSelected, ElementName=myOption}" GroupName="Gender">
             <fa:ImageAwesome Icon="{Binding Path=Icon, ElementName=myOption}" Width="15" Height="15" Foreground="White"/>
         </RadioButton>
 

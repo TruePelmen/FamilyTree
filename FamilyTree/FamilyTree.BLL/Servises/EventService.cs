@@ -1,28 +1,38 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using System;
-using FamilyTree.BLL.Interfaces;
-using System.Collections.Generic;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class EventService : IEventService
     {
-        private IGenericRepository<Event> _eventRepository;
+        private IEventRepository eventRepository;
 
-        public EventService(IGenericRepository<Event> eventRepository)
+        public EventService(IEventRepository eventRepository)
         {
-            _eventRepository = eventRepository;
+            this.eventRepository = eventRepository;
         }
 
         public IEnumerable<Event> GetAllEvents()
         {
-            return _eventRepository.GetAll();
+            return this.eventRepository.GetAll();
+        }
+
+        public IEnumerable<Event> GetEventsByPersonId(int personId)
+        {
+            return this.eventRepository.GetEventsByPersonId(personId);
+        }
+
+        public IEnumerable<Event> GetAllEventsByPersonIdAndEventType(int personId, string eventType)
+        {
+            return this.eventRepository.GetEventsByPersonIdAndEventType(personId, eventType);
         }
 
         public Event GetEventById(int id)
         {
-            return _eventRepository.GetById(id);
+            return this.eventRepository.GetById(id);
         }
 
         public void AddEvent(string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age)
@@ -34,16 +44,16 @@ namespace FamilyTree.BLL.Services
                 EventPlace = eventPlace,
                 PersonId = personId,
                 Description = description,
-                Age = age
+                Age = age,
             };
 
-            _eventRepository.Add(newEvent);
-            _eventRepository.Save();
+            this.eventRepository.Add(newEvent);
+            this.eventRepository.Save();
         }
 
         public void UpdateEvent(int id, string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age)
         {
-            Event existingEvent = _eventRepository.GetById(id);
+            Event existingEvent = this.eventRepository.GetById(id);
 
             if (existingEvent != null)
             {
@@ -54,15 +64,15 @@ namespace FamilyTree.BLL.Services
                 existingEvent.Description = description;
                 existingEvent.Age = age;
 
-                _eventRepository.Update(existingEvent);
-                _eventRepository.Save();
+                this.eventRepository.Update(existingEvent);
+                this.eventRepository.Save();
             }
         }
 
         public void DeleteEvent(int id)
         {
-            _eventRepository.Remove(GetEventById(id));
-            _eventRepository.Save();
+            this.eventRepository.Remove(this.GetEventById(id));
+            this.eventRepository.Save();
         }
     }
 }

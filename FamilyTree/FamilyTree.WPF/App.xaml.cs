@@ -1,33 +1,27 @@
-﻿using FamilyTree.BLL.Interfeces;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using FamilyTree.DAL.Repositories;
-using FamilyTree.BLL.Services;
-using Microsoft.Extensions.DependencyInjection;
-using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-
-
+﻿// <copyright file="App.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FamilyTree.WPF
 {
+    using System.Windows;
+    using Microsoft.Extensions.DependencyInjection;
+
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// Interaction logic for App.xaml.
     /// </summary>
     public partial class App : Application
     {
+        /// <inheritdoc/>
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
             DependencyContainer.Initialize();
-            LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
-            loginWindow.Show();
 
+            // LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
+            // loginWindow.Show();
+            MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
         }
     }
 }

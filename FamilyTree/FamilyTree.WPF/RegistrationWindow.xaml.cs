@@ -1,130 +1,156 @@
-﻿using FamilyTree.BLL.Interfaces;
-using FamilyTree.BLL.Interfeces;
-using FamilyTree.BLL.Services;
-using FamilyTree.WPF.UserControls;
-using Microsoft.Extensions.DependencyInjection;
-using System.Threading.Tasks;
-using System;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿// <copyright file="RegistrationWindow.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FamilyTree.WPF
 {
+    using System;
+    using System.Globalization;
+    using System.Threading.Tasks;
+    using System.Windows;
+    using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.BLL.Interfeces;
+    using FamilyTree.BLL.Services;
+    using FamilyTree.WPF.UserControls;
+    using Microsoft.Extensions.DependencyInjection;
+
+    /// <summary>
+    /// User registration window.
+    /// </summary>
     public partial class RegistrationWindow : Window
     {
-        private readonly IUserService _userService;
-        private readonly ITreePersonService _treePersonService;
-        private readonly ITreeService _treeService;
-        private readonly IUserTreeService _userTreeService;
-        private readonly IPersonService _personService;
         private const string ErrorMessageRequiredField = "Заповніть усі обов'язкові поля";
         private const string ErrorMessagePasswordMismatch = "Паролі не співпадають";
         private const string ErrorMessageDuplicateLogin = "Користувач з таким логіном вже існує";
+        private readonly IUserService userService;
+        private readonly ITreePersonService treePersonService;
+        private readonly ITreeService treeService;
+        private readonly IUserTreeService userTreeService;
+        private readonly IPersonService personService;
 
-        public RegistrationWindow(IUserService userService, ITreeService treeService, IUserTreeService userTreeService,
-            IPersonService personService, ITreePersonService treePersonService)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RegistrationWindow"/> class.
+        /// </summary>
+        /// <param name="userService">An instance of the user service for managing user-related operations.</param>
+        /// <param name="treeService">An instance of the tree service for managing tree-related operations.</param>
+        /// <param name="userTreeService">An instance of the user tree service for managing user-tree relationships.</param>
+        /// <param name="personService">An instance of the person service for managing person-related data.</param>
+        /// <param name="treePersonService">An instance of the tree person service for managing tree-related person data.</param>
+        public RegistrationWindow(IUserService userService, ITreeService treeService, IUserTreeService userTreeService, IPersonService personService, ITreePersonService treePersonService)
         {
-            InitializeComponent();
-            InitializeUI();
-            _userService = userService;
-            _treeService = treeService;
-            _userTreeService = userTreeService;
-            _personService = personService;
-            _treePersonService = treePersonService;
+            this.InitializeComponent();
+            this.InitializeUI();
+            this.userService = userService;
+            this.treeService = treeService;
+            this.userTreeService = userTreeService;
+            this.personService = personService;
+            this.treePersonService = treePersonService;
         }
 
         private void InitializeUI()
         {
-            maleOption.IsSelected = true;
-            loginTextBox.textBox.TextChanged += LoginTextBoxTextChanged;
+            this.maleOption.IsSelected = true;
+            this.loginTextBox.textBox.TextChanged += this.LoginTextBoxTextChanged;
         }
+
         private void BtnMinimizeClick(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
         private void LoginTextBoxTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (CheckLoginUniqueness())
+            if (this.CheckLoginUniqueness())
             {
-                loginTextBox.SuccessBorder();
-                messageField.Visibility = Visibility.Hidden;
+                this.loginTextBox.SuccessBorder();
+                this.messageField.Visibility = Visibility.Hidden;
             }
             else
             {
-                loginTextBox.ErrorBorder();
-                ShowMessage(ErrorMessageDuplicateLogin);
+                this.loginTextBox.ErrorBorder();
+                this.ShowMessage(ErrorMessageDuplicateLogin);
             }
         }
 
         private bool CheckLoginUniqueness()
         {
-            return ! _userService.FindUserByLogin(loginTextBox.Text);
+            return !this.userService.FindUserByLogin(this.loginTextBox.Text);
         }
 
         private void ShowMessage(string message)
         {
-            messageField.Text = message;
-            messageField.Visibility = Visibility.Visible;
+            this.messageField.Text = message;
+            this.messageField.Visibility = Visibility.Visible;
         }
+
         private string DetermineGender()
         {
-            if (maleOption.IsSelected) { return "male"; }
-            else { return "female"; }
+            if (this.maleOption.IsSelected)
+            {
+                return "male";
+            }
+            else
+            {
+                return "female";
+            }
         }
+
         private DateOnly? ParseDate()
         {
-            string dateString = dateOfBirth.SelectedDate.ToString();
+            string dateString = this.dateOfBirth.SelectedDate.ToString();
             string dateWithoutTime = dateString.Split(' ')[0];
             return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
         }
 
         private void ContinueButtonClick(object sender, RoutedEventArgs e)
         {
-            if (CheckFormValidity())
+            if (this.CheckFormValidity())
             {
-                _userService.AddUser(loginTextBox.Text, passwordBox.Password);
-                int treeId = _treeService.AddTree("Дерево " + lastNameTextBox.Text);
-                _userTreeService.AddUserTree(loginTextBox.Text, treeId, "edit");
-                int personId = _personService.AddPerson(true, lastNameTextBox.Text, DetermineGender(), null, firstNameTextBox.Text, null, ParseDate(), null);
-                _treePersonService.AddTreePerson(treeId, personId);
-                MainWindow mainWindow = new MainWindow();
+                this.userService.AddUser(this.loginTextBox.Text, this.passwordBox.Password);
+                int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text);
+                this.userTreeService.AddUserTree(this.loginTextBox.Text, treeId, "edit");
+                int personId = this.personService.AddPerson(true, this.lastNameTextBox.Text, this.DetermineGender(), null, this.firstNameTextBox.Text, null, this.ParseDate(), null);
+                this.treePersonService.AddTreePerson(treeId, personId);
+                MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
                 mainWindow.Show();
-                Close();
+                this.Close();
             }
         }
+
         private bool CheckFieldEmpty()
         {
-            return string.IsNullOrWhiteSpace(lastNameTextBox.Text) ||
-                string.IsNullOrWhiteSpace(firstNameTextBox.Text) ||
-                string.IsNullOrWhiteSpace(passwordBox.Password) ||
-                string.IsNullOrWhiteSpace(confirmPasswordBox.Password) ||
-                string.IsNullOrWhiteSpace(dateOfBirth.SelectedDate.ToString());
+            return string.IsNullOrWhiteSpace(this.lastNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(this.firstNameTextBox.Text) ||
+                string.IsNullOrWhiteSpace(this.passwordBox.Password) ||
+                string.IsNullOrWhiteSpace(this.confirmPasswordBox.Password) ||
+                string.IsNullOrWhiteSpace(this.dateOfBirth.SelectedDate.ToString());
         }
+
         private bool CheckFormValidity()
         {
             bool isValid = true;
 
-            if (CheckFieldEmpty())
+            if (this.CheckFieldEmpty())
             {
                 isValid = false;
-                ShowMessage(ErrorMessageRequiredField);
+                this.ShowMessage(ErrorMessageRequiredField);
             }
 
-            if (!string.Equals(passwordBox.Password, confirmPasswordBox.Password))
+            if (!string.Equals(this.passwordBox.Password, this.confirmPasswordBox.Password))
             {
                 isValid = false;
-                ShowMessage(ErrorMessagePasswordMismatch);
+                this.ShowMessage(ErrorMessagePasswordMismatch);
             }
 
-            if(!CheckLoginUniqueness())
+            if (!this.CheckLoginUniqueness())
             {
                 return false;
             }
@@ -134,40 +160,43 @@ namespace FamilyTree.WPF
 
         private void BorderMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                this.DragMove();
+            }
         }
 
         private void BackClick(object sender, RoutedEventArgs e)
         {
             LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
-            Close();
+            this.Hide();
         }
 
         private void LastNameTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxLostFocus(lastNameTextBox);
+            this.HandleTextBoxLostFocus(this.lastNameTextBox);
         }
 
         private void FirstNameTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxLostFocus(firstNameTextBox);
+            this.HandleTextBoxLostFocus(this.firstNameTextBox);
         }
 
         private void LoginTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxLostFocus(loginTextBox);
+            this.HandleTextBoxLostFocus(this.loginTextBox);
         }
 
         private void PasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            HandlePasswordBoxLostFocus(passwordBox);
+            this.HandlePasswordBoxLostFocus(this.passwordBox);
         }
 
         private void ConfirmPasswordBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            HandlePasswordBoxLostFocus(confirmPasswordBox);
-            passwordBox.PasswordChanged += ConfirmPasswordBoxPasswordChanged;
+            this.HandlePasswordBoxLostFocus(this.confirmPasswordBox);
+            this.passwordBox.PasswordChanged += this.ConfirmPasswordBoxPasswordChanged;
         }
 
         private void HandleTextBoxLostFocus(MyTextBox textBox)
@@ -175,89 +204,89 @@ namespace FamilyTree.WPF
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.ErrorBorder();
-                ShowMessage(ErrorMessageRequiredField);
+                this.ShowMessage(ErrorMessageRequiredField);
             }
         }
 
         private void HandlePasswordBoxLostFocus(PasswordBox passwordBox)
         {
-            if (string.IsNullOrWhiteSpace(passwordBox.Password))
+            if (string.IsNullOrWhiteSpace(this.passwordBox.Password))
             {
-                passwordBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                ShowMessage(ErrorMessageRequiredField);
+                this.passwordBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                this.ShowMessage(ErrorMessageRequiredField);
             }
         }
 
         private void LastNameTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxGotFocus(lastNameTextBox);
+            this.HandleTextBoxGotFocus(this.lastNameTextBox);
         }
 
         private void FirstNameTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxGotFocus(firstNameTextBox);
+            this.HandleTextBoxGotFocus(this.firstNameTextBox);
         }
 
         private void LoginTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HandleTextBoxGotFocus(loginTextBox);
+            this.HandleTextBoxGotFocus(this.loginTextBox);
         }
 
         private void PasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HandlePasswordBoxGotFocus(passwordBox);
+            this.HandlePasswordBoxGotFocus(this.passwordBox);
         }
 
         private void ConfirmPasswordBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HandlePasswordBoxGotFocus(confirmPasswordBox);
+            this.HandlePasswordBoxGotFocus(this.confirmPasswordBox);
         }
 
         private void HandleTextBoxGotFocus(MyTextBox textBox)
         {
             textBox.NormalBorder();
-            if (!CheckFieldEmpty())
+            if (!this.CheckFieldEmpty())
             {
-                messageField.Visibility = Visibility.Hidden;
+                this.messageField.Visibility = Visibility.Hidden;
             }
         }
 
         private void HandlePasswordBoxGotFocus(PasswordBox passwordBox)
         {
-            passwordBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
-            if (!CheckFieldEmpty())
+            this.passwordBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (!this.CheckFieldEmpty())
             {
-                messageField.Visibility = Visibility.Hidden;
+                this.messageField.Visibility = Visibility.Hidden;
             }
         }
 
         private void ConfirmPasswordBoxPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (!string.Equals(passwordBox.Password, confirmPasswordBox.Password))
+            if (!string.Equals(this.passwordBox.Password, this.confirmPasswordBox.Password))
             {
-                ShowMessage(ErrorMessagePasswordMismatch);
+                this.ShowMessage(ErrorMessagePasswordMismatch);
             }
             else
             {
-                messageField.Visibility = Visibility.Hidden;
+                this.messageField.Visibility = Visibility.Hidden;
             }
         }
 
         private void DateOfBirthLostFocus(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(dateOfBirth.SelectedDate.ToString()))
+            if (string.IsNullOrWhiteSpace(this.dateOfBirth.SelectedDate.ToString()))
             {
-                dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
-                ShowMessage(ErrorMessageRequiredField);
+                this.dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                this.ShowMessage(ErrorMessageRequiredField);
             }
         }
 
         private void DateOfBirthGotFocus(object sender, RoutedEventArgs e)
         {
-            dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
-            if (!CheckFieldEmpty())
+            this.dateOfBirth.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (!this.CheckFieldEmpty())
             {
-                messageField.Visibility = Visibility.Hidden;
+                this.messageField.Visibility = Visibility.Hidden;
             }
         }
     }

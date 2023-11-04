@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{26B9AAB8-ED4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{9C72CC6E-4A74-4794-BEDD-A82E84BB00F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.BLL", "FamilyTree.BLL\FamilyTree.BLL.csproj", "{EC79F6E0-4DDF-4F36-9043-F22A5E07C405}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.BLL", "FamilyTree.BLL\FamilyTree.BLL.csproj", "{EC79F6E0-4DDF-4F36-9043-F22A5E07C405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.DAL", "FamilyTree.DAL\FamilyTree.DAL.csproj", "{5C10A573-1613-4ED9-87AB-6F00DF3F6E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.DAL", "FamilyTree.DAL\FamilyTree.DAL.csproj", "{5C10A573-1613-4ED9-87AB-6F00DF3F6E89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FamilyTree.WPF", "FamilyTree.WPF\FamilyTree.WPF.csproj", "{26578E24-5D53-435F-8A2A-1352399E68C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FamilyTree.WPF", "FamilyTree.WPF\FamilyTree.WPF.csproj", "{26578E24-5D53-435F-8A2A-1352399E68C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

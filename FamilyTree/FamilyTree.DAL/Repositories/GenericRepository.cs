@@ -10,7 +10,7 @@ namespace FamilyTree.DAL.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        private FamilyTreeContext _context = null;
+        protected FamilyTreeContext _context = null;
 
         public GenericRepository()
         {

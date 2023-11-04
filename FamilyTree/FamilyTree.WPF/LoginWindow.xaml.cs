@@ -1,82 +1,101 @@
-﻿using FamilyTree.BLL.Interfaces;
-using FamilyTree.BLL.Interfeces;
-using FamilyTree.BLL.Services;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Runtime.CompilerServices;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Threading;
+﻿// <copyright file="LoginWindow.xaml.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace FamilyTree.WPF
 {
+    using System;
+    using System.Windows;
+    using System.Windows.Input;
+    using System.Windows.Media;
+    using System.Windows.Threading;
+    using FamilyTree.BLL.Interfeces;
+    using Microsoft.Extensions.DependencyInjection;
+
+    /// <summary>
+    /// Represents the login window of the application.
+    /// </summary>
     public partial class LoginWindow : Window
     {
+        private readonly IUserService userService;
         private DispatcherTimer timer;
-        private readonly IUserService _userService;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoginWindow"/> class.
+        /// </summary>
+        /// <param name="userService">An instance of the user service used for authentication and user-related operations.</param>
         public LoginWindow(IUserService userService)
         {
-            InitializeComponent();
-            _userService = userService;
+            this.InitializeComponent();
+            this.userService = userService;
         }
-        
+
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
-                DragMove();
+            {
+                this.DragMove();
+            }
         }
 
         private void BtnMinimizeClick(object sender, RoutedEventArgs e)
         {
-            WindowState = WindowState.Minimized;
+            this.WindowState = WindowState.Minimized;
         }
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
         private void ShowErrorLoginMessage()
         {
-            messageTextBlock.Text = "Неправильний логін або пароль";
-            messageTextBlock.Visibility = Visibility.Visible; 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(2);
-            timer.Start();
-            timer.Tick += (sender, e) =>
+            this.messageTextBlock.Text = "Неправильний логін або пароль";
+            this.messageTextBlock.Visibility = Visibility.Visible;
+            this.timer = new DispatcherTimer();
+            this.timer.Interval = TimeSpan.FromSeconds(2);
+            this.timer.Start();
+            this.timer.Tick += (sender, e) =>
             {
-                messageTextBlock.Visibility = Visibility.Hidden;
-                timer.Stop();
+                this.messageTextBlock.Visibility = Visibility.Hidden;
+                this.timer.Stop();
             };
         }
+
         private void ShowEmptyFieldMessage()
         {
-            messageTextBlock.Text = "Заповніть усі обов'язкові поля";
-            messageTextBlock.Visibility = Visibility.Visible;
+            this.messageTextBlock.Text = "Заповніть усі обов'язкові поля";
+            this.messageTextBlock.Visibility = Visibility.Visible;
         }
 
         private void BtnLoginClick(object sender, RoutedEventArgs e)
         {
-            if (!CheckIsNotEmpty())
+            if (!this.CheckIsNotEmpty())
             {
-                bool isAuthenticated = _userService.AuthenticateUser(userTextBox.Text, passwordTextBox.Password);
+                bool isAuthenticated = this.userService.AuthenticateUser(this.userTextBox.Text, this.passwordTextBox.Password);
                 if (isAuthenticated)
                 {
-                    CreateMainWindow();
+                    this.CreateMainWindow();
                 }
                 else
                 {
-                    ShowErrorLoginMessage();
+                    this.ShowErrorLoginMessage();
                 }
             }
             else
             {
-                ShowEmptyFieldMessage();
-                if (userTextBox.Text == string.Empty) { userTextBox.ErrorBorder(); }
-                if (passwordTextBox.Password == string.Empty) { passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0)); }
+                this.ShowEmptyFieldMessage();
+                if (this.userTextBox.Text == string.Empty)
+                {
+                    this.userTextBox.ErrorBorder();
+                }
+
+                if (this.passwordTextBox.Password == string.Empty)
+                {
+                    this.passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                }
             }
         }
-
 
         private void RegisterClick(object sender, MouseButtonEventArgs e)
         {
@@ -87,46 +106,48 @@ namespace FamilyTree.WPF
 
         private void TxtUserLostFocus(object sender, RoutedEventArgs e)
         {
-            if (userTextBox.Text == string.Empty)
+            if (this.userTextBox.Text == string.Empty)
             {
-                ShowEmptyFieldMessage();
-                userTextBox.ErrorBorder();
+                this.ShowEmptyFieldMessage();
+                this.userTextBox.ErrorBorder();
             }
         }
 
         private void TxtPassLostFocus(object sender, RoutedEventArgs e)
         {
-            if (passwordTextBox.Password == string.Empty)
+            if (this.passwordTextBox.Password == string.Empty)
             {
-                ShowEmptyFieldMessage();
-                passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                this.ShowEmptyFieldMessage();
+                this.passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
             }
         }
+
         private bool CheckIsNotEmpty()
         {
-            return userTextBox.Text == string.Empty || passwordTextBox.Password == string.Empty;
+            return this.userTextBox.Text == string.Empty || this.passwordTextBox.Password == string.Empty;
         }
 
         private void TxtPassGotFocus(object sender, RoutedEventArgs e)
         {
-            passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
-            if (userTextBox.Text != string.Empty)
+            this.passwordTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(238, 240, 232));
+            if (this.userTextBox.Text != string.Empty)
             {
-                messageTextBlock.Visibility = Visibility.Hidden;
+                this.messageTextBlock.Visibility = Visibility.Hidden;
             }
-
         }
+
         private void TxtUserGotFocus(object sender, RoutedEventArgs e)
         {
-            userTextBox.NormalBorder();
-            if (passwordTextBox.Password != string.Empty)
+            this.userTextBox.NormalBorder();
+            if (this.passwordTextBox.Password != string.Empty)
             {
-                messageTextBlock.Visibility = Visibility.Hidden;
+                this.messageTextBlock.Visibility = Visibility.Hidden;
             }
         }
+
         private void CreateMainWindow()
         {
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
             this.Close();
         }

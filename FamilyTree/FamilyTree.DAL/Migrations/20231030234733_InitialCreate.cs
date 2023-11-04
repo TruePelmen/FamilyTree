@@ -177,7 +177,7 @@ namespace FamilyTree.DAL.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('tree_person_id_seq'::regclass)"),
                     tree_id = table.Column<int>(type: "integer", nullable: false),
-                    person_id = table.Column<int>(type: "integer", nullable: false)
+                    person_id = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {

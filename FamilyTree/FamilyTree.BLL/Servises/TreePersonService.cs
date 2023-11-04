@@ -7,9 +7,9 @@ namespace FamilyTree.BLL.Services
 {
     public class TreePersonService : ITreePersonService
     {
-        private IGenericRepository<TreePerson> _treePersonRepository;
+        private ITreePersonRepository _treePersonRepository;
 
-        public TreePersonService(IGenericRepository<TreePerson> treePersonRepository)
+        public TreePersonService(ITreePersonRepository treePersonRepository)
         {
             _treePersonRepository = treePersonRepository;
         }
@@ -18,7 +18,10 @@ namespace FamilyTree.BLL.Services
         {
             return _treePersonRepository.GetAll();
         }
-
+        public IEnumerable<Person> GetTreePeopleByTreeId(int treeId)
+        {
+            return _treePersonRepository.GetTreePeopleByTreeId(treeId);
+        }
         public TreePerson GetTreePersonById(int id)
         {
             return _treePersonRepository.GetById(id);

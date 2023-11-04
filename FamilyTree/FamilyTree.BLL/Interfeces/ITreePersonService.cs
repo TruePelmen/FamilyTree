@@ -9,6 +9,7 @@ namespace FamilyTree.BLL.Interfaces
     {
         IEnumerable<TreePerson> GetAllTreePeople();
         TreePerson GetTreePersonById(int id);
+        IEnumerable<Person> GetTreePeopleByTreeId(int treeId);
         void AddTreePerson(int treeId, int personId);
         void UpdateTreePerson(int id, int treeId, int personId);
         void DeleteTreePerson(int id);

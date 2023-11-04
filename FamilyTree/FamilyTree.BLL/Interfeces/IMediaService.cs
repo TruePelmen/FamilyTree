@@ -9,6 +9,7 @@ namespace FamilyTree.BLL.Interfaces
     {
         IEnumerable<Media> GetAllMedia();
         Media GetMediaById(int id);
+        Media GetMainPhotoByPersonId(int id);
         void AddMedia(string mediaType, string filePath, int? taggedPerson, string? description, DateOnly? date, string? place, bool? mainPhoto);
         void UpdateMedia(int id, string mediaType, string filePath, int? taggedPerson, string? description, DateOnly? date, string? place, bool? mainPhoto);
         void DeleteMedia(int id);
