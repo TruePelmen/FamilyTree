@@ -8,7 +8,7 @@
              Height="215" Width="310"
              >
     <Grid>
-        <Border Background="#E4FAE4" CornerRadius="25">
+        <Border Background="#CDD7CB" CornerRadius="25">
             <Grid>
                 <StackPanel x:Name="mainPanel" Orientation="Vertical">
                     <TextBlock Margin="15,15,20,0" 

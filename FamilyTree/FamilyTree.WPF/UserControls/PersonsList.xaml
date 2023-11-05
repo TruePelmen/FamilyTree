@@ -6,25 +6,35 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
              mc:Ignorable="d">
-    <StackPanel Background="White">
+    <StackPanel >
         <StackPanel>
             <StackPanel Height="46" Background="#144509" Margin="10" Width="328">
                 <TextBlock  Foreground="White" Text="Пошук особи" Style="{StaticResource MaterialDesignBody1TextBlock}"  HorizontalAlignment="Center" Margin="10"/>
             </StackPanel>
             <TextBox x:Name="searchLastNameTextBox" Style="{StaticResource  MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Прізвище" Margin="10,0,10,5" Height="46" Width="325"/>
             <TextBox x:Name="searchFirstNameTextBox" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Ім'я" Margin="10,0,10,5" Height="46" Width="325"/>
-            <Grid Margin="20"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid Margin="20"
                 Width="130">
                 <Button Height="40" materialDesign:ButtonAssist.CornerRadius="15"
                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                Style="{StaticResource MaterialDesignRaisedButton}" Margin="7,-6,6,6">
+                Style="{StaticResource MaterialDesignRaisedButton}" Margin="7,-6,6,6" Click="SearchButtonClick">
                     <TextBlock
                     Text="Пошук" />
                 </Button>
             </Grid>
+            <Grid Margin="20" Width="130">
+                <Button Height="40" materialDesign:ButtonAssist.CornerRadius="15" Click="ResetButtonClick"
+                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                 Style="{StaticResource MaterialDesignFlatLightButton}" Margin="7,-6,6,6">
+                    <TextBlock
+                       Text="Скинути" />
+                </Button>
+            </Grid>
+            </StackPanel>
         </StackPanel>
 
-        <DataGrid Margin="10" Name="personList" AutoGenerateColumns="False">
+        <DataGrid Margin="10" Name="personList" AutoGenerateColumns="False" Height="330" HorizontalScrollBarVisibility="Auto" IsReadOnly="True" CanUserAddRows="False" MouseDoubleClick="PersonListMouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Прізвище" Binding="{Binding LastName}"/>

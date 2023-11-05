@@ -7,7 +7,7 @@ using FamilyTree.DAL.Models;
 
 namespace FamilyTree.DAL.Interfaces.Repositories
 {
-    public interface IMediaRepository : IGenericRepository<Media>
+    public interface IMediaPersonRepository : IGenericRepository<MediaPerson>
     {
         Media GetMainPhotoByPersonId(int personId);
     }

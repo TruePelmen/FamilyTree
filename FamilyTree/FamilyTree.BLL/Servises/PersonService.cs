@@ -11,13 +11,13 @@ namespace FamilyTree.BLL.Services
     {
         private IPersonRepository _personRepository;
         private IEventService _eventService;
-        private IMediaService _mediaService;
+        private IMediaPersonService _mediaPersonService;
 
-        public PersonService(IPersonRepository personRepository, IEventService eventService, IMediaService mediaService)
+        public PersonService(IPersonRepository personRepository, IEventService eventService, IMediaPersonService mediaPersonService)
         {
             _personRepository = personRepository;
             _eventService = eventService;
-            _mediaService = mediaService;
+            _mediaPersonService = mediaPersonService;
         }
 
         public IEnumerable<Person> GetAllPeople()
@@ -37,11 +37,13 @@ namespace FamilyTree.BLL.Services
             {
                 person.BirthPlace = birthEvent.EventPlace;
             }
+
             var deathEvent = _eventService.GetAllEventsByPersonIdAndEventType(id, "Death").FirstOrDefault();
             if (deathEvent != null)
             {
                 person.DeathPlace = deathEvent.EventPlace;
             }
+
             return person;
         }
 
@@ -50,7 +52,7 @@ namespace FamilyTree.BLL.Services
             PersonCardInformation person = new PersonCardInformation();
             person.Person = _personRepository.GetById(id);
 
-            var mainPhoto = _mediaService.GetMainPhotoByPersonId(id);
+            var mainPhoto = _mediaPersonService.GetMainPhotoByPersonId(id);
 
             if (mainPhoto != null)
             {
@@ -59,6 +61,7 @@ namespace FamilyTree.BLL.Services
 
             return person;
         }
+
         public int AddPerson(bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
         {
             Person person = new Person

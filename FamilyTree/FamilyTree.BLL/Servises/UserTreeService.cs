@@ -8,9 +8,9 @@ namespace FamilyTree.BLL.Services
 {
     public class UserTreeService : IUserTreeService
     {
-        private IGenericRepository<UserTree> _userTreeRepository;
+        private IUserTreeRepository _userTreeRepository;
 
-        public UserTreeService(IGenericRepository<UserTree> userTreeRepository)
+        public UserTreeService(IUserTreeRepository userTreeRepository)
         {
             _userTreeRepository = userTreeRepository;
         }
@@ -23,6 +23,16 @@ namespace FamilyTree.BLL.Services
         public UserTree GetUserTreeById(int id)
         {
             return _userTreeRepository.GetById(id);
+        }
+
+        public IEnumerable<Tree> GetAllTreeByUserLogin(string userLogin)
+        {
+            return _userTreeRepository.GetAllTreeByUserLogin(userLogin);
+        }
+
+        public string GetAccessTypeByUserLoginAndTreeId(string userLogin, int treeId)
+        {
+            return _userTreeRepository.GetAccessTypeByTreeIdAndUserLogin(treeId, userLogin);
         }
 
         public void AddUserTree(string userLogin, int treeId, string accessType)

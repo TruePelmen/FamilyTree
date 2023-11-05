@@ -8,9 +8,9 @@
 
     public class MediaService : IMediaService
     {
-        private readonly IMediaRepository mediaRepository;
+        private readonly IGenericRepository<Media> mediaRepository;
 
-        public MediaService(IMediaRepository mediaRepository)
+        public MediaService(IGenericRepository<Media> mediaRepository)
         {
             this.mediaRepository = mediaRepository;
         }
@@ -23,11 +23,6 @@
         public Media GetMediaById(int id)
         {
             return this.mediaRepository.GetById(id);
-        }
-
-        public Media GetMainPhotoByPersonId(int id)
-        {
-           return this.mediaRepository.GetMainPhotoByPersonId(id);
         }
 
         public void AddMedia(string mediaType, string filePath, int? taggedPerson, string? description, DateOnly? date, string? place, bool? mainPhoto)

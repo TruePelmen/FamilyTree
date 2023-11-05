@@ -75,7 +75,7 @@ namespace FamilyTree.WPF
                 bool isAuthenticated = this.userService.AuthenticateUser(this.userTextBox.Text, this.passwordTextBox.Password);
                 if (isAuthenticated)
                 {
-                    this.CreateMainWindow();
+                    this.CreateMainWindow(this.userTextBox.Text);
                 }
                 else
                 {
@@ -145,11 +145,12 @@ namespace FamilyTree.WPF
             }
         }
 
-        private void CreateMainWindow()
+        private void CreateMainWindow(string login)
         {
             MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.UserLogin = login;
             mainWindow.Show();
-            this.Close();
+            this.Hide();
         }
     }
 }

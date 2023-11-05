@@ -12,13 +12,16 @@ namespace FamilyTree.BLL
     public class PersonCardInformation
     {
         public Person Person { get; set; }
+
         public string BirthPlace { get; set; }
+
         public string DeathPlace { get; set; }
+
         public string MainPhoto { get; set; }
+
         public bool IsEmptyPerson
         {
-            get { return Person == null; } 
+            get { return Person == null; }
         }
-
     }
 }

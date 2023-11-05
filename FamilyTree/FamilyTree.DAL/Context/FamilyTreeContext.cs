@@ -52,6 +52,7 @@ public partial class FamilyTreeContext : DbContext
             optionsBuilder.UseNpgsql(connectionString);
         }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>(entity =>
@@ -78,7 +79,7 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Person).WithMany(p => p.Events)
                 .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("event_person_id_fkey");
         });
 
@@ -100,7 +101,7 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Media).WithMany(p => p.MediaEvents)
                 .HasForeignKey(d => d.MediaId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("media_event_media_id_fkey");
         });
 
@@ -118,12 +119,12 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Media).WithMany(p => p.MediaPeople)
                 .HasForeignKey(d => d.MediaId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("media_person_media_id_fkey");
 
             entity.HasOne(d => d.Person).WithMany(p => p.MediaPeople)
                 .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("media_person_person_id_fkey");
         });
 
@@ -197,12 +198,12 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.PersonId1Navigation).WithMany(p => p.RelationshipPersonId1Navigations)
                 .HasForeignKey(d => d.PersonId1)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("relationship_person_id1_fkey");
 
             entity.HasOne(d => d.PersonId2Navigation).WithMany(p => p.RelationshipPersonId2Navigations)
                 .HasForeignKey(d => d.PersonId2)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("relationship_person_id2_fkey");
         });
 
@@ -229,7 +230,7 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Event).WithMany(p => p.SpecialRecords)
                 .HasForeignKey(d => d.EventId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("special_record_event_id_fkey");
         });
 
@@ -261,12 +262,12 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Person).WithMany(p => p.TreePeople)
                 .HasForeignKey(d => d.PersonId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("tree_person_person_id_fkey");
 
             entity.HasOne(d => d.Tree).WithMany(p => p.TreePeople)
                 .HasForeignKey(d => d.TreeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("tree_person_tree_id_fkey");
         });
 
@@ -301,12 +302,12 @@ public partial class FamilyTreeContext : DbContext
 
             entity.HasOne(d => d.Tree).WithMany(p => p.UserTrees)
                 .HasForeignKey(d => d.TreeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("user_tree_tree_id_fkey");
 
             entity.HasOne(d => d.UserLoginNavigation).WithMany(p => p.UserTrees)
                 .HasForeignKey(d => d.UserLogin)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("user_tree_user_login_fkey");
         });
         modelBuilder.HasSequence("special_record_id_seq");

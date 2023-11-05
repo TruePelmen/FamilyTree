@@ -39,7 +39,7 @@ namespace FamilyTree.WPF
 
             // Register user-tree-related services and repositories.
             services.AddTransient<IUserTreeService, UserTreeService>();
-            services.AddTransient<IGenericRepository<UserTree>, GenericRepository<UserTree>>();
+            services.AddTransient<IUserTreeRepository, UserTreeRepository>();
 
             // Register person-related services and repositories.
             services.AddTransient<IPersonService, PersonService>();
@@ -50,8 +50,8 @@ namespace FamilyTree.WPF
             services.AddTransient<ITreePersonService, TreePersonService>();
 
             // Register media-related services and repositories.
-            services.AddTransient<IMediaService, MediaService>();
-            services.AddTransient<IMediaRepository, MediaRepositoty>();
+            services.AddTransient<IMediaPersonService, MediaPersonService>();
+            services.AddTransient<IMediaPersonRepository, MediaPersonRepositoty>();
 
             // Register event-related services and repositories.
             services.AddTransient<IEventService, EventService>();

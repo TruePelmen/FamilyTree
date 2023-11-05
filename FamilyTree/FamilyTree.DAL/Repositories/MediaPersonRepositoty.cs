@@ -8,12 +8,14 @@ using FamilyTree.DAL.Models;
 
 namespace FamilyTree.DAL.Repositories
 {
-    public class MediaRepositoty : GenericRepository<Media>, IMediaRepository
+    public class MediaPersonRepositoty : GenericRepository<MediaPerson>, IMediaPersonRepository
     {
         public Media GetMainPhotoByPersonId(int personId)
         {
-            return _context.Media
-            .SingleOrDefault(m => m.TaggedPerson == personId && m.MainPhoto == true);
+            return _context.MediaPeople
+                .Where(mp => mp.PersonId == personId)
+                .Select(mp => mp.Media).Where(m => m.MainPhoto == true && m.MediaType == "photo")
+                .FirstOrDefault();
         }
     }
 }

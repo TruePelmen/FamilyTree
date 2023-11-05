@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
-             mc:Ignorable="d" >
-    <ScrollViewer HorizontalScrollBarVisibility="Auto">
-    <Grid Background="White">
+             mc:Ignorable="d"
+             Background="Transparent">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center">
+    <Grid>
         <StackPanel x:Name="mainPanel" HorizontalAlignment="Left" Margin="10,10,0,0">
                 <StackPanel x:Name="staticPanel" HorizontalAlignment="Center">
                     <StackPanel x:Name="parentPanel" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -30,7 +31,7 @@
                         <Line Y1="0" Y2="20" Stroke="Black" StrokeThickness="1"/>
                     </DockPanel>
                     <StackPanel x:Name="focusPanel" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <local:FocusPersonCard x:Name="maleFocus"  Height="215" Width="310" MouseLeftButtonDown="CardMouseLeftButtonDown"></local:FocusPersonCard>
+                        <local:FocusPersonCard x:Name="maleFocus"  Height="215" Width="310" MouseLeftButtonDown="CardMouseLeftButtonDown" ></local:FocusPersonCard>
                         <Grid  Width="140">
                             <Line X1="0" Y1="170" X2="140" Y2="170" Stroke="Black" StrokeThickness="1"/>
                             <Line X1="70" Y1="170" X2="70" Y2="216" Stroke="Black" StrokeThickness="1"/>

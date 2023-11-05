@@ -120,8 +120,9 @@ namespace FamilyTree.WPF
                 int personId = this.personService.AddPerson(true, this.lastNameTextBox.Text, this.DetermineGender(), null, this.firstNameTextBox.Text, null, this.ParseDate(), null);
                 this.treePersonService.AddTreePerson(treeId, personId);
                 MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
+                mainWindow.UserLogin = this.loginTextBox.Text;
                 mainWindow.Show();
-                this.Close();
+                this.Hide();
             }
         }
 

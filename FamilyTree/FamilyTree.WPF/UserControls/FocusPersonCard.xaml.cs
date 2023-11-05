@@ -12,6 +12,7 @@ namespace FamilyTree.WPF.UserControls
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
+    using FamilyTree.DAL.Models;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -30,6 +31,7 @@ namespace FamilyTree.WPF.UserControls
             this.InitializeComponent();
         }
 
+        public event EventHandler<int> DeletePerson;
         /// <summary>
         /// Gets or sets the ID of the person.
         /// </summary>
@@ -51,6 +53,8 @@ namespace FamilyTree.WPF.UserControls
                 this.CheckIsEmptyForm();
             }
         }
+
+        public bool IsPrimaryPerson { get; set; }
 
         /// <summary>
         /// Sets the default photo based on the gender.
@@ -79,6 +83,7 @@ namespace FamilyTree.WPF.UserControls
             if (!this.isEmpty)
             {
                 this.RenewInformation(person);
+                this.IsPrimaryPerson = person.Person.PrimaryPerson;
             }
         }
 
@@ -202,10 +207,20 @@ namespace FamilyTree.WPF.UserControls
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show($"Ви впевнені, що бажаєте видалити особу: {this.nameTextBlock.Text}?", "Підтвердження видалення", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            if (this.IsPrimaryPerson)
             {
-                this.IsEmpty = true;
+                MessageBox.Show("Неможливо видалити головну особу!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show($"Ви впевнені, що бажаєте видалити особу: {this.nameTextBlock.Text}?", "Підтвердження видалення", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    int id = this.IdPerson;
+                    this.DeletePerson.Invoke(this, this.IdPerson);
+                    this.IsEmpty = true;
+                }
             }
         }
 
