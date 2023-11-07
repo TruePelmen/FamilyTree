@@ -26,8 +26,14 @@ namespace FamilyTree.WPF.UserControls
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Occurs when a row is double-clicked in the data grid.
+        /// </summary>
         public event EventHandler<int> RowDoubleClick;
 
+        /// <summary>
+        /// Sets the list of PersonCardInformation to be displayed in the data grid.
+        /// </summary>
         public List<PersonCardInformation> PersonList
         {
             set

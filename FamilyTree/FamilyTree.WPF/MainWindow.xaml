@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FamilyTree.WPF"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
         xmlns:ur="clr-namespace:FamilyTree.WPF.UserControls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -24,8 +25,8 @@
                     <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\minus-sign.png" Width="14" Margin="0 5 40 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                 </Grid>
                     <StackPanel Background="Transparent" Orientation="Horizontal" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left" Width="1200">
-                        
-                    <ComboBox x:Name="listOfTrees" SelectedValuePath="Id" DisplayMemberPath="Name" SelectionChanged="ListOfTreesSelectionChanged" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Width="200" BorderBrush="White" Foreground="White" FontSize="14" Margin="30,0,30,0"/>
+
+                    <ComboBox x:Name="listOfTrees" SelectedValuePath="Id" DisplayMemberPath="Name" SelectionChanged="ListOfTreesSelectionChanged" Style="{StaticResource MaterialDesignFloatingHintComboBox}" Width="200" BorderBrush="White" Foreground="Gray" FontSize="14" Margin="30,0,30,0"/>
                     <Image ToolTip="Статистики" Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\diagram.png" Style="{StaticResource iconApp}"  Margin="260 0 25 0"  Width="25" VerticalAlignment="Center"/>
                     <Image ToolTip="Діаграми" Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\ancestry.png" Style="{StaticResource iconApp}"  Margin="25 0 25 0"  Width="25" VerticalAlignment="Center"/>
                     <Image ToolTip="Збіги" Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\gemini.png" Style="{StaticResource iconApp}"  Margin="25 0 25 0"  Width="25" VerticalAlignment="Center"/>

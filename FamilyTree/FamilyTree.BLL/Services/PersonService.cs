@@ -28,7 +28,7 @@ namespace FamilyTree.BLL.Services
         {
             return _personRepository.GetById(id);
         }
-        public PersonCardInformation GetFullInformarionAboutPerson(int id)
+        public PersonCardInformation GetFullInformationAboutPerson(int id)
         {
             PersonCardInformation person = GetShortInformationAboutPerson(id);
 

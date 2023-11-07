@@ -12,7 +12,6 @@ namespace FamilyTree.WPF.UserControls
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
-    using FamilyTree.DAL.Models;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -31,7 +30,11 @@ namespace FamilyTree.WPF.UserControls
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Event that occurs when a person is deleted.
+        /// </summary>
         public event EventHandler<int> DeletePerson;
+
         /// <summary>
         /// Gets or sets the ID of the person.
         /// </summary>
@@ -54,6 +57,12 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the person is the primary person.
+        /// </summary>
+        /// <value>
+        /// True if the person is the primary person; otherwise, False.
+        /// </value>
         public bool IsPrimaryPerson { get; set; }
 
         /// <summary>
@@ -72,7 +81,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        [Obsolete]
         /// <summary>
         /// Renews the information on the person card.
         /// </summary>
@@ -101,9 +109,9 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        [Obsolete]
         private void AdjustFontSizeToFit(TextBlock textBlock, double maxWidth)
         {
+            double pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
             var formattedText = new FormattedText(
                 textBlock.Text,
                 CultureInfo.CurrentCulture,
@@ -112,7 +120,8 @@ namespace FamilyTree.WPF.UserControls
                 textBlock.FontSize,
                 Brushes.Black,
                 new NumberSubstitution(),
-                TextFormattingMode.Display);
+                TextFormattingMode.Display,
+                pixelsPerDip);
 
             while (formattedText.Width > maxWidth)
             {
@@ -121,7 +130,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        [Obsolete]
         private void ChangeName(string name)
         {
             this.nameTextBlock.Text = name;
@@ -130,7 +138,7 @@ namespace FamilyTree.WPF.UserControls
 
         private void ChangeDateOfBirth(DateOnly dateOfBirth)
         {
-            this.yearOfLife.Text = $"({dateOfBirth.Year})";
+            this.yearOfLife.Text = $"( - {dateOfBirth.Year})";
             this.dateOfDeathLabel.Visibility = Visibility.Hidden;
             this.placeOfDeathLabel.Visibility = Visibility.Hidden;
             this.dateOfBirthValue.Text = dateOfBirth.ToString("dd.MM.yyyy");
@@ -168,9 +176,9 @@ namespace FamilyTree.WPF.UserControls
             this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
         }
 
-        [Obsolete]
         private void RenewInformation(PersonCardInformation person)
         {
+            this.ClearLabels();
             this.ChangeName(person.Person.LastName + " " + person.Person.FirstName);
             if (person.Person.BirthDate != null && person.Person.DeathDate != null)
             {
@@ -205,6 +213,17 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
+        private void ClearLabels()
+        {
+            this.yearOfLife.Text = string.Empty;
+            this.dateOfBirthValue.Text = "Невідомо";
+            this.dateOfDeathValue.Text = "Невідомо";
+            this.placeOfBirthValue.Text = "Невідомо";
+            this.placeOfDeathValue.Text = "Невідомо";
+            this.placeOfDeathLabel.Visibility = Visibility.Hidden;
+            this.dateOfDeathLabel.Visibility = Visibility.Hidden;
+        }
+
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
             if (this.IsPrimaryPerson)
@@ -219,7 +238,6 @@ namespace FamilyTree.WPF.UserControls
                 {
                     int id = this.IdPerson;
                     this.DeletePerson.Invoke(this, this.IdPerson);
-                    this.IsEmpty = true;
                 }
             }
         }

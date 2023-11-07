@@ -320,7 +320,7 @@ public partial class FamilyTreeContext : DbContext
         modelBuilder.HasSequence("event_id_seq");
         modelBuilder.HasSequence("media_event_id_seq");
         modelBuilder.HasSequence("media_person_id_seq");
-        OnModelCreatingPartial(modelBuilder);
+        this.OnModelCreatingPartial(modelBuilder);
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

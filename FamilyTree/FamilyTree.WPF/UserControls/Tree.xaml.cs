@@ -4,6 +4,8 @@
 
 namespace FamilyTree.WPF.UserControls
 {
+    using System;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -31,9 +33,9 @@ namespace FamilyTree.WPF.UserControls
         /// <summary>
         /// Initializes a new instance of the <see cref="Tree"/> class.
         /// </summary>
-        /// <param name="personService"></param>
-        /// <param name="relationshipService"></param>
-        /// <param name="treeService"></param>
+        /// <param name="personService">The service responsible for managing persons.</param>
+        /// <param name="relationshipService">The service responsible for managing relationships.</param>
+        /// <param name="treeService">The service responsible for managing trees.</param>
         public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService)
         {
             this.relationshipService = relationshipService;
@@ -47,6 +49,14 @@ namespace FamilyTree.WPF.UserControls
             this.treeService = treeService;
         }
 
+        /// <summary>
+        /// Event that occurs when a tree is changed.
+        /// </summary>
+        public event EventHandler TreeChanged;
+
+        /// <summary>
+        /// Gets or sets the identifier of the tree.
+        /// </summary>
         public int TreeId
         {
             get
@@ -61,6 +71,9 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
+        /// <summary>
+        /// Sets the type of access for the tree and performs access checking.
+        /// </summary>
         public string AceessType
         {
             set
@@ -68,26 +81,6 @@ namespace FamilyTree.WPF.UserControls
                 this.accessType = value;
                 this.CheckAccessType();
             }
-        }
-
-        private void CheckAccessType()
-        {
-            if (this.accessType == "edit")
-            {
-                this.maleFocus.editButton.Visibility = Visibility.Visible;
-                this.femaleFocus.editButton.Visibility = Visibility.Visible;
-                this.maleFocus.deleteButton.Visibility = Visibility.Visible;
-                this.femaleFocus.deleteButton.Visibility = Visibility.Visible;
-
-            }
-            else
-            {
-                this.maleFocus.editButton.Visibility = Visibility.Hidden;
-                this.femaleFocus.editButton.Visibility = Visibility.Hidden;
-                this.maleFocus.deleteButton.Visibility = Visibility.Hidden;
-                this.femaleFocus.deleteButton.Visibility = Visibility.Hidden;
-            }
-
         }
 
         /// <summary>
@@ -109,57 +102,44 @@ namespace FamilyTree.WPF.UserControls
         }
 
         /// <summary>
-        /// Marks a person as empty based on the specified type.
-        /// This method is marked as obsolete and should be avoided.
-        /// </summary>
-        /// <param name="type">The type of the person (e.g., 'male', 'female', etc.).</param>
-        [System.Obsolete("This method is marked as obsolete and should be avoided.")]
-        public void EmptyPerson(string type)
-        {
-            switch (type)
-            {
-                case "male":
-                    this.maleFocus.IsEmpty = true;
-                    break;
-                case "female":
-                    this.femaleFocus.IsEmpty = true;
-                    break;
-                case "maleFather":
-                    this.maleFather.IsEmpty = true;
-                    break;
-                case "femaleFather":
-                    this.femaleFather.IsEmpty = true;
-                    break;
-                case "maleMother":
-                    this.maleMother.IsEmpty = true;
-                    break;
-                case "femaleMother":
-                    this.femaleFather.IsEmpty = true;
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Adds a child to the family tree with information from a <see cref="PersonCardInformation"/> object.
-        /// This method is marked as obsolete and should be avoided.
         /// </summary>
         /// <param name="person">A <see cref="PersonCardInformation"/> object containing information about the child.</param>
-        [System.Obsolete("This method is marked as obsolete and should be avoided.")]
-        public void AddChild(PersonCardInformation person)
+        public void AddChild(PersonCardInformation person = null)
         {
-            PersonCard child = new PersonCard();
-            child.RenewPersonCard(person);
-            child.Margin = new Thickness(20, 0, 20, 0);
-            child.Width = 180;
-            child.Height = 100;
-            child.MouseLeftButtonDown += this.CardMouseLeftButtonDown;
-            if (!person.IsEmptyPerson)
+            if (this.numberOfChildren != 0 && person != null)
             {
-                child.IdPerson = person.Person.Id;
+                PersonCard emptyCard = this.childrenPanel.Children.OfType<PersonCard>().FirstOrDefault(card => card.IsEmpty);
+                emptyCard.RenewPersonCard(person);
+                emptyCard.IdPerson = person.Person.Id;
             }
 
-            this.childrenPanel.Children.Add(child);
+            PersonCard newChild = new PersonCard();
+            newChild.RenewPersonCard(new PersonCardInformation());
+            newChild.Margin = new Thickness(20, 0, 20, 0);
+            newChild.Width = 180;
+            newChild.Height = 100;
+            newChild.MouseLeftButtonDown += this.CardMouseLeftButtonDown;
+            this.childrenPanel.Children.Add(newChild);
             this.numberOfChildren++;
+        }
+
+        private void CheckAccessType()
+        {
+            if (this.accessType == "edit")
+            {
+                this.maleFocus.editButton.Visibility = Visibility.Visible;
+                this.femaleFocus.editButton.Visibility = Visibility.Visible;
+                this.maleFocus.deleteButton.Visibility = Visibility.Visible;
+                this.femaleFocus.deleteButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.maleFocus.editButton.Visibility = Visibility.Hidden;
+                this.femaleFocus.editButton.Visibility = Visibility.Hidden;
+                this.maleFocus.deleteButton.Visibility = Visibility.Hidden;
+                this.femaleFocus.deleteButton.Visibility = Visibility.Hidden;
+            }
         }
 
         private void ChildrenPanelLoaded(object sender, RoutedEventArgs e)
@@ -172,17 +152,18 @@ namespace FamilyTree.WPF.UserControls
         {
             this.childrenPanel.Children.Clear();
             this.numberOfChildren = 0;
-            var person = this.personService.GetFullInformarionAboutPerson(this.idFocusPerson);
+            var person = this.personService.GetFullInformationAboutPerson(this.idFocusPerson);
             this.idFocusPersonSpounse = this.relationshipService.GetSpouseIdByPersonId(this.idFocusPerson);
             if (person.Person.Gender == "male")
             {
+                this.maleFocus.IdPerson = this.idFocusPerson;
                 this.maleFocus.RenewPersonCard(person);
                 this.maleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPerson);
                 this.maleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleFather.IdPerson));
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
                 this.maleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleMother.IdPerson));
                 this.femaleFocus.IdPerson = this.idFocusPersonSpounse;
-                this.femaleFocus.RenewPersonCard(this.personService.GetFullInformarionAboutPerson(this.idFocusPersonSpounse));
+                this.femaleFocus.RenewPersonCard(this.personService.GetFullInformationAboutPerson(this.idFocusPersonSpounse));
                 this.femaleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
                 this.femaleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleFather.IdPerson));
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
@@ -190,26 +171,30 @@ namespace FamilyTree.WPF.UserControls
             }
             else
             {
+                this.femaleFocus.IdPerson = this.idFocusPerson;
                 this.femaleFocus.RenewPersonCard(person);
                 this.femaleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPerson);
                 this.femaleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleFather.IdPerson));
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
                 this.femaleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleMother.IdPerson));
                 this.maleFocus.IdPerson = this.idFocusPersonSpounse;
-                this.maleFocus.RenewPersonCard(this.personService.GetFullInformarionAboutPerson(this.idFocusPersonSpounse));
+                this.maleFocus.RenewPersonCard(this.personService.GetFullInformationAboutPerson(this.idFocusPersonSpounse));
                 this.maleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
                 this.maleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleFather.IdPerson));
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
                 this.maleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleMother.IdPerson));
             }
 
-            var children = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPerson);
-            foreach (var child in children)
+            var children = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPerson).ToList();
+            var spouseChildren = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPersonSpounse).ToList();
+            this.AddChild();
+            for (int i = 0; i < children.Count; ++i)
             {
-                this.AddChild(this.personService.GetShortInformationAboutPerson(child));
+                if (spouseChildren.Contains(children[i]))
+                {
+                    this.AddChild(this.personService.GetShortInformationAboutPerson(children[i]));
+                }
             }
-
-            this.AddChild(new PersonCardInformation());
         }
 
         private void RedrawLines()
@@ -283,7 +268,6 @@ namespace FamilyTree.WPF.UserControls
 
         private void DeletePerson(object sender, int personId)
         {
-            int id = personId;
             this.personService.DeletePerson(personId);
             if (this.idFocusPersonSpounse > 0)
             {
@@ -293,6 +277,8 @@ namespace FamilyTree.WPF.UserControls
             {
                 this.FocusPersonId = this.treeService.GetPrimaryPersonId(this.treeId);
             }
+
+            this.TreeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

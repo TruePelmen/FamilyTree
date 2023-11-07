@@ -58,7 +58,7 @@
                                  Padding="10 10"
                                  LostFocus="DateOfBirthLostFocus"
                                  GotFocus="DateOfBirthGotFocus"
-                                 Grid.Column="1" Grid.Row="3" FontSize="12" HorizontalAlignment="Right" Width="213"/>
+                                 Grid.Column="1" Grid.Row="3" FontSize="12" HorizontalAlignment="Center" Width="257"/>
                     <uc:MyTextBox  Grid.Column="1" Grid.Row="4" Hint="" x:Name="loginTextBox" LostFocus="LoginTextBoxLostFocus" GotFocus="LoginTextBoxGotFocus"/>
                     <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="5" x:Name="passwordBox" LostFocus="PasswordBoxLostFocus" GotFocus="PasswordBoxGotFocus"/>
                     <PasswordBox Style="{StaticResource passwordBox}" Grid.Column="1" Grid.Row="6" x:Name="confirmPasswordBox" LostFocus="ConfirmPasswordBoxLostFocus" GotFocus="ConfirmPasswordBoxGotFocus" PasswordChanged="ConfirmPasswordBoxPasswordChanged"/>
@@ -80,8 +80,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Click="BackClick" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" />
-                        <Button Click="ContinueButtonClick" Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити"/>
+                        <Button Click="BackClick" Style="{StaticResource buttonMain}" Margin="0 0 10 0" Content="Повернутись" Height="40"/>
+                        <Button Click="ContinueButtonClick" Grid.Column="1" Style="{StaticResource buttonMainGreen}" Margin="10 0 0 0" Content="Продовжити" Height="40"/>
                     </Grid>
                 </Grid>
             </Grid>

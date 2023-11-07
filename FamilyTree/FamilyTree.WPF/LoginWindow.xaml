@@ -64,6 +64,8 @@
                                />
                     <Button x:Name="btnLogin"                          
                             Content="Увійти" 
+                            Width="170"
+                            Height="40"
                             Click="BtnLoginClick" 
                             Style="{StaticResource buttonMainGreen}"></Button>
                     <StackPanel Orientation="Horizontal"

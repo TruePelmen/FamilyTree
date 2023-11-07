@@ -4,8 +4,11 @@
 
 namespace FamilyTree.WPF
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics.Tracing;
     using System.Linq;
+    using System.Reflection.Metadata;
     using System.Windows;
     using System.Windows.Controls;
     using FamilyTree.BLL;
@@ -18,28 +21,52 @@ namespace FamilyTree.WPF
     public partial class MainWindow : Window
     {
         private readonly ITreePersonService treePersonService;
-        private readonly ITreeService treeService;
         private readonly IUserTreeService userTreeService;
-        private int treeId;
         private string userLogin;
+        private int treeId;
         private UserControls.Tree familyTree;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         /// <param name="treePersonService">An instance of the tree person service for managing tree-related person data.</param>
-        /// <param name="treeService">An instance of the tree service for managing tree-related operations.</param>
         /// <param name="userTreeService">An instance of the user tree service for managing user-related tree data.</param>
-        [System.Obsolete]
-        public MainWindow(ITreePersonService treePersonService, ITreeService treeService, IUserTreeService userTreeService)
+        public MainWindow(ITreePersonService treePersonService, IUserTreeService userTreeService)
         {
-            this.treeService = treeService;
             this.treePersonService = treePersonService;
             this.userTreeService = userTreeService;
             this.InitializeComponent();
             this.personsList.RowDoubleClick += this.PersonsListRowDoubleClick;
         }
 
+        /// <summary>
+        /// Gets or sets the identifier of the tree.
+        /// </summary>
+        /// <value>
+        /// A int representing the tree id.
+        /// </value>
+        public int TreeId
+        {
+            get
+            {
+                return this.treeId;
+            }
+
+            set
+            {
+                this.treeId = value;
+                this.familyTree.TreeId = this.treeId;
+                this.familyTree.AceessType = this.userTreeService.GetAccessTypeByUserLoginAndTreeId(this.userLogin, this.treeId);
+                this.FillListOfPerson();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the user's login name.
+        /// </summary>
+        /// <value>
+        /// A string representing the user's login name.
+        /// </value>
         public string UserLogin
         {
             get
@@ -59,6 +86,7 @@ namespace FamilyTree.WPF
         private void CreateUI()
         {
             this.familyTree = DependencyContainer.ServiceProvider.GetRequiredService<UserControls.Tree>();
+            this.familyTree.TreeChanged += this.FamilyTreeChanged;
             this.familyTree.Margin = new Thickness(50, 20, 0, 0);
             Grid.SetColumn(this.familyTree, 0);
             this.treeGrid.Children.Add(this.familyTree);
@@ -79,8 +107,7 @@ namespace FamilyTree.WPF
             if (this.listOfTrees.SelectedItem != null)
             {
                 int selectedTreeId = (int)this.listOfTrees.SelectedValue;
-                this.familyTree.TreeId = selectedTreeId;
-                this.familyTree.AceessType = this.userTreeService.GetAccessTypeByUserLoginAndTreeId(this.userLogin, selectedTreeId);
+                this.TreeId = selectedTreeId;
             }
         }
 
@@ -111,6 +138,11 @@ namespace FamilyTree.WPF
         private void PersonsListRowDoubleClick(object sender, int selectedId)
         {
             this.familyTree.FocusPersonId = selectedId;
+        }
+
+        private void FamilyTreeChanged(object sender, EventArgs eventArgs)
+        {
+            this.FillListOfPerson();
         }
     }
 }

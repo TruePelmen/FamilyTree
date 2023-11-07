@@ -52,7 +52,7 @@ namespace FamilyTree.DAL.Migrations
                     description = table.Column<string>(type: "character varying", nullable: true),
                     date = table.Column<DateOnly>(type: "date", nullable: true),
                     place = table.Column<string>(type: "character varying", nullable: true),
-                    main_photo = table.Column<bool>(type: "boolean", nullable: true)
+                    main_photo = table.Column<bool>(type: "boolean", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -71,7 +71,7 @@ namespace FamilyTree.DAL.Migrations
                     first_name = table.Column<string>(type: "character varying", nullable: true),
                     other_name_variants = table.Column<string>(type: "character varying", nullable: true),
                     birth_date = table.Column<DateOnly>(type: "date", nullable: true),
-                    death_date = table.Column<DateOnly>(type: "date", nullable: true)
+                    death_date = table.Column<DateOnly>(type: "date", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace FamilyTree.DAL.Migrations
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('tree_id_seq'::regclass)"),
-                    name = table.Column<string>(type: "character varying", nullable: true)
+                    name = table.Column<string>(type: "character varying", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,7 @@ namespace FamilyTree.DAL.Migrations
                 columns: table => new
                 {
                     login = table.Column<string>(type: "character varying", nullable: false),
-                    password = table.Column<string>(type: "character varying", nullable: true)
+                    password = table.Column<string>(type: "character varying", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -112,7 +112,7 @@ namespace FamilyTree.DAL.Migrations
                     event_place = table.Column<string>(type: "character varying", nullable: true),
                     person_id = table.Column<int>(type: "integer", nullable: false),
                     description = table.Column<string>(type: "character varying", nullable: true),
-                    age = table.Column<int>(type: "integer", nullable: true)
+                    age = table.Column<int>(type: "integer", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -130,7 +130,7 @@ namespace FamilyTree.DAL.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('media_person_id_seq'::regclass)"),
                     person_id = table.Column<int>(type: "integer", nullable: false),
-                    media_id = table.Column<int>(type: "integer", nullable: false)
+                    media_id = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -154,7 +154,7 @@ namespace FamilyTree.DAL.Migrations
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('relationship_id_seq'::regclass)"),
                     person_id1 = table.Column<int>(type: "integer", nullable: false),
                     person_id2 = table.Column<int>(type: "integer", nullable: false),
-                    relationship_type = table.Column<string>(type: "character varying", nullable: true)
+                    relationship_type = table.Column<string>(type: "character varying", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -201,7 +201,7 @@ namespace FamilyTree.DAL.Migrations
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('user_tree_id_seq'::regclass)"),
                     user_login = table.Column<string>(type: "character varying", nullable: true),
                     tree_id = table.Column<int>(type: "integer", nullable: false),
-                    access_type = table.Column<string>(type: "character varying", nullable: true)
+                    access_type = table.Column<string>(type: "character varying", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -224,7 +224,7 @@ namespace FamilyTree.DAL.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false, defaultValueSql: "nextval('media_event_id_seq'::regclass)"),
                     event_id = table.Column<int>(type: "integer", nullable: true),
-                    media_id = table.Column<int>(type: "integer", nullable: false)
+                    media_id = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -250,7 +250,7 @@ namespace FamilyTree.DAL.Migrations
                     house_number = table.Column<int>(type: "integer", nullable: true),
                     priest = table.Column<string>(type: "character varying", nullable: true),
                     record = table.Column<string>(type: "character varying", nullable: true),
-                    event_id = table.Column<int>(type: "integer", nullable: false)
+                    event_id = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
