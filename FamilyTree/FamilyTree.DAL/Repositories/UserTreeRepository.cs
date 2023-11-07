@@ -1,5 +1,6 @@
 ﻿namespace FamilyTree.DAL.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FamilyTree.DAL.Interfaces.Repositories;
@@ -9,7 +10,7 @@
     {
         public IEnumerable<Tree> GetAllTreeByUserLogin(string login)
         {
-            return this.context.UserTrees
+            return _context.UserTrees
         .Where(ut => ut.UserLogin == login)
         .Select(ut => ut.Tree)
         .ToList();
@@ -17,7 +18,7 @@
 
         public string GetAccessTypeByTreeIdAndUserLogin(int treeId, string login)
         {
-            return this.context.UserTrees.Where(ut => ut.TreeId == treeId && ut.UserLogin == login).Select(ut => ut.AccessType).FirstOrDefault();
+            return _context.UserTrees.Where(ut => ut.TreeId == treeId && ut.UserLogin == login).Select(ut => ut.AccessType).FirstOrDefault();
         }
     }
 }

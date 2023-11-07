@@ -67,6 +67,7 @@ namespace FamilyTree.WPF
             services.AddSingleton<MainWindow>();
             services.AddTransient<EditWindow>();
             services.AddTransient<UserControls.Tree>();
+            services.AddTransient<AddEvent>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

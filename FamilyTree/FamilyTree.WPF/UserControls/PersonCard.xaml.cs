@@ -105,7 +105,7 @@ namespace FamilyTree.WPF.UserControls
         /// <param name="dateOfDeath">The date of death of the person.</param>
         public void ChangeDateOfDeath(DateOnly dateOfDeath)
         {
-            this.yearOfLife.Text = $"( - {dateOfDeath.Year})";
+            this.yearOfLife.Text = $"({dateOfDeath.Year})";
         }
 
         /// <summary>

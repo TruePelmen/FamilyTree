@@ -12,13 +12,13 @@ namespace FamilyTree.DAL.Repositories
     {
         public IEnumerable<Event> GetEventsByPersonId(int personId)
         {
-            return context.Events
+            return _context.Events
             .Where(e => e.PersonId == personId)
             .ToList();
         }
         public IEnumerable<Event> GetEventsByPersonIdAndEventType(int personId, string eventType)
         {
-            return context.Events
+            return _context.Events
             .Where(e => e.PersonId == personId && e.EventType == eventType)
             .ToList();
         }

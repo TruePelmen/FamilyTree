@@ -1,61 +1,60 @@
-﻿namespace FamilyTree.DAL.Repositories
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Linq.Expressions;
-    using FamilyTree.DAL.Context;
-    using FamilyTree.DAL.Interfaces.Repositories;
-    using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using FamilyTree.DAL.Context;
+using FamilyTree.DAL.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 
-    public class GenericRepository<T> : IGenericRepository<T>
-        where T : class
+namespace FamilyTree.DAL.Repositories
+{
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected FamilyTreeContext context = null;
+        protected FamilyTreeContext _context = null;
 
         public GenericRepository()
         {
-            this.context = new FamilyTreeContext();
+            _context = new FamilyTreeContext();
         }
 
         public GenericRepository(FamilyTreeContext _context)
         {
-            this.context = _context;
+            this._context = _context;
         }
 
         public T GetById(object id)
         {
-            return this.context.Set<T>().Find(id);
+            return _context.Set<T>().Find(id);
         }
 
         public IEnumerable<T> GetAll()
         {
-            return this.context.Set<T>().ToList();
+            return _context.Set<T>().ToList();
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
-            return this.context.Set<T>().Where(predicate);
+            return _context.Set<T>().Where(predicate);
         }
 
         public void Add(T entity)
         {
-            this.context.Set<T>().Add(entity);
+            _context.Set<T>().Add(entity);
         }
 
         public void Update(T entity)
         {
-            this.context.Entry(entity).State = EntityState.Modified;
+            _context.Entry(entity).State = EntityState.Modified;
         }
 
         public void Remove(T entity)
         {
-            this.context.Set<T>().Remove(entity);
+            _context.Set<T>().Remove(entity);
         }
 
         public void Save()
         {
-            this.context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

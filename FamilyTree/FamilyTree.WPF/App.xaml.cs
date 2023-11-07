@@ -18,7 +18,11 @@ namespace FamilyTree.WPF
             base.OnStartup(e);
             DependencyContainer.Initialize();
             LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
-            loginWindow.Show();
+            AddEvent addEvent = DependencyContainer.ServiceProvider.GetRequiredService<AddEvent>();
+            //loginWindow.Show();
+            addEvent.Show();
+            //MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
+            //mainWindow.Show();
         }
     }
 }
