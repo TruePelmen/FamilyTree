@@ -6,7 +6,6 @@
     using FamilyTree.DAL.Models;
 
 #nullable enable
-
     public interface IEventService
     {
         IEnumerable<Event> GetAllEvents();

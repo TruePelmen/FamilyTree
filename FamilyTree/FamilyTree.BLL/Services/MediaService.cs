@@ -1,5 +1,7 @@
 ﻿namespace FamilyTree.BLL.Services
 {
+#nullable enable
+
     using System;
     using System.Collections.Generic;
     using FamilyTree.BLL.Interfaces;

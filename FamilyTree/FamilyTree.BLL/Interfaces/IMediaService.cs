@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using FamilyTree.DAL.Models;
 
+#nullable enable
     /// <summary>
     /// Interface for managing media content in the family tree.
     /// </summary>

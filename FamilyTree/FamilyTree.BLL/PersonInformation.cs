@@ -14,7 +14,7 @@
 
         public bool IsEmptyPerson
         {
-            get { return Person == null; }
+            get { return this.Person == null; }
         }
     }
 }
