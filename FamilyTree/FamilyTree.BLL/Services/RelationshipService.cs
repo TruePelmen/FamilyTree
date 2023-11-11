@@ -1,61 +1,66 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.BLL.Interfaces;
-using FamilyTree.DAL.Models;
-using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class RelationshipService : IRelationshipService
     {
-        private IRelationshipRepository _relationshipRepository;
+        private IRelationshipRepository relationshipRepository;
 
         public RelationshipService(IRelationshipRepository relationshipRepository)
         {
-            _relationshipRepository = relationshipRepository;
+            this.relationshipRepository = relationshipRepository;
         }
 
         public IEnumerable<Relationship> GetAllRelationships()
         {
-            return _relationshipRepository.GetAll();
+            return this.relationshipRepository.GetAll();
         }
 
         public Relationship GetRelationshipById(int id)
         {
-            return _relationshipRepository.GetById(id);
+            return this.relationshipRepository.GetById(id);
         }
+
         public int GetMotherIdByPersonId(int id)
         {
-            return _relationshipRepository.GetParentIdByPersonId(id, "mother-child");
+            return this.relationshipRepository.GetParentIdByPersonId(id, "mother-child");
         }
+
         public int GetFatherIdByPersonId(int id)
         {
-            return _relationshipRepository.GetParentIdByPersonId(id, "father-child");
+            return this.relationshipRepository.GetParentIdByPersonId(id, "father-child");
         }
+
         public int GetSpouseIdByPersonId(int id)
         {
-            return _relationshipRepository.GetSpouseIdByPersonId(id);
+            return this.relationshipRepository.GetSpouseIdByPersonId(id);
         }
+
         public IEnumerable<int> GetChildrenIdByPersonId(int id)
         {
-            return _relationshipRepository.GetChildrenIdByPersonId(id);
+            return this.relationshipRepository.GetChildrenIdByPersonId(id);
         }
+
         public void AddRelationship(int personId1, int personId2, string relationshipType)
         {
             Relationship newRelationship = new Relationship
             {
                 PersonId1 = personId1,
                 PersonId2 = personId2,
-                RelationshipType = relationshipType
+                RelationshipType = relationshipType,
             };
 
-            _relationshipRepository.Add(newRelationship);
-            _relationshipRepository.Save();
+            this.relationshipRepository.Add(newRelationship);
+            this.relationshipRepository.Save();
         }
 
         public void UpdateRelationship(int id, int personId1, int personId2, string relationshipType)
         {
-            Relationship existingRelationship = _relationshipRepository.GetById(id);
+            Relationship existingRelationship = this.relationshipRepository.GetById(id);
 
             if (existingRelationship != null)
             {
@@ -63,15 +68,15 @@ namespace FamilyTree.BLL.Services
                 existingRelationship.PersonId2 = personId2;
                 existingRelationship.RelationshipType = relationshipType;
 
-                _relationshipRepository.Update(existingRelationship);
-                _relationshipRepository.Save();
+                this.relationshipRepository.Update(existingRelationship);
+                this.relationshipRepository.Save();
             }
         }
 
         public void DeleteRelationship(int id)
         {
-            _relationshipRepository.Remove(GetRelationshipById(id));
-            _relationshipRepository.Save();
+            this.relationshipRepository.Remove(this.GetRelationshipById(id));
+            this.relationshipRepository.Save();
         }
     }
 }

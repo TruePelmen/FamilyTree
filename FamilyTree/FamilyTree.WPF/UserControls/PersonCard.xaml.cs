@@ -1,8 +1,4 @@
-﻿// <copyright file="PersonCard.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF.UserControls
+﻿namespace FamilyTree.WPF.UserControls
 {
     using System;
     using System.Windows;
@@ -11,29 +7,17 @@ namespace FamilyTree.WPF.UserControls
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
 
-    /// <summary>
-    /// Represents a user control for displaying information about a person in the FamilyTree application.
-    /// </summary>
     public partial class PersonCard : UserControl, IPersonCard
     {
         private bool isEmpty;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PersonCard"/> class.
-        /// </summary>
         public PersonCard()
         {
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Gets or sets the unique identifier of the person associated with this card.
-        /// </summary>
         public int IdPerson { get; set; }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the card is empty, i.e., does not display person information.
-        /// </summary>
         public bool IsEmpty
         {
             get
@@ -48,10 +32,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Sets the default photo for the card based on the person's gender.
-        /// </summary>
-        /// <param name="gender">The gender of the person (e.g., "male" or "female").</param>
         public void SetDefaultPhoto(string gender)
         {
             if (gender == "male")
@@ -64,9 +44,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Checks whether the card is empty and adjusts its visibility accordingly.
-        /// </summary>
         public void CheckIsEmptyForm()
         {
             if (this.IsEmpty)
@@ -81,56 +58,31 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Changes the name displayed on the card.
-        /// </summary>
-        /// <param name="name">The name of the person.</param>
         public void ChangeName(string name)
         {
             this.nameTextBlock.Text = name;
         }
 
-        /// <summary>
-        /// Changes the date of birth displayed on the card.
-        /// </summary>
-        /// <param name="dateOfBirth">The date of birth of the person.</param>
         public void ChangeDateOfBirth(DateOnly dateOfBirth)
         {
             this.yearOfLife.Text = $"({dateOfBirth.Year})";
         }
 
-        /// <summary>
-        /// Changes the date of death displayed on the card.
-        /// </summary>
-        /// <param name="dateOfDeath">The date of death of the person.</param>
         public void ChangeDateOfDeath(DateOnly dateOfDeath)
         {
             this.yearOfLife.Text = $"( - {dateOfDeath.Year})";
         }
 
-        /// <summary>
-        /// Changes the year of life displayed on the card based on date of birth and date of death.
-        /// </summary>
-        /// <param name="dateOfBirth">The date of birth of the person.</param>
-        /// <param name="dateOfDeath">The date of death of the person.</param>
         public void ChangeYearOfLife(DateOnly dateOfBirth, DateOnly dateOfDeath)
         {
             this.yearOfLife.Text = $"({dateOfBirth.Year} - {dateOfDeath.Year})";
         }
 
-        /// <summary>
-        /// Changes the main photo displayed on the card.
-        /// </summary>
-        /// <param name="mainPhotoPath">The path to the main photo of the person.</param>
         public void ChangeMainPhoto(string mainPhotoPath)
         {
             this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
         }
 
-        /// <summary>
-        /// Renews the information displayed on the card using data from a <see cref="PersonCardInformation"/> object.
-        /// </summary>
-        /// <param name="person">A <see cref="PersonCardInformation"/> object containing person information.</param>
         public void RenewPersonCard(PersonCardInformation person)
         {
             this.IsEmpty = person.IsEmptyPerson;

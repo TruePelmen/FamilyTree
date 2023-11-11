@@ -10,6 +10,7 @@
     public interface IUserTreeRepository : IGenericRepository<UserTree>
     {
         IEnumerable<Tree> GetAllTreeByUserLogin(string login);
+
         string GetAccessTypeByTreeIdAndUserLogin(int treeId, string login);
     }
 }

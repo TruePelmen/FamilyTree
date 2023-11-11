@@ -35,7 +35,7 @@
                 Description = description,
                 Date = date,
                 Place = place,
-                MainPhoto = mainPhoto
+                MainPhoto = mainPhoto,
             };
 
             this.mediaRepository.Add(media);

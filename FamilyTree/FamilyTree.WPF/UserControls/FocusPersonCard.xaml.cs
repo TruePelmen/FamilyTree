@@ -1,8 +1,4 @@
-﻿// <copyright file="FocusPersonCard.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF.UserControls
+﻿namespace FamilyTree.WPF.UserControls
 {
     using System;
     using System.Globalization;
@@ -156,17 +152,22 @@ namespace FamilyTree.WPF.UserControls
             this.yearOfLife.Text = $"({dateOfBirth.Year} - {dateOfDeath.Year})";
             this.dateOfDeathLabel.Visibility = Visibility.Visible;
             this.placeOfDeathLabel.Visibility = Visibility.Visible;
+            this.dateOfDeathValue.Visibility = Visibility.Visible;
+            this.placeOfDeathValue.Visibility = Visibility.Visible;
             this.dateOfBirthValue.Text = dateOfBirth.ToString("dd.MM.yyyy");
             this.dateOfDeathValue.Text = dateOfDeath.ToString("dd.MM.yyyy");
         }
 
         private void ChangePlaceOfBirth(string placeOfBirth)
         {
+            this.placeOfBirthLabel.Visibility = Visibility.Visible;
+            this.placeOfBirthValue.Visibility = Visibility.Visible;
             this.placeOfBirthValue.Text = placeOfBirth;
         }
 
         private void ChangePlaceOfDeath(string placeOfDeath)
         {
+            this.placeOfDeathLabel.Visibility = Visibility.Visible;
             this.placeOfDeathValue.Visibility = Visibility.Visible;
             this.placeOfDeathValue.Text = placeOfDeath;
         }

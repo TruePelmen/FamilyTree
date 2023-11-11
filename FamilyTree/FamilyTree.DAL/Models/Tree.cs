@@ -1,15 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.DAL.Models;
-
-public partial class Tree
+﻿namespace FamilyTree.DAL.Models
 {
-    public int Id { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-    public string Name { get; set; } = null!;
+    public partial class Tree
+    {
+        public int Id { get; set; }
 
-    public virtual ICollection<TreePerson> TreePeople { get; set; } = new List<TreePerson>();
+        public string Name { get; set; } = null!;
 
-    public virtual ICollection<UserTree> UserTrees { get; set; } = new List<UserTree>();
+        public virtual ICollection<TreePerson> TreePeople { get; set; } = new List<TreePerson>();
+
+        public virtual ICollection<UserTree> UserTrees { get; set; } = new List<UserTree>();
+    }
 }

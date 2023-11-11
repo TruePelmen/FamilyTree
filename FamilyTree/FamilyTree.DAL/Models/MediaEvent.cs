@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.DAL.Models;
-
-public partial class MediaEvent
+﻿namespace FamilyTree.DAL.Models
 {
-    public int Id { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-    public int? EventId { get; set; }
+    public partial class MediaEvent
+    {
+        public int Id { get; set; }
 
-    public int MediaId { get; set; }
+        public int? EventId { get; set; }
 
-    public virtual Event? Event { get; set; }
+        public int MediaId { get; set; }
 
-    public virtual Media Media { get; set; } = null!;
+        public virtual Event? Event { get; set; }
+
+        public virtual Media Media { get; set; } = null!;
+    }
 }

@@ -1,71 +1,73 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using FamilyTree.BLL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class TreeService : ITreeService
     {
-        private IGenericRepository<Tree> _treeRepository;
-        private ITreePersonService _treePersonService;
+        private IGenericRepository<Tree> treeRepository;
+        private ITreePersonService treePersonService;
 
         public TreeService(IGenericRepository<Tree> treeRepository, ITreePersonService treePersonService)
         {
-            _treeRepository = treeRepository;
-            _treePersonService = treePersonService;
+            this.treeRepository = treeRepository;
+            this.treePersonService = treePersonService;
         }
 
         public IEnumerable<Tree> GetAllTrees()
         {
-            return _treeRepository.GetAll();
+            return this.treeRepository.GetAll();
         }
 
         public Tree GetTreeById(int id)
         {
-            return _treeRepository.GetById(id);
+            return this.treeRepository.GetById(id);
         }
+
         public int GetPrimaryPersonId(int treeId)
         {
-            var primaryPerson = _treePersonService.GetTreePeopleByTreeId(treeId).FirstOrDefault(person => person.PrimaryPerson);
+            var primaryPerson = this.treePersonService.GetTreePeopleByTreeId(treeId).FirstOrDefault(person => person.PrimaryPerson);
             if (primaryPerson != null)
             {
                 return primaryPerson.Id;
             }
-            return -1; 
+
+            return -1;
         }
 
         public int AddTree(string name)
         {
             Tree tree = new Tree
             {
-                Name = name
+                Name = name,
             };
 
-            _treeRepository.Add(tree);
-            _treeRepository.Save();
+            this.treeRepository.Add(tree);
+            this.treeRepository.Save();
             return tree.Id;
         }
 
         public void UpdateTree(int id, string name)
         {
-            Tree tree = _treeRepository.GetById(id);
+            Tree tree = this.treeRepository.GetById(id);
 
             if (tree != null)
             {
                 tree.Name = name;
 
-                _treeRepository.Update(tree);
-                _treeRepository.Save();
+                this.treeRepository.Update(tree);
+                this.treeRepository.Save();
             }
         }
 
         public void DeleteTree(int id)
         {
-            _treeRepository.Remove(GetTreeById(id));
-            _treeRepository.Save();
+            this.treeRepository.Remove(this.GetTreeById(id));
+            this.treeRepository.Save();
         }
     }
 }

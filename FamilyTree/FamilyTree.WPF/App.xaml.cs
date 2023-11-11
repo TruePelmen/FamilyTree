@@ -1,8 +1,4 @@
-﻿// <copyright file="App.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF
+﻿namespace FamilyTree.WPF
 {
     using System.Windows;
     using Microsoft.Extensions.DependencyInjection;

@@ -1,8 +1,4 @@
-﻿// <copyright file="EventService.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
     using System;
     using System.Collections.Generic;
@@ -20,7 +16,7 @@ namespace FamilyTree.BLL.Services
         /// <summary>
         /// Initializes a new instance of the <see cref="EventService"/> class.
         /// </summary>
-        /// <param name="eventRepository">The repository for events.></param>
+        /// <param name="eventRepository">The repository for events./param>
         public EventService(IEventRepository eventRepository)
         {
             this.eventRepository = eventRepository;

@@ -6,7 +6,7 @@
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
 
-    public class RelationshipRepository: GenericRepository<Relationship>, IRelationshipRepository
+    public class RelationshipRepository : GenericRepository<Relationship>, IRelationshipRepository
     {
         public int GetParentIdByPersonId(int personId, string type)
         {
@@ -52,6 +52,5 @@
             var childrenIds = parentRelationships.Select(r => r.PersonId2).ToList();
             return childrenIds;
         }
-
     }
 }

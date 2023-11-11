@@ -18,9 +18,9 @@
             this.context = new FamilyTreeContext();
         }
 
-        public GenericRepository(FamilyTreeContext _context)
+        public GenericRepository(FamilyTreeContext context)
         {
-            this.context = _context;
+            this.context = context;
         }
 
         public T GetById(object id)

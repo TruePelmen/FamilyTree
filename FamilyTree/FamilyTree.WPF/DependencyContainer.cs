@@ -1,8 +1,4 @@
-﻿// <copyright file="DependencyContainer.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF
+﻿namespace FamilyTree.WPF
 {
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.BLL.Interfeces;

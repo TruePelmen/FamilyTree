@@ -12,7 +12,9 @@
         ResizeMode="NoResize"
         Height="700" Width="1300"
         WindowStartupLocation="CenterScreen"
-        Background="Transparent">
+        Background="Transparent"
+        AllowsTransparency="True"
+        MouseDown="WindowMouseDown">
     <Grid Background="Transparent">
         <Grid.RowDefinitions>
                 <RowDefinition Height="90"/>

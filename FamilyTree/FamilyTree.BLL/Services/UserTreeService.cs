@@ -1,38 +1,38 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using FamilyTree.BLL.Interfaces;
-using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class UserTreeService : IUserTreeService
     {
-        private IUserTreeRepository _userTreeRepository;
+        private IUserTreeRepository userTreeRepository;
 
         public UserTreeService(IUserTreeRepository userTreeRepository)
         {
-            _userTreeRepository = userTreeRepository;
+            this.userTreeRepository = userTreeRepository;
         }
 
         public IEnumerable<UserTree> GetAllUserTrees()
         {
-            return _userTreeRepository.GetAll();
+            return this.userTreeRepository.GetAll();
         }
 
         public UserTree GetUserTreeById(int id)
         {
-            return _userTreeRepository.GetById(id);
+            return this.userTreeRepository.GetById(id);
         }
 
         public IEnumerable<Tree> GetAllTreeByUserLogin(string userLogin)
         {
-            return _userTreeRepository.GetAllTreeByUserLogin(userLogin);
+            return this.userTreeRepository.GetAllTreeByUserLogin(userLogin);
         }
 
         public string GetAccessTypeByUserLoginAndTreeId(string userLogin, int treeId)
         {
-            return _userTreeRepository.GetAccessTypeByTreeIdAndUserLogin(treeId, userLogin);
+            return this.userTreeRepository.GetAccessTypeByTreeIdAndUserLogin(treeId, userLogin);
         }
 
         public void AddUserTree(string userLogin, int treeId, string accessType)
@@ -41,16 +41,16 @@ namespace FamilyTree.BLL.Services
             {
                 UserLogin = userLogin,
                 TreeId = treeId,
-                AccessType = accessType
+                AccessType = accessType,
             };
 
-            _userTreeRepository.Add(userTree);
-            _userTreeRepository.Save();
+            this.userTreeRepository.Add(userTree);
+            this.userTreeRepository.Save();
         }
 
         public void UpdateUserTree(int id, string userLogin, int treeId, string accessType)
         {
-            UserTree userTree = _userTreeRepository.GetById(id);
+            UserTree userTree = this.userTreeRepository.GetById(id);
 
             if (userTree != null)
             {
@@ -58,15 +58,15 @@ namespace FamilyTree.BLL.Services
                 userTree.TreeId = treeId;
                 userTree.AccessType = accessType;
 
-                _userTreeRepository.Update(userTree);
-                _userTreeRepository.Save();
+                this.userTreeRepository.Update(userTree);
+                this.userTreeRepository.Save();
             }
         }
 
         public void DeleteUserTree(int id)
         {
-            _userTreeRepository.Remove(GetUserTreeById(id));
-            _userTreeRepository.Save();
+            this.userTreeRepository.Remove(this.GetUserTreeById(id));
+            this.userTreeRepository.Save();
         }
     }
 }

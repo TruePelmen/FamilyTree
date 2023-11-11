@@ -1,8 +1,4 @@
-﻿// <copyright file="Tree.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF.UserControls
+﻿namespace FamilyTree.WPF.UserControls
 {
     using System;
     using System.Linq;
@@ -14,9 +10,6 @@ namespace FamilyTree.WPF.UserControls
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
 
-    /// <summary>
-    /// Interaction logic for Tree.xaml.
-    /// </summary>
     public partial class Tree : UserControl
     {
         private readonly double halfWidth = 90;
@@ -30,12 +23,6 @@ namespace FamilyTree.WPF.UserControls
         private IRelationshipService relationshipService;
         private ITreeService treeService;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Tree"/> class.
-        /// </summary>
-        /// <param name="personService">The service responsible for managing persons.</param>
-        /// <param name="relationshipService">The service responsible for managing relationships.</param>
-        /// <param name="treeService">The service responsible for managing trees.</param>
         public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService)
         {
             this.relationshipService = relationshipService;
@@ -49,14 +36,8 @@ namespace FamilyTree.WPF.UserControls
             this.treeService = treeService;
         }
 
-        /// <summary>
-        /// Event that occurs when a tree is changed.
-        /// </summary>
         public event EventHandler TreeChanged;
 
-        /// <summary>
-        /// Gets or sets the identifier of the tree.
-        /// </summary>
         public int TreeId
         {
             get
@@ -71,9 +52,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Sets the type of access for the tree and performs access checking.
-        /// </summary>
         public string AceessType
         {
             set
@@ -83,10 +61,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Gets or sets the unique identifier of the focus person.
-        /// This property is marked as obsolete and should be avoided.
-        /// </summary>
         public int FocusPersonId
         {
             get
@@ -101,10 +75,6 @@ namespace FamilyTree.WPF.UserControls
             }
         }
 
-        /// <summary>
-        /// Adds a child to the family tree with information from a <see cref="PersonCardInformation"/> object.
-        /// </summary>
-        /// <param name="person">A <see cref="PersonCardInformation"/> object containing information about the child.</param>
         public void AddChild(PersonCardInformation person = null)
         {
             if (this.numberOfChildren != 0 && person != null)

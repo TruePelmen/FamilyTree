@@ -1,30 +1,32 @@
-﻿using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using FamilyTree.BLL.Interfaces;
-using System.Collections.Generic;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System.Collections.Generic;
+    using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+
     public class TreePersonService : ITreePersonService
     {
-        private ITreePersonRepository _treePersonRepository;
+        private ITreePersonRepository treePersonRepository;
 
         public TreePersonService(ITreePersonRepository treePersonRepository)
         {
-            _treePersonRepository = treePersonRepository;
+            this.treePersonRepository = treePersonRepository;
         }
 
         public IEnumerable<TreePerson> GetAllTreePeople()
         {
-            return _treePersonRepository.GetAll();
+            return this.treePersonRepository.GetAll();
         }
+
         public IEnumerable<Person> GetTreePeopleByTreeId(int treeId)
         {
-            return _treePersonRepository.GetTreePeopleByTreeId(treeId);
+            return this.treePersonRepository.GetTreePeopleByTreeId(treeId);
         }
+
         public TreePerson GetTreePersonById(int id)
         {
-            return _treePersonRepository.GetById(id);
+            return this.treePersonRepository.GetById(id);
         }
 
         public void AddTreePerson(int treeId, int personId)
@@ -32,31 +34,31 @@ namespace FamilyTree.BLL.Services
             TreePerson treePerson = new TreePerson
             {
                 TreeId = treeId,
-                PersonId = personId
+                PersonId = personId,
             };
 
-            _treePersonRepository.Add(treePerson);
-            _treePersonRepository.Save();
+            this.treePersonRepository.Add(treePerson);
+            this.treePersonRepository.Save();
         }
 
         public void UpdateTreePerson(int id, int treeId, int personId)
         {
-            TreePerson treePerson = _treePersonRepository.GetById(id);
+            TreePerson treePerson = this.treePersonRepository.GetById(id);
 
             if (treePerson != null)
             {
                 treePerson.TreeId = treeId;
                 treePerson.PersonId = personId;
 
-                _treePersonRepository.Update(treePerson);
-                _treePersonRepository.Save();
+                this.treePersonRepository.Update(treePerson);
+                this.treePersonRepository.Save();
             }
         }
 
         public void DeleteTreePerson(int id)
         {
-            _treePersonRepository.Remove(GetTreePersonById(id));
-            _treePersonRepository.Save();
+            this.treePersonRepository.Remove(this.GetTreePersonById(id));
+            this.treePersonRepository.Save();
         }
     }
 }

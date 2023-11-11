@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.DAL.Models;
-
-public partial class Media
+﻿namespace FamilyTree.DAL.Models
 {
-    public int Id { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-    public string MediaType { get; set; } = null!;
+    public partial class Media
+    {
+        public int Id { get; set; }
 
-    public string FilePath { get; set; } = null!;
+        public string MediaType { get; set; } = null!;
 
-    public int? TaggedPerson { get; set; }
+        public string FilePath { get; set; } = null!;
 
-    public string Description { get; set; }
+        public int? TaggedPerson { get; set; }
 
-    public DateOnly? Date { get; set; }
+        public string Description { get; set; }
 
-    public string Place { get; set; }
+        public DateOnly? Date { get; set; }
 
-    public bool? MainPhoto { get; set; }
+        public string Place { get; set; }
 
-    public virtual ICollection<MediaEvent> MediaEvents { get; set; } = new List<MediaEvent>();
+        public bool? MainPhoto { get; set; }
 
-    public virtual ICollection<MediaPerson> MediaPeople { get; set; } = new List<MediaPerson>();
+        public virtual ICollection<MediaEvent> MediaEvents { get; set; } = new List<MediaEvent>();
+
+        public virtual ICollection<MediaPerson> MediaPeople { get; set; } = new List<MediaPerson>();
+    }
 }

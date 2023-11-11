@@ -1,8 +1,4 @@
-﻿// <copyright file="IPersonCard.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF.UserControls
+﻿namespace FamilyTree.WPF.UserControls
 {
     /// <summary>
     /// An interface that defines properties for a person card.

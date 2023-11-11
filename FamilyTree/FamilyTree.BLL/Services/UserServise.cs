@@ -1,85 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using FamilyTree.DAL.Interfaces.Repositories;
-using FamilyTree.DAL.Models;
-using FamilyTree.DAL.Repositories;
-using FamilyTree.BLL.Interfeces;
-using BCrypt.Net;
-
-namespace FamilyTree.BLL.Services
+﻿namespace FamilyTree.BLL.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using BCrypt.Net;
+    using FamilyTree.BLL.Interfeces;
+    using FamilyTree.DAL.Interfaces.Repositories;
+    using FamilyTree.DAL.Models;
+    using FamilyTree.DAL.Repositories;
+
     public class UserService : IUserService
     {
-        private IGenericRepository<User> _userRepository;
+        private IGenericRepository<User> userRepository;
 
         public UserService(IGenericRepository<User> userRepository)
         {
-            _userRepository = userRepository;
+            this.userRepository = userRepository;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        // Отримати всіх користувачів
         public IEnumerable<User> GetAllUsers()
         {
-            return _userRepository.GetAll();
+            return this.userRepository.GetAll();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
-        // Отримати користувача за логіном
         public User GetUserByLogin(string login)
         {
-            return _userRepository.GetById(login);
-        }
-        public bool FindUserByLogin(string login)
-        {
-            return GetUserByLogin(login) != null;
+            return this.userRepository.GetById(login);
         }
 
-        // Додати нового користувача
+        public bool FindUserByLogin(string login)
+        {
+            return this.GetUserByLogin(login) != null;
+        }
+
         public void AddUser(string login, string password)
         {
-            // Генерувати хеш пароля перед збереженням
-            password = BCrypt.Net.BCrypt.HashPassword(password);
+            password = BCrypt.HashPassword(password);
             User user = new User();
             user.Login = login;
             user.Password = password;
-            _userRepository.Add(user);
-            _userRepository.Save();
+            this.userRepository.Add(user);
+            this.userRepository.Save();
         }
 
-        // Оновити інформацію про користувача
         public void UpdateUser(string login, string password)
         {
             User user = new User();
             user.Login = login;
             user.Password = password;
-            _userRepository.Update(user);
-            _userRepository.Save();
+            this.userRepository.Update(user);
+            this.userRepository.Save();
         }
 
-        // Видалити користувача
         public void DeleteUser(string login)
         {
-            _userRepository.Remove(GetUserByLogin(login));
-            _userRepository.Save();
+            this.userRepository.Remove(this.GetUserByLogin(login));
+            this.userRepository.Save();
         }
 
         public bool AuthenticateUser(string login, string password)
         {
-            User user = _userRepository.GetById(login);
-            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+            User user = this.userRepository.GetById(login);
+            if (user != null && BCrypt.Verify(password, user.Password))
             {
                 return true;
             }
+
             return false;
         }
     }
 }
-

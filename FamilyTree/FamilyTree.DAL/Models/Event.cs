@@ -1,7 +1,4 @@
-﻿// <copyright file="Event.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-namespace FamilyTree.DAL.Models
+﻿namespace FamilyTree.DAL.Models
 {
     using System;
     using System.Collections.Generic;

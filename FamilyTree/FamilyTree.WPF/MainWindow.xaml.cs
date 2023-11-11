@@ -1,8 +1,4 @@
-﻿// <copyright file="MainWindow.xaml.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
-// </copyright>
-
-namespace FamilyTree.WPF
+﻿namespace FamilyTree.WPF
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +7,7 @@ namespace FamilyTree.WPF
     using System.Reflection.Metadata;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using Microsoft.Extensions.DependencyInjection;
@@ -26,11 +23,6 @@ namespace FamilyTree.WPF
         private int treeId;
         private UserControls.Tree familyTree;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MainWindow"/> class.
-        /// </summary>
-        /// <param name="treePersonService">An instance of the tree person service for managing tree-related person data.</param>
-        /// <param name="userTreeService">An instance of the user tree service for managing user-related tree data.</param>
         public MainWindow(ITreePersonService treePersonService, IUserTreeService userTreeService)
         {
             this.treePersonService = treePersonService;
@@ -143,6 +135,14 @@ namespace FamilyTree.WPF
         private void FamilyTreeChanged(object sender, EventArgs eventArgs)
         {
             this.FillListOfPerson();
+        }
+
+        private void WindowMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

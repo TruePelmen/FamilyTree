@@ -1,35 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FamilyTree.DAL.Models;
-
-public partial class Person
+﻿namespace FamilyTree.DAL.Models
 {
-    public int Id { get; set; }
+    using System;
+    using System.Collections.Generic;
 
-    public bool PrimaryPerson { get; set; }
+    public partial class Person
+    {
+        public int Id { get; set; }
 
-    public string Gender { get; set; } = null!;
+        public bool PrimaryPerson { get; set; }
 
-    public string LastName { get; set; } = null!;
+        public string Gender { get; set; } = null!;
 
-    public string? MaidenName { get; set; }
+        public string LastName { get; set; } = null!;
 
-    public string? FirstName { get; set; }
+        public string? MaidenName { get; set; }
 
-    public string? OtherNameVariants { get; set; }
+        public string? FirstName { get; set; }
 
-    public DateOnly? BirthDate { get; set; }
+        public string? OtherNameVariants { get; set; }
 
-    public DateOnly? DeathDate { get; set; }
+        public DateOnly? BirthDate { get; set; }
 
-    public virtual ICollection<Event> Events { get; set; } = new List<Event>();
+        public DateOnly? DeathDate { get; set; }
 
-    public virtual ICollection<MediaPerson> MediaPeople { get; set; } = new List<MediaPerson>();
+        public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
-    public virtual ICollection<Relationship> RelationshipPersonId1Navigations { get; set; } = new List<Relationship>();
+        public virtual ICollection<MediaPerson> MediaPeople { get; set; } = new List<MediaPerson>();
 
-    public virtual ICollection<Relationship> RelationshipPersonId2Navigations { get; set; } = new List<Relationship>();
+        public virtual ICollection<Relationship> RelationshipPersonId1Navigations { get; set; } = new List<Relationship>();
 
-    public virtual ICollection<TreePerson> TreePeople { get; set; } = new List<TreePerson>();
+        public virtual ICollection<Relationship> RelationshipPersonId2Navigations { get; set; } = new List<Relationship>();
+
+        public virtual ICollection<TreePerson> TreePeople { get; set; } = new List<TreePerson>();
+    }
 }
