@@ -13,8 +13,10 @@
         {
             base.OnStartup(e);
             DependencyContainer.Initialize();
-            LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
-            loginWindow.Show();
+            //LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
+            //loginWindow.Show();
+            AddPersonWindow addWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
+            addWindow.Show();
         }
     }
 }

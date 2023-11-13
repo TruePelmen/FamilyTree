@@ -63,6 +63,8 @@
             services.AddSingleton<MainWindow>();
             services.AddTransient<EditWindow>();
             services.AddTransient<UserControls.Tree>();
+            services.AddSingleton<AddPersonWindow>();
+            services.AddSingleton<AddEvent>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
