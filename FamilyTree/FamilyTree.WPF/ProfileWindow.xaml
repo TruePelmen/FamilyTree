@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FamilyTree.WPF"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -20,7 +21,7 @@
         <Border Grid.Column="0" CornerRadius="50,0,0,50" Background="#CDD7CB">
         <StackPanel Margin="20, 50, 0, 0" Grid.Column="0" HorizontalAlignment="Center">
             <Image x:Name="photo" Height="150" Width="150" Margin="20"/>
-            <TextBlock x:Name="nameTextBlock" Style="{StaticResource MaterialDesignHeadline5TextBlock}" FontWeight="SemiBold" Margin="20"/>
+            <TextBlock x:Name="nameTextBlock" Style="{StaticResource MaterialDesignHeadline5TextBlock}" FontWeight="SemiBold" Margin="20" HorizontalAlignment="Center"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="75"/>
@@ -70,6 +71,12 @@
                     <TabItem Header="Події">
                         <ScrollViewer>
                             <StackPanel Margin="10" x:Name="eventsPanel">
+                                <StackPanel x:Name="addEventRecord" Width="400" Height="100" Orientation="Horizontal">
+                                    <Button x:Name="addEventButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="120,0,10,0" Click="AddEventButtonClick">
+                                        <fa:ImageAwesome Icon="Plus" Width="10" Height="10" Foreground="White" />
+                                    </Button>
+                                    <TextBlock Text="Додати подію" Foreground="#363636" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </StackPanel>
                         </ScrollViewer>
                     </TabItem>

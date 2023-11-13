@@ -29,6 +29,8 @@
             this.personService = personService;
         }
 
+        public event EventHandler SuccessfulAdditionEvent;
+
         public int PersonId { get; set; } = 1;
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -97,7 +99,7 @@
                 };
                 this.eventService.AddEvent(eventInformation);
 
-                // Закриваємо вікно
+                this.SuccessfulAdditionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             }
             else

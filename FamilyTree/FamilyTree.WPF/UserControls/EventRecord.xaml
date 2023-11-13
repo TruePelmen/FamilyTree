@@ -5,8 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="400">
-    <Grid Background="White">
+             d:DesignHeight="100" d:DesignWidth="400"
+             MouseEnter="UserControlMouseEnter"
+             MouseLeave="UserControlMouseLeave"
+             Cursor="Hand">
+    <UserControl.Resources>
+        <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#CDD7CB" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90"/>
             <ColumnDefinition Width="50"/>

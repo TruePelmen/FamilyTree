@@ -45,5 +45,15 @@
                 this.place.Text = eventInformation.EventPlace;
             }
         }
+
+        private void UserControlMouseEnter(object sender, MouseEventArgs e)
+        {
+            this.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CDD7CB"));
+        }
+
+        private void UserControlMouseLeave(object sender, MouseEventArgs e)
+        {
+            this.Background = Brushes.White;
+        }
     }
 }

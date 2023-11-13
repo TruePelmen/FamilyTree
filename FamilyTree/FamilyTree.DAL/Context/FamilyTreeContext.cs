@@ -216,6 +216,7 @@
                     .HasDefaultValueSql("nextval('special_record_id_seq'::regclass)")
                     .HasColumnName("id");
                 entity.Property(e => e.EventId).HasColumnName("event_id");
+                entity.Property(e => e.EventId).HasColumnName("media_id");
                 entity.Property(e => e.HouseNumber).HasColumnName("house_number");
                 entity.Property(e => e.Priest)
                     .HasColumnType("character varying")
