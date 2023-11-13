@@ -9,8 +9,6 @@
     {
         public int Id { get; set; }
 
-        public bool PrimaryPerson { get; set; }
-
         public string Gender { get; set; } = null!;
 
         public string LastName { get; set; } = null!;

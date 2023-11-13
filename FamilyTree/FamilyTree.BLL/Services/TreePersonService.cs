@@ -1,6 +1,7 @@
 ﻿namespace FamilyTree.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
@@ -19,9 +20,10 @@
             return this.treePersonRepository.GetAll();
         }
 
-        public IEnumerable<Person> GetTreePeopleByTreeId(int treeId)
+        public IEnumerable<PersonInformation> GetTreePeopleByTreeId(int treeId)
         {
-            return this.treePersonRepository.GetTreePeopleByTreeId(treeId);
+            return this.treePersonRepository.GetTreePeopleByTreeId(treeId).Select(person =>
+                new PersonInformation(person)).ToList();
         }
 
         public TreePerson GetTreePersonById(int id)

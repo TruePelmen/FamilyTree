@@ -57,11 +57,21 @@
             services.AddTransient<IRelationshipService, RelationshipService>();
             services.AddTransient<IRelationshipRepository, RelationshipRepository>();
 
+            services.AddTransient<IMediaEventRepository, MediaEventRepository>();
+            services.AddTransient<IMediaEventService, MediaEventService>();
+
+            services.AddTransient<IGenericRepository<Media>, GenericRepository<Media>>();
+            services.AddTransient<IMediaService, MediaService>();
+
+
             // Register the application windows and user controls.
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<RegistrationWindow>();
             services.AddSingleton<MainWindow>();
             services.AddTransient<EditWindow>();
+            services.AddTransient<AddEvent>();
+            services.AddTransient<ProfileWindow>();
+            services.AddTransient<PhotoWindow>();
             services.AddTransient<UserControls.Tree>();
 
             ServiceProvider = services.BuildServiceProvider();

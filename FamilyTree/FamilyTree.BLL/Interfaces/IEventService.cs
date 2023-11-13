@@ -8,17 +8,19 @@
 #nullable enable
     public interface IEventService
     {
-        IEnumerable<Event> GetAllEvents();
+        IEnumerable<EventInformation> GetAllEvents();
 
-        IEnumerable<Event> GetEventsByPersonId(int id);
+        IEnumerable<EventInformation> GetEventsByPersonId(int id);
 
-        IEnumerable<Event> GetAllEventsByPersonIdAndEventType(int personId, string eventType);
+        IEnumerable<EventInformation> GetImportantEventsByPersonId(int personId);
 
-        Event GetEventById(int id);
+        IEnumerable<EventInformation> GetAllEventsByPersonIdAndEventType(int personId, string eventType);
 
-        void AddEvent(string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age);
+        EventInformation GetEventById(int id);
 
-        void UpdateEvent(int id, string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age);
+        void AddEvent(EventInformation eventInformation);
+
+        void UpdateEvent(EventInformation eventInformation);
 
         void DeleteEvent(int id);
 

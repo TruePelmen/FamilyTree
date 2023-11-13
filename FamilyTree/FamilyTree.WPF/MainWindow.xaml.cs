@@ -29,6 +29,9 @@
             this.userTreeService = userTreeService;
             this.InitializeComponent();
             this.personsList.RowDoubleClick += this.PersonsListRowDoubleClick;
+            AddEvent addEvent = DependencyContainer.ServiceProvider.GetRequiredService<AddEvent>();
+            addEvent.PersonId = 7;
+            addEvent.Show();
         }
 
         /// <summary>
@@ -115,15 +118,7 @@
 
         private void FillListOfPerson()
         {
-            var persons = this.treePersonService.GetTreePeopleByTreeId(this.treeId).ToList();
-            List<PersonCardInformation> formatingPersons = new List<PersonCardInformation>();
-            foreach (var person in persons)
-            {
-                PersonCardInformation personCardInformation = new PersonCardInformation();
-                personCardInformation.Person = person;
-                formatingPersons.Add(personCardInformation);
-            }
-
+            List<PersonInformation> formatingPersons = this.treePersonService.GetTreePeopleByTreeId(this.treeId).ToList();
             this.personsList.PersonList = formatingPersons;
         }
 

@@ -12,7 +12,7 @@
     /// </summary>
     public partial class PersonsList : UserControl
     {
-        private List<PersonCardInformation> personsList;
+        private List<PersonInformation> personsList;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PersonsList"/> class.
@@ -30,19 +30,18 @@
         /// <summary>
         /// Sets the list of PersonCardInformation to be displayed in the data grid.
         /// </summary>
-        public List<PersonCardInformation> PersonList
+        public List<PersonInformation> PersonList
         {
             set
             {
                 this.personsList = value;
-                var list = this.personsList.Select(x => x.Person).ToList();
-                this.personList.ItemsSource = list;
+                this.personList.ItemsSource = this.personsList;
             }
         }
 
         private void SearchButtonClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            var filtered = this.personsList.Select(x => x.Person).ToList();
+            var filtered = this.personsList.ToList();
             if (!string.IsNullOrWhiteSpace(this.searchLastNameTextBox.Text))
             {
                 filtered = filtered.Where(x => x.LastName == this.searchLastNameTextBox.Text).ToList();
@@ -58,13 +57,13 @@
 
         private void ResetButtonClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            var list = this.personsList.Select(x => x.Person).ToList();
+            var list = this.personsList.ToList();
             this.personList.ItemsSource = list;
         }
 
         private void PersonListMouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var selectedRow = this.personList.SelectedItem as Person;
+            var selectedRow = this.personList.SelectedItem as PersonInformation;
             if (selectedRow != null)
             {
                 int selectedId = selectedRow.Id;

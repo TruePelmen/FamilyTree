@@ -1,6 +1,7 @@
 ﻿namespace FamilyTree.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
@@ -24,9 +25,20 @@
             return this.mediaPersonRepository.GetById(id);
         }
 
-        public Media GetMainPhotoByPersonId(int id)
+        public IEnumerable<Photo> GetAllMediaByPersonId(int personId)
         {
-            return this.mediaPersonRepository.GetMainPhotoByPersonId(id);
+            return this.mediaPersonRepository.GetAllMediaByPersonId(personId).Select(photo =>
+                           new Photo(photo)).ToList();
+        }
+
+        public IEnumerable<int> GetAllPersonsIdByMediaId(int mediaId)
+        {
+            return this.mediaPersonRepository.GetAllPersonsIdByMediaId(mediaId);
+        }
+
+        public Photo GetMainPhotoByPersonId(int id)
+        {
+            return new Photo(this.mediaPersonRepository.GetMainPhotoByPersonId(id));
         }
 
         public void AddMediaPerson(int personId, int mediaId)

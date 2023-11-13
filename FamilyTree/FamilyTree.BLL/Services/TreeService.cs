@@ -30,20 +30,15 @@
 
         public int GetPrimaryPersonId(int treeId)
         {
-            var primaryPerson = this.treePersonService.GetTreePeopleByTreeId(treeId).FirstOrDefault(person => person.PrimaryPerson);
-            if (primaryPerson != null)
-            {
-                return primaryPerson.Id;
-            }
-
-            return -1;
+            return this.GetTreeById(treeId).PrimaryPerson;
         }
 
-        public int AddTree(string name)
+        public int AddTree(string name, int primaryPersonId)
         {
             Tree tree = new Tree
             {
                 Name = name,
+                PrimaryPerson = primaryPersonId,
             };
 
             this.treeRepository.Add(tree);

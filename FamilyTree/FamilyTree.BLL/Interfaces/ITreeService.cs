@@ -34,7 +34,7 @@
         /// </summary>
         /// <param name="name">The name of the family tree.</param>
         /// <returns>The unique identifier of the newly added family tree.</returns>
-        int AddTree(string name);
+        int AddTree(string name, int primaryPersonId);
 
         /// <summary>
         /// Updates an existing family tree in the system.

@@ -6,6 +6,7 @@
     using System.Windows.Input;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
+    using Microsoft.Extensions.DependencyInjection;
 
     public partial class PersonCard : UserControl, IPersonCard
     {
@@ -83,7 +84,7 @@
             this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
         }
 
-        public void RenewPersonCard(PersonCardInformation person)
+        public void RenewPersonCard(PersonInformation person)
         {
             this.IsEmpty = person.IsEmptyPerson;
             if (!this.IsEmpty)
@@ -92,20 +93,20 @@
             }
         }
 
-        private void RenewInformation(PersonCardInformation person)
+        private void RenewInformation(PersonInformation person)
         {
-            this.ChangeName(person.Person.LastName + " " + person.Person.FirstName);
-            if (person.Person.BirthDate != null && person.Person.DeathDate != null)
+            this.ChangeName(person.LastName + " " + person.FirstName);
+            if (person.BirthDate != null && person.DeathDate != null)
             {
-                this.ChangeYearOfLife((DateOnly)person.Person.BirthDate, (DateOnly)person.Person.DeathDate);
+                this.ChangeYearOfLife((DateOnly)person.BirthDate, (DateOnly)person.DeathDate);
             }
-            else if (person.Person.BirthDate != null)
+            else if (person.BirthDate != null)
             {
-                this.ChangeDateOfBirth((DateOnly)person.Person.BirthDate);
+                this.ChangeDateOfBirth((DateOnly)person.BirthDate);
             }
-            else if (person.Person.DeathDate != null)
+            else if (person.DeathDate != null)
             {
-                this.ChangeDateOfDeath((DateOnly)person.Person.DeathDate);
+                this.ChangeDateOfDeath((DateOnly)person.DeathDate);
             }
 
             if (person.MainPhoto != null)
@@ -114,13 +115,13 @@
             }
             else
             {
-                this.SetDefaultPhoto(person.Person.Gender);
+                this.SetDefaultPhoto(person.Gender);
             }
         }
 
         private void NameTextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ProfileWindow profileWindow = new ProfileWindow();
+            ProfileWindow profileWindow = DependencyContainer.ServiceProvider.GetRequiredService<ProfileWindow>();
             profileWindow.Id = this.IdPerson;
             profileWindow.ShowDialog();
         }

@@ -54,14 +54,6 @@
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the person is the primary person.
-        /// </summary>
-        /// <value>
-        /// True if the person is the primary person; otherwise, False.
-        /// </value>
-        public bool IsPrimaryPerson { get; set; }
-
-        /// <summary>
         /// Sets the default photo based on the gender.
         /// </summary>
         /// <param name="gender">The gender of the person (e.g., "male" or "female").</param>
@@ -81,13 +73,12 @@
         /// Renews the information on the person card.
         /// </summary>
         /// <param name="person">The information about the person to display on the card.</param>
-        public void RenewPersonCard(PersonCardInformation person)
+        public void RenewPersonCard(PersonInformation person)
         {
             this.IsEmpty = person.IsEmptyPerson;
             if (!this.isEmpty)
             {
                 this.RenewInformation(person);
-                this.IsPrimaryPerson = person.Person.PrimaryPerson;
             }
         }
 
@@ -177,21 +168,21 @@
             this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
         }
 
-        private void RenewInformation(PersonCardInformation person)
+        private void RenewInformation(PersonInformation person)
         {
             this.ClearLabels();
-            this.ChangeName(person.Person.LastName + " " + person.Person.FirstName);
-            if (person.Person.BirthDate != null && person.Person.DeathDate != null)
+            this.ChangeName(person.LastName + " " + person.FirstName);
+            if (person.BirthDate != null && person.DeathDate != null)
             {
-                this.ChangeYearOfLife((DateOnly)person.Person.BirthDate, (DateOnly)person.Person.DeathDate);
+                this.ChangeYearOfLife((DateOnly)person.BirthDate, (DateOnly)person.DeathDate);
             }
-            else if (person.Person.BirthDate != null)
+            else if (person.BirthDate != null)
             {
-                this.ChangeDateOfBirth((DateOnly)person.Person.BirthDate);
+                this.ChangeDateOfBirth((DateOnly)person.BirthDate);
             }
-            else if (person.Person.DeathDate != null)
+            else if (person.DeathDate != null)
             {
-                 this.ChangeDateOfDeath((DateOnly)person.Person.DeathDate);
+                 this.ChangeDateOfDeath((DateOnly)person.DeathDate);
             }
 
             if (person.MainPhoto != null)
@@ -200,7 +191,7 @@
             }
             else
             {
-                this.SetDefaultPhoto(person.Person.Gender);
+                this.SetDefaultPhoto(person.Gender);
             }
 
             if (person.BirthPlace != null && person.BirthPlace != string.Empty)
@@ -227,19 +218,11 @@
 
         private void DeleteButtonClick(object sender, RoutedEventArgs e)
         {
-            if (this.IsPrimaryPerson)
+            MessageBoxResult result = MessageBox.Show($"Ви впевнені, що бажаєте видалити особу: {this.nameTextBlock.Text}?", "Підтвердження видалення", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
             {
-                MessageBox.Show("Неможливо видалити головну особу!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            else
-            {
-                MessageBoxResult result = MessageBox.Show($"Ви впевнені, що бажаєте видалити особу: {this.nameTextBlock.Text}?", "Підтвердження видалення", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    int id = this.IdPerson;
-                    this.DeletePerson.Invoke(this, this.IdPerson);
-                }
+                int id = this.IdPerson;
+                this.DeletePerson.Invoke(this, this.IdPerson);
             }
         }
 
@@ -258,7 +241,7 @@
 
         private void NameTextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            ProfileWindow profileWindow = new ProfileWindow();
+            ProfileWindow profileWindow = DependencyContainer.ServiceProvider.GetRequiredService<ProfileWindow>();
             profileWindow.Id = this.IdPerson;
             profileWindow.ShowDialog();
         }

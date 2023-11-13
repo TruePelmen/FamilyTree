@@ -22,6 +22,10 @@
         /// <returns>The MediaEvent object with the specified identifier, or null if not found.</returns>
         MediaEvent GetMediaEventById(int id);
 
+        IEnumerable<Photo> GetAllPhotosForPerson(int personId);
+
+        IEnumerable<int> GetAllPersonsIdForPhotos(int mediaId);
+
         /// <summary>
         /// Adds a new media event to the family tree.
         /// </summary>

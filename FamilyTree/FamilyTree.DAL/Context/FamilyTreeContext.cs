@@ -178,7 +178,6 @@
                 entity.Property(e => e.OtherNameVariants)
                     .HasColumnType("character varying")
                     .HasColumnName("other_name_variants");
-                entity.Property(e => e.PrimaryPerson).HasColumnName("primary_person");
             });
 
             modelBuilder.Entity<Relationship>(entity =>
@@ -246,6 +245,7 @@
                 entity.Property(e => e.Name)
                     .HasColumnType("character varying")
                     .HasColumnName("name");
+                entity.Property(e => e.PrimaryPerson).HasColumnName("primary_person");
             });
 
             modelBuilder.Entity<TreePerson>(entity =>

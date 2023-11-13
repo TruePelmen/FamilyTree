@@ -11,6 +11,8 @@
     {
         public IEnumerable<Event> GetEventsByPersonId(int personId);
 
+        public IEnumerable<Event> GetImportantEventsByPersonId(int personId);
+
         public IEnumerable<Event> GetEventsByPersonIdAndEventType(int personId, string eventType);
     }
 }
