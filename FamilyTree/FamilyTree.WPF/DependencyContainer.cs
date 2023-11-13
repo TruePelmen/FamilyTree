@@ -74,6 +74,11 @@
             services.AddTransient<PhotoWindow>();
             services.AddTransient<UserControls.Tree>();
 
+            // Special record
+            services.AddTransient<ISpecialRecordService, SpecialRecordService>();
+            services.AddTransient<ISpecialRecordRepository, SpecialRecordRepository>();
+            services.AddTransient<AddSpecialRecord>();
+
             ServiceProvider = services.BuildServiceProvider();
         }
     }

@@ -1,15 +1,16 @@
 ﻿namespace FamilyTree.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
 
     public class SpecialRecordService : ISpecialRecordService
     {
-        private IGenericRepository<SpecialRecord> specialRecordRepository;
+        private ISpecialRecordRepository specialRecordRepository;
 
-        public SpecialRecordService(IGenericRepository<SpecialRecord> specialRecordRepository)
+        public SpecialRecordService(ISpecialRecordRepository specialRecordRepository)
         {
             this.specialRecordRepository = specialRecordRepository;
         }
@@ -61,5 +62,30 @@
             this.specialRecordRepository.Remove(this.GetSpecialRecordById(id));
             this.specialRecordRepository.Save();
         }
+        public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)
+        {
+            List<SpecialRecord> specialRecordsForEvent = new List<SpecialRecord>();
+            List<SpecialRecord> specialRecordsCollection = (List<SpecialRecord>)GetAllSpecialRecords();
+
+            foreach (SpecialRecord specialRecord in specialRecordsCollection)
+            {
+                if (specialRecord.EventId == eventId)
+                {
+                    specialRecordsForEvent.Add(specialRecord);
+                }
+            }
+
+            return specialRecordsForEvent; // Явно перетворюємо в List<SpecialRecord>
+        }
+
+
+
+        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
+        {
+            // Отримайте всі спеціальні записи для заданої події та перевірте, чи є серед них записи заданого типу.
+            var specialRecords = this.GetAllSpecialRecordsForEvent(eventId);
+            return specialRecords.Any(record => record.RecordType == recordType);
+        }
+
     }
 }
