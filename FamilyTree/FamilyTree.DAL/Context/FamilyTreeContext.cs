@@ -178,7 +178,6 @@
                 entity.Property(e => e.OtherNameVariants)
                     .HasColumnType("character varying")
                     .HasColumnName("other_name_variants");
-                entity.Property(e => e.PrimaryPerson).HasColumnName("primary_person");
             });
 
             modelBuilder.Entity<Relationship>(entity =>
@@ -217,6 +216,7 @@
                     .HasDefaultValueSql("nextval('special_record_id_seq'::regclass)")
                     .HasColumnName("id");
                 entity.Property(e => e.EventId).HasColumnName("event_id");
+                entity.Property(e => e.EventId).HasColumnName("media_id");
                 entity.Property(e => e.HouseNumber).HasColumnName("house_number");
                 entity.Property(e => e.Priest)
                     .HasColumnType("character varying")
@@ -246,6 +246,7 @@
                 entity.Property(e => e.Name)
                     .HasColumnType("character varying")
                     .HasColumnName("name");
+                entity.Property(e => e.PrimaryPerson).HasColumnName("primary_person");
             });
 
             modelBuilder.Entity<TreePerson>(entity =>

@@ -10,5 +10,9 @@
     public interface IMediaPersonRepository : IGenericRepository<MediaPerson>
     {
         Media GetMainPhotoByPersonId(int personId);
+
+        IEnumerable<Media> GetAllMediaByPersonId(int personId);
+
+        IEnumerable<int> GetAllPersonsIdByMediaId(int mediaId);
     }
 }

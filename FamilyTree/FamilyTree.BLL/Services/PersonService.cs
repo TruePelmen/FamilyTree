@@ -20,83 +20,75 @@
             this.mediaPersonService = mediaPersonService;
         }
 
-        public IEnumerable<Person> GetAllPeople()
+        public IEnumerable<PersonInformation> GetAllPeople()
         {
-            return this.personRepository.GetAll();
+            return this.personRepository.GetAll().Select(person =>
+                new PersonInformation(person)).ToList();
         }
 
-        public Person GetPersonById(int id)
+        public PersonInformation GetPersonById(int id)
         {
-            return this.personRepository.GetById(id);
-        }
-
-        public PersonCardInformation GetFullInformationAboutPerson(int id)
-        {
-            PersonCardInformation person = this.GetShortInformationAboutPerson(id);
-
-            var birthEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "Birth").FirstOrDefault();
+            PersonInformation personInformation = this.GetShortInformationAboutPerson(id);
+            var birthEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "birth").FirstOrDefault();
             if (birthEvent != null)
             {
-                person.BirthPlace = birthEvent.EventPlace;
+                personInformation.BirthPlace = birthEvent.EventPlace;
             }
 
-            var deathEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "Death").FirstOrDefault();
+            var deathEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "death").FirstOrDefault();
             if (deathEvent != null)
             {
-                person.DeathPlace = deathEvent.EventPlace;
+                personInformation.DeathPlace = deathEvent.EventPlace;
             }
 
-            return person;
+            return personInformation;
         }
 
-        public PersonCardInformation GetShortInformationAboutPerson(int id)
+        public PersonInformation GetShortInformationAboutPerson(int id)
         {
-            PersonCardInformation person = new PersonCardInformation();
-            person.Person = this.personRepository.GetById(id);
-
+            var person = this.personRepository.GetById(id);
+            PersonInformation personInformation = new PersonInformation(person);
             var mainPhoto = this.mediaPersonService.GetMainPhotoByPersonId(id);
-
             if (mainPhoto != null)
             {
-                person.MainPhoto = mainPhoto.FilePath;
+                personInformation.MainPhoto = mainPhoto.FilePath;
             }
 
-            return person;
+            return personInformation;
         }
 
-        public int AddPerson(bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
+        public int AddPerson(PersonInformation personInformation)
         {
             Person person = new Person
             {
-                PrimaryPerson = primaryPersone,
-                LastName = lastname,
-                Gender = gender,
-                MaidenName = maidenName,
-                FirstName = firstName,
-                OtherNameVariants = otherNameVariants,
-                BirthDate = birthDate,
-                DeathDate = deathDate,
+                LastName = personInformation.LastName,
+                Gender = personInformation.Gender,
+                MaidenName = personInformation.MaidenName,
+                FirstName = personInformation.FirstName,
+                OtherNameVariants = personInformation.OtherNameVariants,
+                BirthDate = personInformation.BirthDate,
+                DeathDate = personInformation.DeathDate,
             };
 
             this.personRepository.Add(person);
+            int id = person.Id;
             this.personRepository.Save();
-            return person.Id;
+            return id;
         }
 
-        public void UpdatePerson(int id, bool primaryPersone, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate)
+        public void UpdatePerson(PersonInformation personInformation)
         {
-            Person person = this.personRepository.GetById(id);
+            Person person = this.personRepository.GetById(personInformation.Id);
 
             if (person != null)
             {
-                person.PrimaryPerson = primaryPersone;
-                person.LastName = lastname;
-                person.Gender = gender;
-                person.MaidenName = maidenName;
-                person.FirstName = firstName;
-                person.OtherNameVariants = otherNameVariants;
-                person.BirthDate = birthDate;
-                person.DeathDate = deathDate;
+                person.LastName = personInformation.LastName;
+                person.Gender = personInformation.Gender;
+                person.MaidenName = personInformation.MaidenName;
+                person.FirstName = personInformation.FirstName;
+                person.OtherNameVariants = personInformation.OtherNameVariants;
+                person.BirthDate = personInformation.BirthDate;
+                person.DeathDate = personInformation.DeathDate;
 
                 this.personRepository.Update(person);
                 this.personRepository.Save();
@@ -105,8 +97,12 @@
 
         public void DeletePerson(int id)
         {
-            this.personRepository.Remove(this.GetPersonById(id));
-            this.personRepository.Save();
+            Person person = this.personRepository.GetById(id);
+            if (person != null)
+            {
+                this.personRepository.Update(person);
+                this.personRepository.Save();
+            }
         }
     }
 }

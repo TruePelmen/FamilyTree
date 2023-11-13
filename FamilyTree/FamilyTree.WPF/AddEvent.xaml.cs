@@ -5,6 +5,7 @@
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Models;
 
@@ -27,6 +28,8 @@
             this.eventService = eventService;
             this.personService = personService;
         }
+
+        public event EventHandler SuccessfulAdditionEvent;
 
         public int PersonId { get; set; } = 1;
 
@@ -85,10 +88,18 @@
 
             if (isEventUnique)
             {
-                // Додаємо подію до сервісу
-                this.eventService.AddEvent(eventType, eventDate, eventPlace, id, eventDescription, eventAge);
+                EventInformation eventInformation = new EventInformation()
+                {
+                    EventType = eventType,
+                    EventDate = eventDate,
+                    EventPlace = eventPlace,
+                    PersonId = id,
+                    Description = eventDescription,
+                    Age = eventAge,
+                };
+                this.eventService.AddEvent(eventInformation);
 
-                // Закриваємо вікно
+                this.SuccessfulAdditionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             }
             else

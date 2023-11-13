@@ -7,6 +7,7 @@
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
+    using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.BLL.Interfeces;
     using FamilyTree.BLL.Services;
@@ -111,9 +112,16 @@
             if (this.CheckFormValidity())
             {
                 this.userService.AddUser(this.loginTextBox.Text, this.passwordBox.Password);
-                int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text);
+                PersonInformation person = new PersonInformation
+                {
+                    LastName = this.lastNameTextBox.Text,
+                    FirstName = this.firstNameTextBox.Text,
+                    BirthDate = this.ParseDate(),
+                    Gender = this.DetermineGender(),
+                };
+                int personId = this.personService.AddPerson(person);
+                int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text, personId);
                 this.userTreeService.AddUserTree(this.loginTextBox.Text, treeId, "edit");
-                int personId = this.personService.AddPerson(true, this.lastNameTextBox.Text, this.DetermineGender(), null, this.firstNameTextBox.Text, null, this.ParseDate(), null);
                 this.treePersonService.AddTreePerson(treeId, personId);
                 MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
                 mainWindow.UserLogin = this.loginTextBox.Text;

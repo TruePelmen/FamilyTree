@@ -75,17 +75,25 @@
             }
         }
 
-        public void AddChild(PersonCardInformation person = null)
+        public int PrimaryPersonId
+        {
+            get
+            {
+                return this.treeService.GetPrimaryPersonId(this.treeId);
+            }
+        }
+
+        public void AddChild(PersonInformation person = null)
         {
             if (this.numberOfChildren != 0 && person != null)
             {
                 PersonCard emptyCard = this.childrenPanel.Children.OfType<PersonCard>().FirstOrDefault(card => card.IsEmpty);
                 emptyCard.RenewPersonCard(person);
-                emptyCard.IdPerson = person.Person.Id;
+                emptyCard.IdPerson = person.Id;
             }
 
             PersonCard newChild = new PersonCard();
-            newChild.RenewPersonCard(new PersonCardInformation());
+            newChild.RenewPersonCard(new PersonInformation());
             newChild.Margin = new Thickness(20, 0, 20, 0);
             newChild.Width = 180;
             newChild.Height = 100;
@@ -122,9 +130,9 @@
         {
             this.childrenPanel.Children.Clear();
             this.numberOfChildren = 0;
-            var person = this.personService.GetFullInformationAboutPerson(this.idFocusPerson);
+            var person = this.personService.GetPersonById(this.idFocusPerson);
             this.idFocusPersonSpounse = this.relationshipService.GetSpouseIdByPersonId(this.idFocusPerson);
-            if (person.Person.Gender == "male")
+            if (person.Gender == "male")
             {
                 this.maleFocus.IdPerson = this.idFocusPerson;
                 this.maleFocus.RenewPersonCard(person);
@@ -133,7 +141,7 @@
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
                 this.maleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleMother.IdPerson));
                 this.femaleFocus.IdPerson = this.idFocusPersonSpounse;
-                this.femaleFocus.RenewPersonCard(this.personService.GetFullInformationAboutPerson(this.idFocusPersonSpounse));
+                this.femaleFocus.RenewPersonCard(this.personService.GetPersonById(this.idFocusPersonSpounse));
                 this.femaleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
                 this.femaleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleFather.IdPerson));
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
@@ -148,7 +156,7 @@
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
                 this.femaleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleMother.IdPerson));
                 this.maleFocus.IdPerson = this.idFocusPersonSpounse;
-                this.maleFocus.RenewPersonCard(this.personService.GetFullInformationAboutPerson(this.idFocusPersonSpounse));
+                this.maleFocus.RenewPersonCard(this.personService.GetPersonById(this.idFocusPersonSpounse));
                 this.maleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
                 this.maleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleFather.IdPerson));
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
@@ -238,7 +246,20 @@
 
         private void DeletePerson(object sender, int personId)
         {
-            this.personService.DeletePerson(personId);
+            if (personId == this.PrimaryPersonId)
+            {
+                MessageBox.Show("Неможливо видалити головну особу!", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                this.personService.DeletePerson(personId);
+                this.RefocusTree();
+                this.TreeChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        private void RefocusTree()
+        {
             if (this.idFocusPersonSpounse > 0)
             {
                 this.FocusPersonId = this.idFocusPersonSpounse;
@@ -247,8 +268,6 @@
             {
                 this.FocusPersonId = this.treeService.GetPrimaryPersonId(this.treeId);
             }
-
-            this.TreeChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

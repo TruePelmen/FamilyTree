@@ -9,6 +9,8 @@
 
         public string Name { get; set; } = null!;
 
+        public int PrimaryPerson { get; set; }
+
         public virtual ICollection<TreePerson> TreePeople { get; set; } = new List<TreePerson>();
 
         public virtual ICollection<UserTree> UserTrees { get; set; } = new List<UserTree>();

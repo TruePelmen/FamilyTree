@@ -15,6 +15,10 @@
         /// <returns>An IEnumerable of MediaPerson objects representing all media associations with persons.</returns>
         IEnumerable<MediaPerson> GetAllMediaPeople();
 
+        IEnumerable<Photo> GetAllMediaByPersonId(int personId);
+
+        IEnumerable<int> GetAllPersonsIdByMediaId(int mediaId);
+
         /// <summary>
         /// Retrieves a media association with a person by its unique identifier.
         /// </summary>
@@ -27,7 +31,7 @@
         /// </summary>
         /// <param name="id">The unique identifier of the person.</param>
         /// <returns>The Media object representing the main photo of the person, or null if not found.</returns>
-        Media GetMainPhotoByPersonId(int id);
+        Photo GetMainPhotoByPersonId(int id);
 
         /// <summary>
         /// Adds a new media association with a person in the family tree.

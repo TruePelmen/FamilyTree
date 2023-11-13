@@ -27,7 +27,7 @@
         /// </summary>
         /// <param name="treeId">The unique identifier of the family tree.</param>
         /// <returns>An IEnumerable of Person objects associated with the family tree.</returns>
-        IEnumerable<Person> GetTreePeopleByTreeId(int treeId);
+        IEnumerable<PersonInformation> GetTreePeopleByTreeId(int treeId);
 
         /// <summary>
         /// Adds a new association of a person with a family tree.

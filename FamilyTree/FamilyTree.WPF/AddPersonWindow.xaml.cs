@@ -12,6 +12,9 @@
     using static System.Net.Mime.MediaTypeNames;
     using System.Windows.Media.Imaging;
     using Microsoft.Extensions.DependencyInjection;
+    using FamilyTree.BLL;
+    using FamilyTree.DAL.Models;
+    using FamilyTree.WPF.UserControls;
 
     /// <summary>
     /// Interaction logic for AddPersonWindow.xaml.
@@ -22,9 +25,9 @@
         private readonly ITreeService treeService;
         private readonly IPersonService personService;
 
-        public AddPersonWindow()
+        public AddPersonWindow(ITreePersonService treePersonService, ITreeService treeService, IPersonService personService)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.treePersonService = treePersonService;
             this.treeService = treeService;
             this.personService = personService;
@@ -32,9 +35,21 @@
 
         private void AddNewPersonButtonClick(object sender, RoutedEventArgs e)
         {
-            this.CheckFieldEmpty();
-            int personId = this.personService.AddPerson(true, this.addLastNameTextBox.Text, this.DetermineGender(), this.addMaidenNameTextBox.Text, 
-                this.addFirstNameTextBox.Text, this.addOtherNameTextBox.Text, this.ParseDate(this.dateOfBirth.SelectedDate.ToString()), this.ParseDate(this.dateOfDeath.SelectedDate.ToString()));
+            if (this.CheckFieldEmpty())
+            {
+                PersonInformation person = new PersonInformation
+                {
+                    LastName = this.LastNameTextBox.Text,
+                    FirstName = this.FirstNameTextBox.Text,
+                    MaidenName = this.MaidenNameTextBox.Text,
+                    BirthDate = this.ParseDate(this.dateOfBirth),
+                    DeathDate = this.ParseDate(this.dateOfDeath),
+                    Gender = this.DetermineGender(),
+                };
+                int personId = this.personService.AddPerson(person);
+                int treeId = this.treeService.AddTree("Дерево " + this.LastNameTextBox.Text, personId);
+                this.treePersonService.AddTreePerson(treeId, personId);
+            }
         }
 
         private string DetermineGender()
@@ -49,44 +64,32 @@
             }
         }
 
-        private void FemaleOption_Checked(object sender, RoutedEventArgs e)
+        private DateOnly? ParseDate(DatePicker date)
         {
-            this.HandleGenderSelection("female");
-        }
-
-        private void MaleOption_Checked(object sender, RoutedEventArgs e)
-        {
-            this.HandleGenderSelection("male");
-        }
-
-        private void HandleGenderSelection(string gender)
-        {
-            if (gender == "female")
+            if (!string.IsNullOrWhiteSpace(date.SelectedDate.ToString())) 
             {
-                this.addMaidenNameTextBox.Visibility = Visibility.Visible;
+                string dateString = date.SelectedDate.ToString();
+                string dateWithoutTime = dateString.Split(' ')[0];
+                return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             }
-            else if (gender == "male")
-            {
-                this.addMaidenNameTextBox.Visibility = Visibility.Collapsed;
-            }
-
+            return null;
         }
 
-        private DateOnly? ParseDate(string dateString)
+        private bool CheckFieldEmpty()
         {
-            string dateWithoutTime = dateString.Split(' ')[0];
-            return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
-        }
-
-        private void CheckFieldEmpty()
-        {
-            if (string.IsNullOrWhiteSpace(this.addLastNameTextBox.Text))
+            if (string.IsNullOrWhiteSpace(this.LastNameTextBox.Text))
             {
-                this.addLastNameTextBox.Focus();
+                this.LastNameTextBox.Focus();
+                return false;
             }
-            else if (!this.maleOption.IsSelected || !this.femaleOption.IsSelected)
+            else if (!this.maleOption.IsSelected && !this.femaleOption.IsSelected)
             {
                 this.genderWarning.Visibility = Visibility.Visible;
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -115,12 +118,12 @@
 
         private void LastNameTextBoxLostFocus(object sender, RoutedEventArgs e)
         {
-            this.HandleTextBoxLostFocus(this.addLastNameTextBox);
+            this.HandleTextBoxLostFocus(this.LastNameTextBox);
         }
 
         private void LastNameTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            HintAssist.SetHint(this.addLastNameTextBox, "Прізвище");
+            HintAssist.SetHint(this.LastNameTextBox, "Прізвище");
         }
 
         private void HandleTextBoxLostFocus(TextBox textBox)
@@ -138,19 +141,39 @@
             }
         }
 
+        private void MaidenNameTextBoxLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (!this.femaleOption.IsSelected)
+            {
+                this.MaidenNameTextBox.BorderBrush = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            }
+        }
+
+        private void MaidenNameTextBoxGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (this.femaleOption.IsSelected)
+            {
+                this.MaidenNameTextBox.BorderBrush = SystemColors.ControlDarkDarkBrush;
+                HintAssist.SetHint(this.MaidenNameTextBox, "Жіноче прізвище");
+                this.MaidenNameTextBox.IsReadOnly = false;
+            }
+        }
+
         private void ResetButtonClick(object sender, RoutedEventArgs e)
         {
-            this.addLastNameTextBox.Text = null;
-            this.addFirstNameTextBox.Text = null;
-            this.addMaidenNameTextBox.Text = null;
-            this.addOtherNameTextBox.Text = null;
+            this.LastNameTextBox.Text = null;
+            this.FirstNameTextBox.Text = null;
+            this.MaidenNameTextBox.Text = null;
+            this.OtherNameTextBox.Text = null;
             this.dateOfBirth.Text = null;
             this.dateOfDeath.Text = null;
             this.maleOption.IsSelected = false;
             this.femaleOption.IsSelected = false;
+            this.MaidenNameTextBox.IsReadOnly = true;
+            this.genderWarning.Visibility= Visibility.Collapsed;
         }
 
-        private void addEventButtonClick(object sender, RoutedEventArgs e)
+        private void AddEventButtonClick(object sender, RoutedEventArgs e)
         {
             AddEvent addEventWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddEvent>();
             addEventWindow.Show();

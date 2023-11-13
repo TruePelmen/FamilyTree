@@ -23,5 +23,12 @@
             .Where(e => e.PersonId == personId && e.EventType == eventType)
             .ToList();
         }
+
+        public IEnumerable<Event> GetImportantEventsByPersonId(int personId)
+        {
+            return this.context.Events
+            .Where(e => e.PersonId == personId && (e.EventType == "birth" || e.EventType == "death" || e.EventType == "marriage"))
+            .ToList();
+        }
     }
 }

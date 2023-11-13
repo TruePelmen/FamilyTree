@@ -17,54 +17,59 @@
             this.eventRepository = eventRepository;
         }
 
-        public IEnumerable<Event> GetAllEvents()
+        public IEnumerable<EventInformation> GetAllEvents()
         {
-            return this.eventRepository.GetAll();
+            return this.eventRepository.GetAll().Select(eventInfo => new EventInformation(eventInfo)).ToList();
         }
 
-        public IEnumerable<Event> GetEventsByPersonId(int personId)
+        public IEnumerable<EventInformation> GetEventsByPersonId(int personId)
         {
-            return this.eventRepository.GetEventsByPersonId(personId);
+            return this.eventRepository.GetEventsByPersonId(personId).Select(eventInfo => new EventInformation(eventInfo)).ToList();
         }
 
-        public IEnumerable<Event> GetAllEventsByPersonIdAndEventType(int personId, string eventType)
+        public IEnumerable<EventInformation> GetImportantEventsByPersonId(int personId)
         {
-            return this.eventRepository.GetEventsByPersonIdAndEventType(personId, eventType);
+            return this.eventRepository.GetImportantEventsByPersonId(personId).Select(eventInfo => new EventInformation(eventInfo)).ToList();
         }
 
-        public Event GetEventById(int id)
+        public IEnumerable<EventInformation> GetAllEventsByPersonIdAndEventType(int personId, string eventType)
         {
-            return this.eventRepository.GetById(id);
+            return this.eventRepository.GetEventsByPersonIdAndEventType(personId, eventType).Select(eventInfo => new EventInformation(eventInfo)).ToList();
         }
 
-        public void AddEvent(string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age)
+        public EventInformation GetEventById(int id)
+        {
+            return new EventInformation(this.eventRepository.GetById(id));
+        }
+
+        public void AddEvent(EventInformation eventInformation)
         {
             Event newEvent = new Event
             {
-                EventType = eventType,
-                EventDate = eventDate,
-                EventPlace = eventPlace,
-                PersonId = personId,
-                Description = description,
-                Age = age,
+                EventType = eventInformation.EventType,
+                EventDate = eventInformation.EventDate,
+                EventPlace = eventInformation.EventPlace,
+                PersonId = eventInformation.PersonId,
+                Description = eventInformation.Description,
+                Age = eventInformation.Age,
             };
 
             this.eventRepository.Add(newEvent);
             this.eventRepository.Save();
         }
 
-        public void UpdateEvent(int id, string eventType, DateOnly? eventDate, string? eventPlace, int personId, string? description, int? age)
+        public void UpdateEvent(EventInformation eventInformation)
         {
-            Event existingEvent = this.eventRepository.GetById(id);
+            Event existingEvent = this.eventRepository.GetById(eventInformation.Id);
 
             if (existingEvent != null)
             {
-                existingEvent.EventType = eventType;
-                existingEvent.EventDate = eventDate;
-                existingEvent.EventPlace = eventPlace;
-                existingEvent.PersonId = personId;
-                existingEvent.Description = description;
-                existingEvent.Age = age;
+                existingEvent.EventType = eventInformation.EventType;
+                existingEvent.EventDate = eventInformation.EventDate;
+                existingEvent.EventPlace = eventInformation.EventPlace;
+                existingEvent.PersonId = eventInformation.PersonId;
+                existingEvent.Description = eventInformation.Description;
+                existingEvent.Age = eventInformation.Age;
 
                 this.eventRepository.Update(existingEvent);
                 this.eventRepository.Save();
@@ -73,7 +78,7 @@
 
         public void DeleteEvent(int id)
         {
-            this.eventRepository.Remove(this.GetEventById(id));
+            this.eventRepository.Remove(this.eventRepository.GetById(id));
             this.eventRepository.Save();
         }
 
@@ -81,19 +86,17 @@
         {
             if (eventType == "birth" || eventType == "death")
             {
-                IEnumerable<Event> existingEvents = this.GetAllEventsByPersonIdAndEventType(personId, eventType);
+                IEnumerable<EventInformation> existingEvents = this.GetAllEventsByPersonIdAndEventType(personId, eventType);
 
                 if (existingEvents != null && existingEvents.Any())
                 {
-                    foreach (Event existingEvent in existingEvents)
+                    foreach (EventInformation existingEvent in existingEvents)
                     {
                         if (existingEvent.EventType == eventType)
                         {
                             return false;
                         }
                     }
-
-                    // Вже існує подія такого типу, не додавати нову
                 }
             }
 

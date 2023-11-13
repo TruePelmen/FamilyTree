@@ -1,15 +1,16 @@
 ﻿namespace FamilyTree.BLL.Services
 {
     using System.Collections.Generic;
+    using System.Linq;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
 
     public class MediaEventService : IMediaEventService
     {
-        private IGenericRepository<MediaEvent> mediaEventRepository;
+        private IMediaEventRepository mediaEventRepository;
 
-        public MediaEventService(IGenericRepository<MediaEvent> mediaEventRepository)
+        public MediaEventService (IMediaEventRepository mediaEventRepository)
         {
             this.mediaEventRepository = mediaEventRepository;
         }
@@ -17,6 +18,17 @@
         public IEnumerable<MediaEvent> GetAllMediaEvents()
         {
             return this.mediaEventRepository.GetAll();
+        }
+
+        public IEnumerable<Photo> GetAllPhotosForPerson(int personId)
+        {
+            return this.mediaEventRepository.GetAllPhotosForPerson(personId).Select(photo =>
+                           new Photo(photo)).ToList();
+        }
+
+        public IEnumerable<int> GetAllPersonsIdForPhotos(int mediaId)
+        {
+            return this.mediaEventRepository.GetAllPersonForPhotos(mediaId);
         }
 
         public MediaEvent GetMediaEventById(int id)

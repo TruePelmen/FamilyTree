@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using FamilyTree.DAL.Models;
 
     /// <summary>
     /// Interface for managing persons and their information in the family tree.
@@ -13,28 +12,21 @@
         /// Retrieves all persons in the family tree.
         /// </summary>
         /// <returns>An IEnumerable of Person objects representing all persons.</returns>
-        IEnumerable<Person> GetAllPeople();
+        IEnumerable<PersonInformation> GetAllPeople();
 
         /// <summary>
         /// Retrieves a person by their unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the person.</param>
         /// <returns>The Person object with the specified identifier, or null if not found.</returns>
-        Person GetPersonById(int id);
-
-        /// <summary>
-        /// Retrieves full information about a person in the family tree.
-        /// </summary>
-        /// <param name="id">The unique identifier of the person.</param>
-        /// <returns>A PersonCardInformation object containing full information about the person.</returns>
-        PersonCardInformation GetFullInformationAboutPerson(int id);
+        PersonInformation GetPersonById(int id);
 
         /// <summary>
         /// Retrieves short information about a person in the family tree.
         /// </summary>
         /// <param name="id">The unique identifier of the person.</param>
         /// <returns>A PersonCardInformation object containing concise information about the person.</returns>
-        PersonCardInformation GetShortInformationAboutPerson(int id);
+        PersonInformation GetShortInformationAboutPerson(int id);
 
         /// <summary>
         /// Adds a new person to the family tree.
@@ -48,7 +40,7 @@
         /// <param name="birthDate">The date of birth of the person (null if unknown).</param>
         /// <param name="deathDate">The date of death of the person (null if alive or date unknown).</param>
         /// <returns>The unique identifier of the newly added person.</returns>
-        int AddPerson(bool primaryPerson, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate);
+        int AddPerson(PersonInformation person);
 
         /// <summary>
         /// Updates existing person information in the family tree.
@@ -62,7 +54,7 @@
         /// <param name="otherNameVariants">The updated other name variants or aliases of the person.</param>
         /// <param name="birthDate">The updated date of birth of the person (null if unchanged).</param>
         /// <param name="deathDate">The updated date of death of the person (null if unchanged).</param>
-        void UpdatePerson(int id, bool primaryPerson, string lastname, string gender, string maidenName, string firstName, string otherNameVariants, DateOnly? birthDate, DateOnly? deathDate);
+        void UpdatePerson(PersonInformation person);
 
         /// <summary>
         /// Deletes a person from the family tree.
