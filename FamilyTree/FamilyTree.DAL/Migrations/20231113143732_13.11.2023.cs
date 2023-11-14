@@ -80,7 +80,7 @@ namespace FamilyTree.DAL.Migrations
                 table: "Person",
                 type: "character varying",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "character varying",
                 oldNullable: true);
@@ -90,7 +90,7 @@ namespace FamilyTree.DAL.Migrations
                 table: "Person",
                 type: "character varying",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "character varying",
                 oldNullable: true);
@@ -100,7 +100,7 @@ namespace FamilyTree.DAL.Migrations
                 table: "Event",
                 type: "character varying",
                 nullable: false,
-                defaultValue: "",
+                defaultValue: string.Empty,
                 oldClrType: typeof(string),
                 oldType: "character varying",
                 oldNullable: true);

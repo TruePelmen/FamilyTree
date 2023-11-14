@@ -8,6 +8,7 @@
              d:DesignHeight="100" d:DesignWidth="400"
              MouseEnter="UserControlMouseEnter"
              MouseLeave="UserControlMouseLeave"
+             MouseLeftButtonDown="UserControlMouseLeftButtonDown"
              Cursor="Hand">
     <UserControl.Resources>
         <Style TargetType="UserControl">

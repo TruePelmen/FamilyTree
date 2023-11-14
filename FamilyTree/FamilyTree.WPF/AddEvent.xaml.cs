@@ -48,7 +48,7 @@
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
