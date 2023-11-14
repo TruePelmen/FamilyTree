@@ -286,10 +286,13 @@
         {
             foreach (var photo in this.photos)
             {
+                var addPhoto = this.addPhoto;
+                this.photoPanel.Children.Remove(addPhoto);
                 PhotoCard photoCard = new PhotoCard();
                 photoCard.RenewCard(photo);
                 photoCard.OpenPhotoWindow += this.PhotoCardOpenPhotoWindow;
                 this.photoPanel.Children.Add(photoCard);
+                this.photoPanel.Children.Add(addPhoto);
             }
         }
 
@@ -321,7 +324,8 @@
             var spouseEvents = this.eventService.GetAllEventsByPersonIdAndEventType(this.relationshipService.GetSpouseIdByPersonId(this.Id), "death");
             foreach (var spouseEvent in spouseEvents)
             {
-                spouseEvent.FullEventType += " " + this.spouseGender;
+                spouseEvent.FullEventType += " " + this.spouseGender + " " + this.spouse.FullName;
+                spouseEvent.Age = this.personInformation.CurrentAge(spouseEvent.EventDate?.Year);
                 this.events.Add(spouseEvent);
             }
 
@@ -341,11 +345,16 @@
                 foreach (var childEvent in childEvents)
                 {
                     childEvent.FullEventType += childGender + " " + child.FullName;
+                    childEvent.Age = this.personInformation.CurrentAge(childEvent.EventDate?.Year);
                     this.events.Add(childEvent);
                 }
             }
 
             this.events = this.events.OrderBy(e => e.EventDate).ToList();
+            if (this.personInformation.DeathDate != null)
+            {
+                this.events = this.events.Where(e => e.EventDate <= this.personInformation.DeathDate).OrderBy(e => e.EventDate).ToList();
+            }
         }
 
         private void ShowPersonEvents()
@@ -353,12 +362,35 @@
             this.GetAllEvents();
             foreach (var personEvent in this.events)
             {
+                var addEvent = this.addEventRecord;
+                this.eventsPanel.Children.Remove(addEvent);
                 EventRecord eventRecord = new EventRecord(personEvent);
                 this.eventsPanel.Children.Add(eventRecord);
                 Separator separator = new Separator();
                 separator.Style = (Style)this.FindResource("MaterialDesignDarkSeparator");
                 this.eventsPanel.Children.Add(separator);
+                this.eventsPanel.Children.Add(addEvent);
             }
+        }
+
+        private void AddEventButtonClick(object sender, RoutedEventArgs e)
+        {
+            AddEvent addEventWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddEvent>();
+            addEventWindow.PersonId = this.Id;
+            addEventWindow.SuccessfulAdditionEvent += this.AddEventWindowAddEvent;
+            addEventWindow.ShowDialog();
+        }
+
+        private void AddEventWindowAddEvent(object sender, EventArgs e)
+        {
+            ProfileWindow profileWindow = DependencyContainer.ServiceProvider.GetRequiredService<ProfileWindow>();
+            profileWindow.Id = this.Id;
+            profileWindow.Show();
+            this.Close();
+        }
+
+        private void AddPhotoButtonClick(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

@@ -71,19 +71,6 @@
             }
         }
 
-        public int CurrentAge
-        {
-            get
-            {
-                if (this.BirthDate != null)
-                {
-                    return DateTime.Now.Year - this.BirthDate.Value.Year;
-                }
-
-                return 0;
-            }
-        }
-
         public int AgeAtDeath
         {
             get
@@ -95,6 +82,16 @@
 
                 return 0;
             }
+        }
+
+        public int? CurrentAge(int? date)
+        {
+            if (this.BirthDate != null && date != null)
+                {
+                    return date - this.BirthDate.Value.Year;
+                }
+
+            return 0;
         }
     }
 }

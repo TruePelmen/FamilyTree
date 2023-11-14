@@ -15,42 +15,49 @@
             this.specialRecordRepository = specialRecordRepository;
         }
 
-        public IEnumerable<SpecialRecord> GetAllSpecialRecords()
+        public IEnumerable<SpecialRecordInformation> GetAllSpecialRecords()
         {
-            return this.specialRecordRepository.GetAll();
+            return this.specialRecordRepository.GetAll().Select(specialRecord =>
+                                       new SpecialRecordInformation(specialRecord)).ToList();
         }
 
-        public SpecialRecord GetSpecialRecordById(int id)
+        public IEnumerable<SpecialRecordInformation> GetAllSpecialRecordsForEvent(int eventId)
         {
-            return this.specialRecordRepository.GetById(id);
+            return this.specialRecordRepository.GetAllSpecialRecordsForEvent(eventId).Select(specialRecord =>
+                                                  new SpecialRecordInformation(specialRecord)).ToList();
         }
 
-        public void AddSpecialRecord(string recordType, int? houseNumber, string priest, string record, int eventId)
+        public SpecialRecordInformation GetSpecialRecordById(int id)
+        {
+            return new SpecialRecordInformation(this.specialRecordRepository.GetById(id));
+        }
+
+        public void AddSpecialRecord(SpecialRecordInformation specialRecord)
         {
             SpecialRecord newSpecialRecord = new SpecialRecord
             {
-                RecordType = recordType,
-                HouseNumber = houseNumber,
-                Priest = priest,
-                Record = record,
-                EventId = eventId,
+                RecordType = specialRecord.RecordType,
+                HouseNumber = specialRecord.HouseNumber,
+                Priest = specialRecord.Priest,
+                Record = specialRecord.Record,
+                EventId = specialRecord.EventId,
             };
 
             this.specialRecordRepository.Add(newSpecialRecord);
             this.specialRecordRepository.Save();
         }
 
-        public void UpdateSpecialRecord(int id, string recordType, int? houseNumber, string priest, string record, int eventId)
+        public void UpdateSpecialRecord(SpecialRecordInformation specialRecord)
         {
-            SpecialRecord existingSpecialRecord = this.specialRecordRepository.GetById(id);
+            SpecialRecord existingSpecialRecord = this.specialRecordRepository.GetById(specialRecord.Id);
 
             if (existingSpecialRecord != null)
             {
-                existingSpecialRecord.RecordType = recordType;
-                existingSpecialRecord.HouseNumber = houseNumber;
-                existingSpecialRecord.Priest = priest;
-                existingSpecialRecord.Record = record;
-                existingSpecialRecord.EventId = eventId;
+                existingSpecialRecord.RecordType = specialRecord.RecordType;
+                existingSpecialRecord.HouseNumber = specialRecord.HouseNumber;
+                existingSpecialRecord.Priest = specialRecord.Priest;
+                existingSpecialRecord.Record = specialRecord.Record;
+                existingSpecialRecord.EventId = specialRecord.EventId;
 
                 this.specialRecordRepository.Update(existingSpecialRecord);
                 this.specialRecordRepository.Save();
@@ -59,7 +66,7 @@
 
         public void DeleteSpecialRecord(int id)
         {
-            this.specialRecordRepository.Remove(this.GetSpecialRecordById(id));
+            this.specialRecordRepository.Remove(this.specialRecordRepository.GetById(id));
             this.specialRecordRepository.Save();
         }
         public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)

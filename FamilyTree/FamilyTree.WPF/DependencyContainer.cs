@@ -63,6 +63,8 @@
             services.AddTransient<IGenericRepository<Media>, GenericRepository<Media>>();
             services.AddTransient<IMediaService, MediaService>();
 
+            services.AddTransient<ISpecialRecordRepository, SpecialRecordRepository>();
+            services.AddTransient<ISpecialRecordService, SpecialRecordService>();
 
             // Register the application windows and user controls.
             services.AddSingleton<LoginWindow>();
@@ -72,7 +74,10 @@
             services.AddTransient<AddEvent>();
             services.AddTransient<ProfileWindow>();
             services.AddTransient<PhotoWindow>();
+            services.AddTransient<EventDetails>();
             services.AddTransient<UserControls.Tree>();
+            services.AddSingleton<AddPersonWindow>();
+            services.AddSingleton<AddEvent>();
 
             // Special record
             services.AddTransient<ISpecialRecordService, SpecialRecordService>();
