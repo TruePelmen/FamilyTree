@@ -76,6 +76,8 @@
             services.AddTransient<PhotoWindow>();
             services.AddTransient<EventDetails>();
             services.AddTransient<UserControls.Tree>();
+            services.AddSingleton<AddPersonWindow>();
+            services.AddSingleton<AddEvent>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

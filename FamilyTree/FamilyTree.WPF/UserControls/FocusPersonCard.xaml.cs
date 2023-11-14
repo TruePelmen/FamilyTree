@@ -235,8 +235,8 @@
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
-            AddPersonWindow addPersonWindow = new AddPersonWindow();
-            addPersonWindow.ShowDialog();
+            AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
+            addPersonWindow.Show();
         }
 
         private void NameTextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
