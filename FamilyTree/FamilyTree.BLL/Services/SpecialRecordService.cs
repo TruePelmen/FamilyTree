@@ -62,6 +62,7 @@
             this.specialRecordRepository.Remove(this.GetSpecialRecordById(id));
             this.specialRecordRepository.Save();
         }
+
         public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)
         {
             List<SpecialRecord> specialRecordsForEvent = new List<SpecialRecord>();
@@ -77,8 +78,6 @@
 
             return specialRecordsForEvent; // Явно перетворюємо в List<SpecialRecord>
         }
-
-
 
         public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
         {
