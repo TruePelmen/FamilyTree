@@ -69,23 +69,22 @@
             this.specialRecordRepository.Remove(this.specialRecordRepository.GetById(id));
             this.specialRecordRepository.Save();
         }
-        public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)
-        {
-            List<SpecialRecord> specialRecordsForEvent = new List<SpecialRecord>();
-            List<SpecialRecord> specialRecordsCollection = (List<SpecialRecord>)GetAllSpecialRecords();
 
-            foreach (SpecialRecord specialRecord in specialRecordsCollection)
-            {
-                if (specialRecord.EventId == eventId)
-                {
-                    specialRecordsForEvent.Add(specialRecord);
-                }
-            }
+        //public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)
+        //{
+        //    List<SpecialRecord> specialRecordsForEvent = new List<SpecialRecord>();
+        //    List<SpecialRecord> specialRecordsCollection = (List<SpecialRecord>)this.GetAllSpecialRecords();
 
-            return specialRecordsForEvent; // Явно перетворюємо в List<SpecialRecord>
-        }
+        //    foreach (SpecialRecord specialRecord in specialRecordsCollection)
+        //    {
+        //        if (specialRecord.EventId == eventId)
+        //        {
+        //            specialRecordsForEvent.Add(specialRecord);
+        //        }
+        //    }
 
-
+        //    return specialRecordsForEvent; // Явно перетворюємо в List<SpecialRecord>
+        //}
 
         public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
         {
@@ -93,6 +92,5 @@
             var specialRecords = this.GetAllSpecialRecordsForEvent(eventId);
             return specialRecords.Any(record => record.RecordType == recordType);
         }
-
     }
 }

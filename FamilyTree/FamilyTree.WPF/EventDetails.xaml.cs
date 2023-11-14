@@ -1,18 +1,9 @@
 ﻿namespace FamilyTree.WPF
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
     using System.Windows.Input;
     using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Shapes;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.WPF.UserControls;
@@ -130,6 +121,18 @@
 
         private void AddSpecialRecordButtonClick(object sender, RoutedEventArgs e)
         {
+            AddSpecialRecord addSpecialRecord = DependencyContainer.ServiceProvider.GetRequiredService<AddSpecialRecord>();
+            addSpecialRecord.EventId = this.eventId;
+            addSpecialRecord.AddSpecialRecordEvent += this.AddSpecialRecord;
+            addSpecialRecord.ShowDialog();
+        }
+
+        private void AddSpecialRecord(object sender, EventArgs e)
+        {
+            EventDetails eventDetails = DependencyContainer.ServiceProvider.GetRequiredService<EventDetails>();
+            eventDetails.EventId = this.eventId;
+            eventDetails.ShowDialog();
+            this.Close();
         }
     }
 }

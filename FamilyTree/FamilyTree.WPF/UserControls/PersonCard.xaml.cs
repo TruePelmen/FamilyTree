@@ -128,8 +128,6 @@
 
         private void AddPersonButtonClick(object sender, RoutedEventArgs e)
         {
-            AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
-            addPersonWindow.Show();
         }
     }
 }
