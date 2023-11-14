@@ -1,4 +1,4 @@
-﻿namespace FamilyTree.DAL.Repositories
+namespace FamilyTree.DAL.Repositories
 {
     using System;
     using System.Collections.Generic;

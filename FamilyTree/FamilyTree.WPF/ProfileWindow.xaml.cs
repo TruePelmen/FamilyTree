@@ -136,11 +136,11 @@
             {
                 if (this.personInformation.Gender == "male")
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                    //this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\FT_16_27_13.11.2023\\FamilyTree\\FamilyTree.WPF\\Images\\Images\\man.png"));
                 }
                 else
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                    //this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
                 }
             }
         }
