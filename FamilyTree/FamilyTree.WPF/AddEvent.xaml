@@ -1,54 +1,56 @@
 ﻿<Window x:Class="FamilyTree.WPF.AddEvent"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Додати Подію" Height="700" Width="500"
+        Title="Додати Подію" Height="660" Width="430"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         MouseDown="WindowMouseDown">
-  <Grid>
-    <Border Background="White" CornerRadius="25">
-      <Grid Margin="10,10,10,10">
-        <StackPanel>
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0">
-            <Image Source="Images/minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
-            <Image Source="Images/close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
-          </StackPanel>
-        </StackPanel>
-        <StackPanel Width="220" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
-          <Image Source="Images/logo.png" Width="88" Height="95"/>
-          <TextBlock Text="Додати Подію" Foreground="#144509" FontSize="28" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-          <StackPanel Margin="0,20,0,0">
-            <TextBlock Text="Тип події" Margin="0,0,0,5"/>
-            <ComboBox Name="eventTypeComboBox">
-              <ComboBoxItem Content="Народження" IsSelected="True" />
-              <ComboBoxItem Content="Смерть" />
-              <ComboBoxItem Content="Одруження" />
-              <ComboBoxItem Content="Інша подія" />
-            </ComboBox>
-          </StackPanel>
-          <StackPanel Margin="0,30,0,0">
-            <TextBlock Text="Дата" Margin="0,0,0,5"/>
-            <DatePicker Name="eventDatePicker" />
-          </StackPanel>
-          <StackPanel Margin="0,30,0,0">
-            <TextBlock Text="Місце" Margin="0,0,0,5"/>
-            <TextBox Name="eventPlaceTextBox" />
-          </StackPanel>
-          <StackPanel Margin="0,30,0,0">
-            <TextBlock Text="Опис" Margin="0,0,0,5"/>
-            <TextBox Name="eventDescriptionTextBox" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
-          </StackPanel>
-          <Button Name="addPhotoButton" Content="Додати медіа" Margin="0,30,0,0" />
-          <Button Name="addSpecialRecordButton" Content="Додати спеціальний запис" Margin="0,30,0,0" />
-          <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
-            <Button Name="saveButton" Content="Зберегти" Click="SaveButton_Click" Margin="0,0,10,0"/>
-            <Button Name="cancelButton" Content="Скасувати" Click="CloseButton_Click" Margin="10,0,0,0"/>
-          </StackPanel>
-        </StackPanel>
-      </Grid>
-    </Border>
-  </Grid>
+    <Grid>
+        <Border BorderBrush="#144509" BorderThickness="2" Background="White" CornerRadius="25">
+            <Grid Margin="10,10,10,10">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0">
+                        <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
+                        <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+                    <Button Name="addPhotoButton" Style="{StaticResource MaterialDesignFloatingActionButton}" Width="80" Height="80">
+                        <Button.Content>
+                            <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\add.png" Width="40" Height="40" />
+                        </Button.Content>
+                    </Button>
+
+                    <StackPanel Width="220" Margin="0,20,0,0">
+                        <TextBlock Text="Тип події" Margin="0,0,0,5" Style="{StaticResource text}"/>
+                        <ComboBox  Name="eventTypeComboBox" Style="{StaticResource MaterialDesignFilledComboBox}">
+                            <ComboBoxItem Content="Народження" IsSelected="True" />
+                            <ComboBoxItem Content="Смерть" />
+                            <ComboBoxItem Content="Одруження" />
+                            <ComboBoxItem Content="Інша подія" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Width="220" Margin="0,30,0,0">
+                        <TextBlock Text="Дата" Margin="0,0,0,5" Style="{StaticResource text}"/>
+                        <DatePicker Name="eventDatePicker" Style="{StaticResource MaterialDesignFilledDatePicker}"/>
+                    </StackPanel>
+                    <StackPanel Width="220" Margin="0,30,0,0">
+                        <TextBlock Text="Місце" Margin="0,0,0,5" Style="{StaticResource text}"/>
+                        <TextBox Name="eventPlaceTextBox" Style="{StaticResource MaterialDesignFilledTextBox}"/>
+                    </StackPanel>
+                    <StackPanel Width="220" Margin="0,30,0,0">
+                        <TextBlock Text="Опис" Margin="0,0,0,5" Style="{StaticResource text}"/>
+                        <TextBox Height="80" Name="eventDescriptionTextBox" Style="{StaticResource MaterialDesignFilledTextBox}" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
+                        <Button Name="saveButton" Content="Зберегти" Click="SaveButton_Click" Margin="0,0,10,0" Style="{StaticResource buttonMainGreen}" Height="40" Width="100"/>
+                        <Button Name="cancelButton" Content="Скасувати" Click="CloseButton_Click" Margin="10,0,0,0" Style="{StaticResource buttonMain}" Height="40" Width="100"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
 </Window>

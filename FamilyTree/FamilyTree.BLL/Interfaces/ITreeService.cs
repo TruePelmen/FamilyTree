@@ -29,11 +29,6 @@
         /// <returns>The unique identifier of the primary person in the family tree, or -1 if not found.</returns>
         int GetPrimaryPersonId(int treeId);
 
-        /// <summary>
-        /// Adds a new family tree to the system.
-        /// </summary>
-        /// <param name="name">The name of the family tree.</param>
-        /// <returns>The unique identifier of the newly added family tree.</returns>
         int AddTree(string name, int primaryPersonId);
 
         /// <summary>

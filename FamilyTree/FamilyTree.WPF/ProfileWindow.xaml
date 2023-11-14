@@ -18,7 +18,7 @@
             <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" CornerRadius="50,0,0,50" Background="#CDD7CB">
+        <Border Grid.Column="0" CornerRadius="25,0,0,25" Background="#CDD7CB">
         <StackPanel Margin="20, 50, 0, 0" Grid.Column="0" HorizontalAlignment="Center">
             <Image x:Name="photo" Height="150" Width="150" Margin="20"/>
             <TextBlock x:Name="nameTextBlock" Style="{StaticResource MaterialDesignHeadline5TextBlock}" FontWeight="SemiBold" Margin="20" HorizontalAlignment="Center"/>
@@ -63,7 +63,7 @@
             </StackPanel>
         </StackPanel>
         </Border>
-        <Border Grid.Column="1" CornerRadius="0,50,50,0" Background="White">
+        <Border Grid.Column="1" CornerRadius="0,25,25,0" Background="White">
             <StackPanel>
                 <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 30 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
                 <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 -22 70 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
@@ -83,7 +83,12 @@
                     <TabItem Header="Зображення">
                         <ScrollViewer>
                             <WrapPanel x:Name="photoPanel">
-
+                                <StackPanel Margin="30,20,20,20" Width="150" Height="200"  x:Name="addPhoto" Orientation="Horizontal">
+                                    <Button x:Name="addPhotoButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="5,0,10,0" Click="AddPhotoButtonClick">
+                                        <fa:ImageAwesome Icon="Plus" Width="10" Height="10" Foreground="White" />
+                                    </Button>
+                                    <TextBlock  Width="150" Text="Додати фото" TextWrapping="Wrap" Foreground="#363636" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </WrapPanel>
                         </ScrollViewer>
                     </TabItem>
