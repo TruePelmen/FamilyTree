@@ -13,6 +13,7 @@
     using FamilyTree.BLL.Services;
     using FamilyTree.WPF.UserControls;
     using Microsoft.Extensions.DependencyInjection;
+    using Serilog;
 
     /// <summary>
     /// User registration window.
@@ -123,6 +124,7 @@
                 int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text, personId);
                 this.userTreeService.AddUserTree(this.loginTextBox.Text, treeId, "edit");
                 this.treePersonService.AddTreePerson(treeId, personId);
+                Log.Information("User was successfully registrated =)");
                 MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
                 mainWindow.UserLogin = this.loginTextBox.Text;
                 mainWindow.Show();
