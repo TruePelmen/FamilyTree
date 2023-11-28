@@ -1,16 +1,16 @@
 ﻿namespace FamilyTree.WPF
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Documents;
-    using System.Collections.Generic;
+    using System.Windows.Input;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.WPF.UserControls;
     using Microsoft.Extensions.DependencyInjection;
-    using System.Linq;
-    using System.Windows.Input;
 
     /// <summary>
     /// Interaction logic for PhotoWindow.xaml

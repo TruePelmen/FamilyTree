@@ -5,6 +5,10 @@
 
     public class Photo
     {
+        public Photo()
+        {
+        }
+
         public Photo(Media media)
         {
             if (media != null)

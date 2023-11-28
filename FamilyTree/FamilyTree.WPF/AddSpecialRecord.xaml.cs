@@ -1,5 +1,6 @@
 ﻿namespace FamilyTree.WPF
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
@@ -28,7 +29,9 @@
             this.personService = personService;
             this.specialRecordService = specialRecordService;
         }
-
+        
+        public event EventHandler AddSpecialRecordEvent;
+        
         public int EventId
         {
             get
@@ -59,8 +62,8 @@
         {
             this.Close();
         }
-
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -87,6 +90,7 @@
                     recordType = "population census";
                     break;
             }
+            
             if (this.specialRecordService.AreSpecialRecordsOfTypeExistForEvent(this.EventId, recordType))
             {
                 MessageBox.Show($"Для цієї події вже існують записи типу '{recordType}'. Додавання нового запису заборонено.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -96,9 +100,15 @@
             int? houseNumber = int.Parse(this.recordPlaceTextBox.Text);
             string priest = this.recordPriestTextBox.Text;
             string record = this.recordDescTextBox.Text;
-
-            this.specialRecordService.AddSpecialRecord(recordType, houseNumber, priest, record, this.EventId);
-            Log.Information("Specail record was successfully added =)");
+            SpecialRecordInformation specialRecord = new SpecialRecordInformation()
+            {
+                RecordType = recordType,
+                HouseNumber = houseNumber,
+                Priest = priest,
+                EventId = this.EventId,
+            };
+            this.specialRecordService.AddSpecialRecord(specialRecord);
+            this.AddSpecialRecordEvent.Invoke(this, new EventArgs());
             this.Close();
 
         }

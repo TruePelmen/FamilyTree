@@ -10,7 +10,7 @@
     {
         private IMediaEventRepository mediaEventRepository;
 
-        public MediaEventService (IMediaEventRepository mediaEventRepository)
+        public MediaEventService(IMediaEventRepository mediaEventRepository)
         {
             this.mediaEventRepository = mediaEventRepository;
         }
@@ -29,6 +29,12 @@
         public IEnumerable<int> GetAllPersonsIdForPhotos(int mediaId)
         {
             return this.mediaEventRepository.GetAllPersonForPhotos(mediaId);
+        }
+
+        public IEnumerable<Photo> GetAllPhotosForEvent(int eventId)
+        {
+            return this.mediaEventRepository.GetAllPhotosForEvent(eventId).Select(photo =>
+                                      new Photo(photo)).ToList();
         }
 
         public MediaEvent GetMediaEventById(int id)

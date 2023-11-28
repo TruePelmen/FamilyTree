@@ -4,9 +4,34 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <TargetFramework>net7.0-windows</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
     <UseWPF>true</UseWPF>
     
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\add-image.png" />
+    <None Remove="Images\add.png" />
+    <None Remove="Images\ancestry.png" />
+    <None Remove="Images\cancel.png" />
+    <None Remove="Images\close.png" />
+    <None Remove="Images\close_.png" />
+    <None Remove="Images\close_white.png" />
+    <None Remove="Images\diagram.png" />
+    <None Remove="Images\gemini.png" />
+    <None Remove="Images\login.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\logo_white.png" />
+    <None Remove="Images\man.png" />
+    <None Remove="Images\minimize.png" />
+    <None Remove="Images\minimize_white.png" />
+    <None Remove="Images\minus-sign.png" />
+    <None Remove="Images\minus.png" />
+    <None Remove="Images\password.png" />
+    <None Remove="Images\settings.png" />
+    <None Remove="Images\woman.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
@@ -30,6 +55,29 @@
   <ItemGroup>
     <ProjectReference Include="..\FamilyTree.BLL\FamilyTree.BLL.csproj" />
     <ProjectReference Include="..\FamilyTree.DAL\FamilyTree.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\add-image.png" />
+    <Resource Include="Images\add.png" />
+    <Resource Include="Images\ancestry.png" />
+    <Resource Include="Images\cancel.png" />
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\close_.png" />
+    <Resource Include="Images\close_white.png" />
+    <Resource Include="Images\diagram.png" />
+    <Resource Include="Images\gemini.png" />
+    <Resource Include="Images\login.png" />
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\logo_white.png" />
+    <Resource Include="Images\man.png" />
+    <Resource Include="Images\minimize.png" />
+    <Resource Include="Images\minimize_white.png" />
+    <Resource Include="Images\minus-sign.png" />
+    <Resource Include="Images\minus.png" />
+    <Resource Include="Images\password.png" />
+    <Resource Include="Images\settings.png" />
+    <Resource Include="Images\woman.png" />
   </ItemGroup>
 
 </Project>

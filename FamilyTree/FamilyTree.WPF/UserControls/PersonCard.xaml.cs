@@ -128,8 +128,6 @@
 
         private void AddPersonButtonClick(object sender, RoutedEventArgs e)
         {
-            AddPersonWindow addPersonWindow = new AddPersonWindow();
-            addPersonWindow.ShowDialog();
         }
     }
 }

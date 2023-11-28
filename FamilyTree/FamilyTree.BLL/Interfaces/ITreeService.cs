@@ -29,19 +29,9 @@
         /// <returns>The unique identifier of the primary person in the family tree, or -1 if not found.</returns>
         int GetPrimaryPersonId(int treeId);
 
-        /// <summary>
-        /// Adds a new family tree to the system.
-        /// </summary>
-        /// <param name="name">The name of the family tree.</param>
-        /// <returns>The unique identifier of the newly added family tree.</returns>
         int AddTree(string name, int primaryPersonId);
 
-        /// <summary>
-        /// Updates an existing family tree in the system.
-        /// </summary>
-        /// <param name="id">The unique identifier of the family tree to update.</param>
-        /// <param name="name">The updated name of the family tree.</param>
-        void UpdateTree(int id, string name);
+        string UpdateTree(int id, string name);
 
         /// <summary>
         /// Deletes a family tree from the system.

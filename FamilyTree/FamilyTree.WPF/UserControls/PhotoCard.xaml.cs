@@ -31,6 +31,5 @@
         {
             this.OpenPhotoWindow?.Invoke(this, this.Id);
         }
-
     }
 }

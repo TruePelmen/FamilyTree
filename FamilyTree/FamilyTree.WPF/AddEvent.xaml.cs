@@ -30,6 +30,8 @@
             this.personService = personService;
         }
 
+        public event EventHandler SuccessfulAdditionEvent;
+
         public int PersonId { get; set; } = 1;
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -47,7 +49,7 @@
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -98,7 +100,7 @@
                 };
                 this.eventService.AddEvent(eventInformation);
                 Log.Information("Event was successfully added =)");
-                // Закриваємо вікно
+                this.SuccessfulAdditionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             }
             else

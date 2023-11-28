@@ -11,6 +11,10 @@
     {
         IEnumerable<Tree> GetAllTreeByUserLogin(string login);
 
+        IEnumerable<UserTree> GetAllUserTreeByUserLogin(string login);
+
+        IEnumerable<UserTree> GetAllUserTreeByTreeId(int treeId);
+
         string GetAccessTypeByTreeIdAndUserLogin(int treeId, string login);
     }
 }
