@@ -79,6 +79,7 @@
             services.AddTransient<UserControls.Tree>();
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddTree>();
+            services.AddTransient<EditUserWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

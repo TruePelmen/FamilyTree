@@ -53,7 +53,7 @@
         {
             User user = new User();
             user.Login = login;
-            user.Password = password;
+            user.Password = BCrypt.HashPassword(password);
             try
             {
                 this.userRepository.Update(user);
