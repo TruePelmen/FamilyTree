@@ -8,6 +8,7 @@
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Models;
+    using Serilog;
 
     /// <summary>
     /// Interaction logic for AddEvent.xaml
@@ -96,7 +97,7 @@
                     Age = eventAge,
                 };
                 this.eventService.AddEvent(eventInformation);
-
+                Log.Information("Event was successfully added =)");
                 // Закриваємо вікно
                 this.Close();
             }
