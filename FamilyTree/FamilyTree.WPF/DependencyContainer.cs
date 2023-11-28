@@ -80,6 +80,7 @@
             services.AddSingleton<AddEvent>();
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddTree>();
+            services.AddTransient<EditUserWindow>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
