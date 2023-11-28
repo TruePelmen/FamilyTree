@@ -235,8 +235,6 @@
 
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
-            AddPersonWindow addPersonWindow = new AddPersonWindow();
-            addPersonWindow.ShowDialog();
         }
 
         private void NameTextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

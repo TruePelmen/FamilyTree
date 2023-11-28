@@ -1,7 +1,7 @@
 ﻿<Window x:Class="FamilyTree.WPF.AddSpecialRecord"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Додати Подію" Height="700" Width="500"
+        Title="Додати Подію" Height="650" Width="460"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
@@ -9,41 +9,41 @@
         AllowsTransparency="True"
         MouseDown="WindowMouseDown">
     <Grid>
-        <Border Background="White" CornerRadius="25">
+        <Border BorderBrush="#144509" BorderThickness="2" Background="White" CornerRadius="25" Margin="0,0,0,14">
             <Grid Margin="10,10,10,10">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0">
-                        <Image Source="Images/minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
-                        <Image Source="Images/close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
+                        <Image Source="Images\minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
+                        <Image Source="Images\close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Width="320" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
-                    <Image Source="Images/logo.png" Width="88" Height="95"/>
-                    <TextBlock Foreground="#144509" FontSize="28" FontWeight="SemiBold" Width="272" Height="66"><Run Text="Додати спеціальний "/><LineBreak/><Run Text="             запис"/></TextBlock>
-                    <StackPanel Margin="0,20,0,0">
-                        <TextBlock Margin="0,0,0,5"><Run Language="uk-ua" Text="Вид запису"/></TextBlock>
-                        <ComboBox Name="recordTypeComboBox" SelectionChanged="RecordTypeComboBox_SelectionChanged">
+                <StackPanel Width="320" Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+
+                    <StackPanel Width="220" Margin="0,20,0,0">
+                        <TextBlock Style="{StaticResource text}" Margin="0,0,0,5"><Run Language="uk-ua" Text="Вид запису"/></TextBlock>
+                        <ComboBox Style="{StaticResource MaterialDesignFilledComboBox}" Name="recordTypeComboBox" SelectionChanged="RecordTypeComboBox_SelectionChanged">
                             <ComboBoxItem Content="Метрична книга" />
                             <ComboBoxItem Content="Сповідальний запис" />
                             <ComboBoxItem Content="Переписний запис" />
                             <ComboBoxItem Content="Перепис населння" />
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel Margin="0,30,0,0">
-                        <TextBlock Margin="0,0,0,5"><Run Language="uk-ua" Text="Номер будинку"/></TextBlock>
-                        <TextBox Name="recordPlaceTextBox" />
+                    <StackPanel Width="220" Margin="0,30,0,0">
+                        <TextBlock Style="{StaticResource text}" Margin="0,0,0,5"><Run Language="uk-ua" Text="Номер будинку"/></TextBlock>
+                        <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Name="recordPlaceTextBox" />
                     </StackPanel>
-                    <StackPanel Margin="0,30,0,0">
-                        <TextBlock Text="Опис" Margin="0,0,0,5"/>
-                        <TextBox Name="recordDescTextBox" />
+                    <StackPanel Width="220" Margin="0,30,0,0" x:Name="priestStackPanel">
+                        <TextBlock Style="{StaticResource text}" Text="Священик" Margin="0,0,0,5"  />
+                        <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Name="recordPriestTextBox" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"/>
                     </StackPanel>
-                    <StackPanel Margin="0,30,0,0" x:Name="priestStackPanel" Visibility="Collapsed">
-                        <TextBlock Text="Священик" Margin="0,0,0,5"  />
-                        <TextBox Name="recordPriestTextBox" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" />
+                    <StackPanel Width="220" Margin="0,30,0,0">
+                        <TextBlock Style="{StaticResource text}" Text="Опис" Margin="0,0,0,5"/>
+                        <TextBox Style="{StaticResource MaterialDesignFilledTextBox}" Name="recordDescTextBox" Height="80"/>
                     </StackPanel>
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
-                        <Button Name="saveButton" Content="Зберегти" Click="SaveButton_Click" Margin="0,0,10,0"/>
-                        <Button Name="cancelButton" Content="Скасувати" Click="CloseButton_Click" Margin="10,0,0,0"/>
+                        <Button Name="saveButton" Content="Зберегти" Click="SaveButton_Click" Margin="0,0,10,0" Width="100" Height="40" Style="{StaticResource buttonMainGreen}"/>
+                        <Button Name="cancelButton" Content="Скасувати" Click="CloseButtonClick" Margin="10,0,0,0" Width="100" Height="40" Style="{StaticResource buttonMain}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>

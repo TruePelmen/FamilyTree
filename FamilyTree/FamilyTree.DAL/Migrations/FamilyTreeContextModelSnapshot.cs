@@ -67,6 +67,7 @@ namespace FamilyTree.DAL.Migrations
                         .HasColumnName("event_place");
 
                     b.Property<string>("EventType")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("event_type");
 
@@ -197,10 +198,12 @@ namespace FamilyTree.DAL.Migrations
                         .HasColumnName("first_name");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("gender");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("character varying")
                         .HasColumnName("last_name");
 
@@ -211,10 +214,6 @@ namespace FamilyTree.DAL.Migrations
                     b.Property<string>("OtherNameVariants")
                         .HasColumnType("character varying")
                         .HasColumnName("other_name_variants");
-
-                    b.Property<bool>("PrimaryPerson")
-                        .HasColumnType("boolean")
-                        .HasColumnName("primary_person");
 
                     b.HasKey("Id")
                         .HasName("person_pkey");
@@ -262,7 +261,7 @@ namespace FamilyTree.DAL.Migrations
 
                     b.Property<int>("EventId")
                         .HasColumnType("integer")
-                        .HasColumnName("event_id");
+                        .HasColumnName("media_id");
 
                     b.Property<int?>("HouseNumber")
                         .HasColumnType("integer")
@@ -299,6 +298,10 @@ namespace FamilyTree.DAL.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("character varying")
                         .HasColumnName("name");
+
+                    b.Property<int>("PrimaryPerson")
+                        .HasColumnType("integer")
+                        .HasColumnName("primary_person");
 
                     b.HasKey("Id")
                         .HasName("tree_pkey");
@@ -383,6 +386,7 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Person", "Person")
                         .WithMany("Events")
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("event_person_id_fkey");
 
@@ -399,6 +403,7 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Media", "Media")
                         .WithMany("MediaEvents")
                         .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("media_event_media_id_fkey");
 
@@ -412,12 +417,14 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Media", "Media")
                         .WithMany("MediaPeople")
                         .HasForeignKey("MediaId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("media_person_media_id_fkey");
 
                     b.HasOne("FamilyTree.DAL.Models.Person", "Person")
                         .WithMany("MediaPeople")
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("media_person_person_id_fkey");
 
@@ -431,12 +438,14 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Person", "PersonId1Navigation")
                         .WithMany("RelationshipPersonId1Navigations")
                         .HasForeignKey("PersonId1")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("relationship_person_id1_fkey");
 
                     b.HasOne("FamilyTree.DAL.Models.Person", "PersonId2Navigation")
                         .WithMany("RelationshipPersonId2Navigations")
                         .HasForeignKey("PersonId2")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("relationship_person_id2_fkey");
 
@@ -450,6 +459,7 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Event", "Event")
                         .WithMany("SpecialRecords")
                         .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("special_record_event_id_fkey");
 
@@ -461,12 +471,14 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Person", "Person")
                         .WithMany("TreePeople")
                         .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("tree_person_person_id_fkey");
 
                     b.HasOne("FamilyTree.DAL.Models.Tree", "Tree")
                         .WithMany("TreePeople")
                         .HasForeignKey("TreeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("tree_person_tree_id_fkey");
 
@@ -480,12 +492,14 @@ namespace FamilyTree.DAL.Migrations
                     b.HasOne("FamilyTree.DAL.Models.Tree", "Tree")
                         .WithMany("UserTrees")
                         .HasForeignKey("TreeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("user_tree_tree_id_fkey");
 
                     b.HasOne("FamilyTree.DAL.Models.User", "UserLoginNavigation")
                         .WithMany("UserTrees")
                         .HasForeignKey("UserLogin")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("user_tree_user_login_fkey");
 
                     b.Navigation("Tree");

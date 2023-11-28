@@ -26,6 +26,8 @@
 
         IEnumerable<int> GetAllPersonsIdForPhotos(int mediaId);
 
+        IEnumerable<Photo> GetAllPhotosForEvent(int eventId);
+
         /// <summary>
         /// Adds a new media event to the family tree.
         /// </summary>

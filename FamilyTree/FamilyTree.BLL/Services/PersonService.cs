@@ -100,7 +100,7 @@
             Person person = this.personRepository.GetById(id);
             if (person != null)
             {
-                this.personRepository.Update(person);
+                this.personRepository.Remove(person);
                 this.personRepository.Save();
             }
         }

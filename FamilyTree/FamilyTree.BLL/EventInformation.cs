@@ -1,6 +1,7 @@
 ﻿namespace FamilyTree.BLL
 {
     using System;
+    using System.Diagnostics;
     using FamilyTree.DAL.Models;
 
 #nullable enable
@@ -10,11 +11,13 @@
 
         public EventInformation()
         {
-
+            this.fullEventType = string.Empty;
+            this.EventType = string.Empty;
         }
 
         public EventInformation(Event eventInfo)
         {
+           this.fullEventType = string.Empty;
            this.Id = eventInfo.Id;
            this.EventType = eventInfo.EventType;
            this.GetFullEventType();
@@ -27,7 +30,7 @@
 
         public int Id { get; set; }
 
-        public string EventType{ get; set; }
+        public string EventType { get; set; }
 
         public string FullEventType
         {
