@@ -84,7 +84,32 @@
             userTreeService.AddUserTree(userTreeToAdd.UserLogin, userTreeToAdd.TreeId, userTreeToAdd.AccessType);
 
             // Assert
-            mockUserTreeRepository.Verify(repo => repo.Add(userTreeToAdd), Times.Once);
+            mockUserTreeRepository.Verify(repo => repo.Add(It.IsAny<UserTree>()), Times.Once);
+            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Once);
+        }
+
+        [Fact]
+        public void AddUser_ShouldThrowException()
+        {
+            // Arrange
+            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
+            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
+
+            var userTreeToAdd = new UserTree
+            {
+                UserLogin = "user1",
+                TreeId = 1,
+                AccessType = "edit",
+            };
+
+            mockUserTreeRepository.Setup(repo => repo.Add(It.IsAny<UserTree>())).Throws(new Exception());
+
+            // Act
+            Action act = () => userTreeService.AddUserTree(userTreeToAdd.UserLogin, userTreeToAdd.TreeId, userTreeToAdd.AccessType);
+
+            // Assert
+            act.Should().Throw<Exception>().WithMessage("Не вдалося додати дерево для користувача");
+            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Never);
         }
 
         [Fact]
@@ -112,6 +137,47 @@
 
             // Assert
             mockUserTreeRepository.Verify(repo => repo.Update(userTreeFromRepository), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteUserTree_ShouldDeleteUserTreeFromRepository()
+        {
+            // Arrange
+            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
+            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
+
+            var userTreeId = 1;
+            var userTreeFromRepository = new UserTree { Id = userTreeId, UserLogin = "user1", TreeId = 1, AccessType = "edit" };
+
+            mockUserTreeRepository.Setup(repo => repo.GetById(userTreeId)).Returns(userTreeFromRepository);
+
+            // Act
+            userTreeService.DeleteUserTree(userTreeId);
+
+            // Assert
+            mockUserTreeRepository.Verify(repo => repo.Remove(userTreeFromRepository), Times.Once);
+            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteUserTree_ShouldThrowException()
+        {
+            // Arrange
+            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
+            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
+
+            var userTreeId = 1;
+            var userTreeFromRepository = new UserTree { Id = userTreeId, UserLogin = "user1", TreeId = 1, AccessType = "edit" };
+
+            mockUserTreeRepository.Setup(repo => repo.GetById(userTreeId)).Returns(userTreeFromRepository);
+            mockUserTreeRepository.Setup(repo => repo.Remove(It.IsAny<UserTree>())).Throws(new Exception());
+
+            // Act
+            Action act = () => userTreeService.DeleteUserTree(userTreeId);
+
+            // Assert
+            act.Should().Throw<Exception>().WithMessage("Не вдалося видалити дерево для користувача");
+            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Never);
         }
     }
 }
