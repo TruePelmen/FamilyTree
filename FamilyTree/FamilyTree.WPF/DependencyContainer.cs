@@ -7,6 +7,7 @@
     using FamilyTree.DAL.Models;
     using FamilyTree.DAL.Repositories;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// A static class responsible for managing the service provider and its initialization.
@@ -18,6 +19,7 @@
         /// </summary>
         public static ServiceProvider ServiceProvider { get; private set; }
 
+        public static ILoggerFactory LoggerFactory;
         /// <summary>
         /// Initializes the service provider and registers services.
         /// </summary>
@@ -80,6 +82,47 @@
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddTree>();
             services.AddTransient<EditUserWindow>();
+
+            // Logger
+            services.AddSingleton<ILogger<LoginWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<LoginWindow>();
+            });
+
+            services.AddSingleton<ILogger<RegistrationWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<RegistrationWindow>();
+            });
+
+            services.AddSingleton<ILogger<MainWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<MainWindow>();
+            });
+
+            services.AddTransient<ILogger<EditWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<EditWindow>();
+            });
+
+            services.AddTransient<ILogger<AddEvent>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<AddEvent>();
+            });
+
+            services.AddTransient<ILogger<ProfileWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<ProfileWindow>();
+            });
+
+            services.AddTransient<ILogger<PhotoWindow>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<PhotoWindow>();
+            });            
+            
+            services.AddSingleton<ILogger<AddSpecialRecord>>(serviceProvider =>
+            {
+                return LoggerFactory.CreateLogger<AddSpecialRecord>();
+            });
 
             ServiceProvider = services.BuildServiceProvider();
         }

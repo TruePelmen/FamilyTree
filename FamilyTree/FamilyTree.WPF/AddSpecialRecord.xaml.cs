@@ -10,6 +10,7 @@
     using FamilyTree.BLL.Interfaces;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Serilog;
 
     /// <summary>
     /// Interaction logic for AddSpecialRecord.xaml
@@ -28,9 +29,9 @@
             this.personService = personService;
             this.specialRecordService = specialRecordService;
         }
-
+        
         public event EventHandler AddSpecialRecordEvent;
-
+        
         public int EventId
         {
             get
@@ -61,7 +62,7 @@
         {
             this.Close();
         }
-
+        
         private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -89,7 +90,7 @@
                     recordType = "population census";
                     break;
             }
-
+            
             if (this.specialRecordService.AreSpecialRecordsOfTypeExistForEvent(this.EventId, recordType))
             {
                 MessageBox.Show($"Для цієї події вже існують записи типу '{recordType}'. Додавання нового запису заборонено.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -109,6 +110,7 @@
             this.specialRecordService.AddSpecialRecord(specialRecord);
             this.AddSpecialRecordEvent.Invoke(this, new EventArgs());
             this.Close();
+
         }
 
         private void RecordTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
