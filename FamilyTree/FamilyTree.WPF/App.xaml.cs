@@ -15,12 +15,10 @@
             DependencyContainer.Initialize();
             LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
-            //EditUserWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<EditUserWindow>();
-            //loginWindow.Show();
-            //AddTree addtree = DependencyContainer.ServiceProvider.GetService<AddTree>();
-            //addtree.Show();
             EditUserWindow editUserWindow = DependencyContainer.ServiceProvider.GetService<EditUserWindow>();
             editUserWindow.Show();
+            //RegistrationWindow registrationWindow = DependencyContainer.ServiceProvider.GetService<RegistrationWindow>();
+            //registrationWindow.Show();
         }
     }
 }
