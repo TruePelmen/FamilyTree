@@ -18,7 +18,7 @@
         private readonly IUserService userService;
         private readonly IUserTreeService userTreeService;
         private DispatcherTimer timer;
-        private string userLogin = "wertys";
+        private string userLogin = "qwerty";
 
         public EditUserWindow(IUserService userService, IUserService userService1, IUserTreeService userTreeService)
         {
