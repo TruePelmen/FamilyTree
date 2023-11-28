@@ -13,14 +13,14 @@
             <Grid Margin="10,10,10,10">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5,10,0">
-                        <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
-                        <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
+                        <Image Source="Images\minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick"/>
+                        <Image Source="Images\close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
                     <Button Name="addPhotoButton" Style="{StaticResource MaterialDesignFloatingActionButton}" Width="80" Height="80">
                         <Button.Content>
-                            <Image Source="C:\Users\olesy\OneDrive\Документи\GitHub\ProgramEngineeringProject-\FamilyTree\FamilyTree.WPF\Images\add.png" Width="40" Height="40" />
+                            <Image Source="Images\add.png" Width="40" Height="40" />
                         </Button.Content>
                     </Button>
 

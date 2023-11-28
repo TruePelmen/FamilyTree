@@ -77,7 +77,6 @@
             services.AddTransient<PhotoWindow>();
             services.AddTransient<EventDetails>();
             services.AddTransient<UserControls.Tree>();
-            services.AddSingleton<AddEvent>();
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddTree>();
 

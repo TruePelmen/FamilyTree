@@ -1,5 +1,6 @@
 ﻿namespace FamilyTree.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FamilyTree.BLL.Interfaces;
@@ -42,15 +43,21 @@
                 Record = specialRecord.Record,
                 EventId = specialRecord.EventId,
             };
-
-            this.specialRecordRepository.Add(newSpecialRecord);
-            this.specialRecordRepository.Save();
+            try
+            {
+                this.specialRecordRepository.Add(newSpecialRecord);
+                this.specialRecordRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Невдалося додати спеціальний запис");
+            }
         }
 
-        public void UpdateSpecialRecord(SpecialRecordInformation specialRecord)
+        public string UpdateSpecialRecord(SpecialRecordInformation specialRecord)
         {
             SpecialRecord existingSpecialRecord = this.specialRecordRepository.GetById(specialRecord.Id);
-
+            string message = string.Empty;
             if (existingSpecialRecord != null)
             {
                 existingSpecialRecord.RecordType = specialRecord.RecordType;
@@ -61,34 +68,31 @@
 
                 this.specialRecordRepository.Update(existingSpecialRecord);
                 this.specialRecordRepository.Save();
+                message = "Спеціальний запис успішно оновлено";
             }
+            else
+            {
+                message = "Спеціальний запис з таким id не знайдено";
+            }
+
+            return message;
         }
 
         public void DeleteSpecialRecord(int id)
         {
-            this.specialRecordRepository.Remove(this.specialRecordRepository.GetById(id));
-            this.specialRecordRepository.Save();
+            try
+            {
+                this.specialRecordRepository.Remove(this.specialRecordRepository.GetById(id));
+                this.specialRecordRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Невдалося видалити спеціальний запис з таким id");
+            }
         }
-
-        //public IEnumerable<SpecialRecord> GetAllSpecialRecordsForEvent(int eventId)
-        //{
-        //    List<SpecialRecord> specialRecordsForEvent = new List<SpecialRecord>();
-        //    List<SpecialRecord> specialRecordsCollection = (List<SpecialRecord>)this.GetAllSpecialRecords();
-
-        //    foreach (SpecialRecord specialRecord in specialRecordsCollection)
-        //    {
-        //        if (specialRecord.EventId == eventId)
-        //        {
-        //            specialRecordsForEvent.Add(specialRecord);
-        //        }
-        //    }
-
-        //    return specialRecordsForEvent; // Явно перетворюємо в List<SpecialRecord>
-        //}
 
         public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
         {
-            // Отримайте всі спеціальні записи для заданої події та перевірте, чи є серед них записи заданого типу.
             var specialRecords = this.GetAllSpecialRecordsForEvent(eventId);
             return specialRecords.Any(record => record.RecordType == recordType);
         }

@@ -43,9 +43,15 @@
                 TreeId = treeId,
                 AccessType = accessType,
             };
-
-            this.userTreeRepository.Add(userTree);
-            this.userTreeRepository.Save();
+            try
+            {
+                this.userTreeRepository.Add(userTree);
+                this.userTreeRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося додати дерево для користувача");
+            }
         }
 
         public void UpdateUserTree(int id, string userLogin, int treeId, string accessType)
@@ -65,8 +71,15 @@
 
         public void DeleteUserTree(int id)
         {
-            this.userTreeRepository.Remove(this.GetUserTreeById(id));
-            this.userTreeRepository.Save();
+            try
+            {
+                this.userTreeRepository.Remove(this.GetUserTreeById(id));
+                this.userTreeRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося видалити дерево для користувача");
+            }
         }
     }
 }
