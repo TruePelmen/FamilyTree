@@ -26,7 +26,7 @@
 
         void AddSpecialRecord(SpecialRecordInformation specialRecord);
 
-        void UpdateSpecialRecord(SpecialRecordInformation specialRecord);
+        string UpdateSpecialRecord(SpecialRecordInformation specialRecord);
 
         /// <summary>
         /// Deletes a special record from the family tree.

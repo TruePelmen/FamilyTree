@@ -62,7 +62,7 @@
             this.Close();
         }
 
-        private void closeButton_Click(object sender, RoutedEventArgs e)
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -70,7 +70,7 @@
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             string recordType;
-            ComboBoxItem selectedItem = (ComboBoxItem)recordTypeComboBox.SelectedItem;
+            ComboBoxItem selectedItem = (ComboBoxItem)this.recordTypeComboBox.SelectedItem;
             switch (selectedItem.Content.ToString())
             {
                 case "Метрична книга":
@@ -89,11 +89,13 @@
                     recordType = "population census";
                     break;
             }
-            if (this.specialRecordService.AreSpecialRecordsOfTypeExistForEvent(EventId, recordType))
+
+            if (this.specialRecordService.AreSpecialRecordsOfTypeExistForEvent(this.EventId, recordType))
             {
                 MessageBox.Show($"Для цієї події вже існують записи типу '{recordType}'. Додавання нового запису заборонено.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
+
             int? houseNumber = int.Parse(this.recordPlaceTextBox.Text);
             string priest = this.recordPriestTextBox.Text;
             string record = this.recordDescTextBox.Text;

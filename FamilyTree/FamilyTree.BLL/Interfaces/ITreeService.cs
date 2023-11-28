@@ -31,12 +31,7 @@
 
         int AddTree(string name, int primaryPersonId);
 
-        /// <summary>
-        /// Updates an existing family tree in the system.
-        /// </summary>
-        /// <param name="id">The unique identifier of the family tree to update.</param>
-        /// <param name="name">The updated name of the family tree.</param>
-        void UpdateTree(int id, string name);
+        string UpdateTree(int id, string name);
 
         /// <summary>
         /// Deletes a family tree from the system.

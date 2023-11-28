@@ -5,7 +5,9 @@ namespace FamilyTree.DAL.Migrations
     using Microsoft.EntityFrameworkCore.Migrations;
 
     /// <inheritdoc />
+#pragma warning disable SA1300 // Element should begin with upper-case letter
     public partial class _13112023 : Migration
+#pragma warning restore SA1300 // Element should begin with upper-case letter
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

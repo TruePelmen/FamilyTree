@@ -38,8 +38,15 @@
             User user = new User();
             user.Login = login;
             user.Password = password;
-            this.userRepository.Add(user);
-            this.userRepository.Save();
+            try
+            {
+                this.userRepository.Add(user);
+                this.userRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося додати користувача");
+            }
         }
 
         public void UpdateUser(string login, string password)
@@ -47,14 +54,28 @@
             User user = new User();
             user.Login = login;
             user.Password = BCrypt.HashPassword(password);
-            this.userRepository.Update(user);
-            this.userRepository.Save();
+            try
+            {
+                this.userRepository.Update(user);
+                this.userRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося оновити користувача");
+            }
         }
 
         public void DeleteUser(string login)
         {
-            this.userRepository.Remove(this.GetUserByLogin(login));
-            this.userRepository.Save();
+            try
+            {
+                this.userRepository.Remove(this.GetUserByLogin(login));
+                this.userRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося видалити користувача");
+            }
         }
 
         public bool AuthenticateUser(string login, string password)

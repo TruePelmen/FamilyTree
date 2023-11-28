@@ -45,7 +45,8 @@
 
         private void DefaultPhoto(string relative)
         {
-            if (relative == "чоловік" || relative == "батько" || relative == "син" || relative == "брат")
+            string relativePart = relative.Split(' ')[1];
+            if (relativePart == "чоловік" || relativePart == "батько" || relativePart == "син" || relativePart == "брат")
             {
                 this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
             }

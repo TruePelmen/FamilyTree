@@ -17,8 +17,8 @@
     <Grid>
         <Border BorderBrush="#144509" BorderThickness="2" CornerRadius="25" Background="White">
             <StackPanel Margin="20">
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 4 0 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 -22 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
+                <Image Source="Images\close.png" Width="25" Margin="0 4 0 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
+                <Image Source="Images\minimize.png" Width="20" Margin="0 -22 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                 <StackPanel>
                     <TextBlock x:Name="typeTextBlock"  Foreground="#144509" Margin="20,0,0,0" Text="Невідома подія" Style="{StaticResource MaterialDesignHeadline4TextBlock}" FontWeight="SemiBold" />
                     <Separator Margin="20,10,20,20" Style="{StaticResource MaterialDesignDarkSeparator}"/>

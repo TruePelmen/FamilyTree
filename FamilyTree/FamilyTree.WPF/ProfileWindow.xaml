@@ -65,8 +65,8 @@
         </Border>
         <Border Grid.Column="1" CornerRadius="0,25,25,0" Background="White">
             <StackPanel>
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 30 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
-                <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 -22 70 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
+                <Image Source="Images\close.png" Width="25" Margin="0 30 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
+                <Image Source="Images\minimize.png" Width="20" Margin="0 -22 70 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                 <TabControl Style="{StaticResource MaterialDesignTabControl}" Margin="20" Height="600">
                     <TabItem Header="Події">
                         <ScrollViewer>

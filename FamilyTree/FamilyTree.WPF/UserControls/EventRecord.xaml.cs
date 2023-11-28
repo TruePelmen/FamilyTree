@@ -22,7 +22,7 @@
     /// </summary>
     public partial class EventRecord : UserControl
     {
-        private int eventid; 
+        private int eventid;
 
         public EventRecord(EventInformation eventInformation)
         {
