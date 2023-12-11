@@ -19,6 +19,8 @@
 
         public int IdPerson { get; set; }
 
+        public event EventHandler<int> PersonAdded;
+
         public bool IsEmpty
         {
             get
@@ -129,6 +131,12 @@
         private void AddPersonButtonClick(object sender, RoutedEventArgs e)
         {
             AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
+            addPersonWindow.Closed += (s, args) =>
+            {
+                this.IdPerson = addPersonWindow.IdNewPerson;
+                this.PersonAdded?.Invoke(this, this.IdPerson);
+            };
+
             addPersonWindow.Show();
         }
     }

@@ -8,6 +8,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
+    using FamilyTree.DAL.Models;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -30,6 +31,8 @@
         /// Event that occurs when a person is deleted.
         /// </summary>
         public event EventHandler<int> DeletePerson;
+
+        public event EventHandler<int> PersonAddedFocus;
 
         /// <summary>
         /// Gets or sets the ID of the person.
@@ -182,7 +185,7 @@
             }
             else if (person.DeathDate != null)
             {
-                 this.ChangeDateOfDeath((DateOnly)person.DeathDate);
+                this.ChangeDateOfDeath((DateOnly)person.DeathDate);
             }
 
             if (person.MainPhoto != null)
@@ -236,6 +239,12 @@
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
+            addPersonWindow.Closed += (s, args) =>
+            {
+                this.IdPerson = addPersonWindow.IdNewPerson;
+                this.PersonAddedFocus?.Invoke(this, this.IdPerson);
+            };
+
             addPersonWindow.Show();
         }
 

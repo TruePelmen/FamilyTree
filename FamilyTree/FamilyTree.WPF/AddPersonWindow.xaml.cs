@@ -25,6 +25,7 @@
         private readonly ITreeService treeService;
         private readonly IPersonService personService;
 
+
         public AddPersonWindow(ITreePersonService treePersonService, ITreeService treeService, IPersonService personService)
         {
             this.InitializeComponent();
@@ -32,6 +33,8 @@
             this.treeService = treeService;
             this.personService = personService;
         }
+
+        public int IdNewPerson { get; set; }
 
         private void AddNewPersonButtonClick(object sender, RoutedEventArgs e)
         {
@@ -46,9 +49,9 @@
                     DeathDate = this.ParseDate(this.dateOfDeath),
                     Gender = this.DetermineGender(),
                 };
-                int personId = this.personService.AddPerson(person);
-                int treeId = this.treeService.AddTree("Дерево " + this.LastNameTextBox.Text, personId);
-                this.treePersonService.AddTreePerson(treeId, personId);
+
+                this.IdNewPerson = this.personService.AddPerson(person);
+                this.Close();
             }
         }
 
@@ -66,7 +69,7 @@
 
         private DateOnly? ParseDate(DatePicker date)
         {
-            if (!string.IsNullOrWhiteSpace(date.SelectedDate.ToString())) 
+            if (!string.IsNullOrWhiteSpace(date.SelectedDate.ToString()))
             {
                 string dateString = date.SelectedDate.ToString();
                 string dateWithoutTime = dateString.Split(' ')[0];
@@ -170,7 +173,7 @@
             this.maleOption.IsSelected = false;
             this.femaleOption.IsSelected = false;
             this.MaidenNameTextBox.IsReadOnly = true;
-            this.genderWarning.Visibility= Visibility.Collapsed;
+            this.genderWarning.Visibility = Visibility.Collapsed;
         }
 
         private void AddEventButtonClick(object sender, RoutedEventArgs e)

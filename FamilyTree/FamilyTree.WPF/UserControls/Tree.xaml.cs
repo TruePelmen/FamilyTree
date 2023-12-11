@@ -9,6 +9,7 @@
     using System.Windows.Shapes;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Models;
 
     public partial class Tree : UserControl
     {
@@ -22,16 +23,28 @@
         private IPersonService personService;
         private IRelationshipService relationshipService;
         private ITreeService treeService;
+        private ITreePersonService treePersonService;
 
-        public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService)
+
+        public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService, ITreePersonService treePersonService)
         {
             this.relationshipService = relationshipService;
             this.personService = personService;
+            this.treePersonService = treePersonService;
             this.InitializeComponent();
             this.childrenPanel.Loaded += this.ChildrenPanelLoaded;
             this.childrenPanel.SizeChanged += this.ChildrenPanelLoaded;
             this.maleFocus.DeletePerson += this.DeletePerson;
             this.femaleFocus.DeletePerson += this.DeletePerson;
+
+            this.maleFocus.PersonAddedFocus += this.FocusPersonAddedHandler;
+            this.femaleFocus.PersonAddedFocus += this.FocusPersonAddedHandler;
+
+            this.maleFather.PersonAdded += this.PersonAddedHandler;
+            this.maleMother.PersonAdded += this.PersonAddedHandler;
+            this.femaleFather.PersonAdded += this.PersonAddedHandler;
+            this.femaleMother.PersonAdded += this.PersonAddedHandler;
+
             this.numberOfChildren = 0;
             this.treeService = treeService;
         }
@@ -256,6 +269,56 @@
                 this.RefocusTree();
                 this.TreeChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void FocusPersonAddedHandler(object sender, int id)
+        {
+            this.treePersonService.AddTreePerson(this.TreeId, id);
+            this.RedrawTree();
+            //PersonInformation person = this.personService.GetPersonById(id);
+            //if (person.Gender == "male")
+            //{
+            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "father-child");
+            //    this.relationshipService.AddRelationship(this.maleMother.IdPerson, person.Id, "mother-child");
+            //    this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, person.Id, "spouse");
+            //}
+            //else
+            //{
+            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "father-child");
+            //    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, person.Id, "mother-child");
+            //    this.relationshipService.AddRelationship(this.maleFocus.IdPerson, person.Id, "spouse");
+            //}
+        }
+
+        private void PersonAddedHandler(object sender, int id)
+        {
+            this.treePersonService.AddTreePerson(this.TreeId, id);
+            this.RedrawTree();
+            //PersonInformation person = this.personService.GetPersonById(id);
+            //if (this.maleFather.IdPerson == person.Id)
+            //{
+            //    this.relationshipService.AddRelationship(person.Id, this.maleFocus.IdPerson, "father-child");
+            //    this.relationshipService.AddRelationship(this.maleMother.IdPerson, this.maleFocus.IdPerson, "mother-child");
+            //    this.relationshipService.AddRelationship(person.Id, this.maleMother.IdPerson, "spouse");
+            //}
+            //else if (this.maleMother.IdPerson == person.Id)
+            //{
+            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, this.maleFocus.IdPerson, "father-child");
+            //    this.relationshipService.AddRelationship(person.Id, this.maleFocus.IdPerson, "mother-child");
+            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "spouse");
+            //}
+            //else if (this.femaleFather.IdPerson == person.Id)
+            //{
+            //    this.relationshipService.AddRelationship(person.Id, this.femaleFocus.IdPerson, "father-child");
+            //    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, this.femaleFocus.IdPerson, "mother-child");
+            //    this.relationshipService.AddRelationship(person.Id, this.femaleMother.IdPerson, "spouse");
+            //}
+            //else if (this.femaleMother.IdPerson == person.Id)
+            //{
+            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, this.femaleFocus.IdPerson, "father-child");
+            //    this.relationshipService.AddRelationship(person.Id, this.femaleFocus.IdPerson, "mother-child");
+            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "spouse");
+            //}
         }
 
         private void RefocusTree()

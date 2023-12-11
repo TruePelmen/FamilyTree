@@ -64,8 +64,8 @@
                             <TextBox x:Name="MaidenNameTextBox" Style="{StaticResource MaterialDesignFilledTextBox}" materialDesign:HintAssist.Hint="Дівоче прізвище (тільки для жіночої статі)" Margin="10,0,10,5" Height="46" Width="325" IsReadOnly="True" LostFocus ="MaidenNameTextBoxLostFocus" GotFocus="MaidenNameTextBoxGotFocus"/>
                             <StackPanel Orientation="Horizontal" Margin="10,15,10,10" HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
-                                    <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption" Height="46" Width="125" IsSelectedChanged="MaleOption_IsSelectedChanged"/>
-                                    <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption" Height="46" Width="125" IsSelectedChanged="FemaleOption_IsSelectedChanged"/>
+                                    <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption" Height="46" Width="125" />
+                                    <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption" Height="46" Width="125" />
                                 </StackPanel>
                             </StackPanel>
                             <Grid>
