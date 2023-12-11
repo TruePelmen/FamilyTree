@@ -82,6 +82,7 @@
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddTree>();
             services.AddTransient<EditUserWindow>();
+            services.AddTransient<Statistics>();
 
             // Logger
             services.AddSingleton<ILogger<LoginWindow>>(serviceProvider =>
@@ -117,8 +118,8 @@
             services.AddTransient<ILogger<PhotoWindow>>(serviceProvider =>
             {
                 return LoggerFactory.CreateLogger<PhotoWindow>();
-            });            
-            
+            });
+
             services.AddSingleton<ILogger<AddSpecialRecord>>(serviceProvider =>
             {
                 return LoggerFactory.CreateLogger<AddSpecialRecord>();
