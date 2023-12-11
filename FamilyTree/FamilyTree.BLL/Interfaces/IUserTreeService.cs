@@ -59,5 +59,7 @@
         /// </summary>
         /// <param name="id">The unique identifier of the user-tree association to delete.</param>
         void DeleteUserTree(int id);
+
+        void DeleteUserTree(string login);
     }
 }

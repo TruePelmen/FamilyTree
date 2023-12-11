@@ -36,5 +36,21 @@
 
             return persons;
         }
+
+        public IEnumerable<Media> GetAllPhotosForEvent(int eventId)
+        {
+            var mediaEvents = this.context.MediaEvents
+                .Include(me => me.Event)
+                .Include(me => me.Media)
+                .Where(me => me.EventId == eventId)
+                .ToList();
+
+            var photos = mediaEvents
+                .Where(me => me.Media.MediaType == "photo")
+                .Select(me => me.Media)
+                .ToList();
+
+            return photos;
+        }
     }
 }

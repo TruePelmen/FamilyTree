@@ -1,65 +1,100 @@
 ﻿namespace FamilyTree.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Interfaces.Repositories;
     using FamilyTree.DAL.Models;
 
     public class SpecialRecordService : ISpecialRecordService
     {
-        private IGenericRepository<SpecialRecord> specialRecordRepository;
+        private ISpecialRecordRepository specialRecordRepository;
 
-        public SpecialRecordService(IGenericRepository<SpecialRecord> specialRecordRepository)
+        public SpecialRecordService(ISpecialRecordRepository specialRecordRepository)
         {
             this.specialRecordRepository = specialRecordRepository;
         }
 
-        public IEnumerable<SpecialRecord> GetAllSpecialRecords()
+        public IEnumerable<SpecialRecordInformation> GetAllSpecialRecords()
         {
-            return this.specialRecordRepository.GetAll();
+            return this.specialRecordRepository.GetAll().Select(specialRecord =>
+                                       new SpecialRecordInformation(specialRecord)).ToList();
         }
 
-        public SpecialRecord GetSpecialRecordById(int id)
+        public IEnumerable<SpecialRecordInformation> GetAllSpecialRecordsForEvent(int eventId)
         {
-            return this.specialRecordRepository.GetById(id);
+            return this.specialRecordRepository.GetAllSpecialRecordsForEvent(eventId).Select(specialRecord =>
+                                                  new SpecialRecordInformation(specialRecord)).ToList();
         }
 
-        public void AddSpecialRecord(string recordType, int? houseNumber, string priest, string record, int eventId)
+        public SpecialRecordInformation GetSpecialRecordById(int id)
+        {
+            return new SpecialRecordInformation(this.specialRecordRepository.GetById(id));
+        }
+
+        public void AddSpecialRecord(SpecialRecordInformation specialRecord)
         {
             SpecialRecord newSpecialRecord = new SpecialRecord
             {
-                RecordType = recordType,
-                HouseNumber = houseNumber,
-                Priest = priest,
-                Record = record,
-                EventId = eventId,
+                RecordType = specialRecord.RecordType,
+                HouseNumber = specialRecord.HouseNumber,
+                Priest = specialRecord.Priest,
+                Record = specialRecord.Record,
+                EventId = specialRecord.EventId,
             };
-
-            this.specialRecordRepository.Add(newSpecialRecord);
-            this.specialRecordRepository.Save();
+            try
+            {
+                this.specialRecordRepository.Add(newSpecialRecord);
+                this.specialRecordRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Невдалося додати спеціальний запис");
+            }
         }
 
-        public void UpdateSpecialRecord(int id, string recordType, int? houseNumber, string priest, string record, int eventId)
+        public string UpdateSpecialRecord(SpecialRecordInformation specialRecord)
         {
-            SpecialRecord existingSpecialRecord = this.specialRecordRepository.GetById(id);
-
+            SpecialRecord existingSpecialRecord = this.specialRecordRepository.GetById(specialRecord.Id);
+            string message = string.Empty;
             if (existingSpecialRecord != null)
             {
-                existingSpecialRecord.RecordType = recordType;
-                existingSpecialRecord.HouseNumber = houseNumber;
-                existingSpecialRecord.Priest = priest;
-                existingSpecialRecord.Record = record;
-                existingSpecialRecord.EventId = eventId;
+                existingSpecialRecord.RecordType = specialRecord.RecordType;
+                existingSpecialRecord.HouseNumber = specialRecord.HouseNumber;
+                existingSpecialRecord.Priest = specialRecord.Priest;
+                existingSpecialRecord.Record = specialRecord.Record;
+                existingSpecialRecord.EventId = specialRecord.EventId;
 
                 this.specialRecordRepository.Update(existingSpecialRecord);
                 this.specialRecordRepository.Save();
+                message = "Спеціальний запис успішно оновлено";
             }
+            else
+            {
+                message = "Спеціальний запис з таким id не знайдено";
+            }
+
+            return message;
         }
 
         public void DeleteSpecialRecord(int id)
         {
-            this.specialRecordRepository.Remove(this.GetSpecialRecordById(id));
-            this.specialRecordRepository.Save();
+            try
+            {
+                this.specialRecordRepository.Remove(this.specialRecordRepository.GetById(id));
+                this.specialRecordRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Невдалося видалити спеціальний запис з таким id");
+            }
+        }
+
+        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
+        {
+            var specialRecords = this.GetAllSpecialRecordsForEvent(eventId);
+            return specialRecords.Any(record => record.RecordType == recordType);
         }
     }
 }

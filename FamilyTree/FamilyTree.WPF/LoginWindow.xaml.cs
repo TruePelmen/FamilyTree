@@ -7,6 +7,7 @@
     using System.Windows.Threading;
     using FamilyTree.BLL.Interfeces;
     using Microsoft.Extensions.DependencyInjection;
+    using Serilog;
 
     /// <summary>
     /// Represents the login window of the application.
@@ -71,6 +72,7 @@
                 bool isAuthenticated = this.userService.AuthenticateUser(this.userTextBox.Text, this.passwordTextBox.Password);
                 if (isAuthenticated)
                 {
+                    Log.Information("User successfully signed in =)");
                     this.CreateMainWindow(this.userTextBox.Text);
                 }
                 else

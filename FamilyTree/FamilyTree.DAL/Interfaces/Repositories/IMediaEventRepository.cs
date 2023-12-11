@@ -12,5 +12,7 @@
         IEnumerable<Media> GetAllPhotosForPerson(int personId);
 
         IEnumerable<int> GetAllPersonForPhotos(int mediaId);
+
+        IEnumerable<Media> GetAllPhotosForEvent(int eventId);
     }
 }

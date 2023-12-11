@@ -8,6 +8,7 @@
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.DAL.Models;
+    using Serilog;
 
     /// <summary>
     /// Interaction logic for AddEvent.xaml
@@ -48,7 +49,7 @@
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            this.Close();
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -98,7 +99,7 @@
                     Age = eventAge,
                 };
                 this.eventService.AddEvent(eventInformation);
-
+                Log.Information("Event was successfully added =)");
                 this.SuccessfulAdditionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();
             }

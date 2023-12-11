@@ -286,10 +286,13 @@
         {
             foreach (var photo in this.photos)
             {
+                var addPhoto = this.addPhoto;
+                this.photoPanel.Children.Remove(addPhoto);
                 PhotoCard photoCard = new PhotoCard();
                 photoCard.RenewCard(photo);
                 photoCard.OpenPhotoWindow += this.PhotoCardOpenPhotoWindow;
                 this.photoPanel.Children.Add(photoCard);
+                this.photoPanel.Children.Add(addPhoto);
             }
         }
 
@@ -384,6 +387,10 @@
             profileWindow.Id = this.Id;
             profileWindow.Show();
             this.Close();
+        }
+
+        private void AddPhotoButtonClick(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

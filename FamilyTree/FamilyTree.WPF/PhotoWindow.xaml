@@ -29,8 +29,8 @@
                 </Grid.RowDefinitions>
                 <ScrollViewer Grid.Row="0">
                     <StackPanel Margin="20,80,20,20">
-                        <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\close.png" Width="25" Margin="0 -50 -10 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
-                        <Image Source="C:\Users\olesy\OneDrive\Документи\FamilyTree\FamilyTree.WPF\Images\minimize.png" Width="20" Margin="0 -46 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
+                        <Image Source="Images\close.png" Width="25" Margin="0 -50 -10 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnCloseClick"/>
+                        <Image Source="Images\minimize.png" Width="20" Margin="0 -46 30 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                         <TextBlock Text="Короткі відомості" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
                         <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
                         <Grid>

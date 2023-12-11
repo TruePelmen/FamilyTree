@@ -10,12 +10,10 @@
     public class TreeService : ITreeService
     {
         private IGenericRepository<Tree> treeRepository;
-        private ITreePersonService treePersonService;
 
-        public TreeService(IGenericRepository<Tree> treeRepository, ITreePersonService treePersonService)
+        public TreeService(IGenericRepository<Tree> treeRepository)
         {
             this.treeRepository = treeRepository;
-            this.treePersonService = treePersonService;
         }
 
         public IEnumerable<Tree> GetAllTrees()
@@ -40,29 +38,48 @@
                 Name = name,
                 PrimaryPerson = primaryPersonId,
             };
-
-            this.treeRepository.Add(tree);
-            this.treeRepository.Save();
-            return tree.Id;
+            try
+            {
+                this.treeRepository.Add(tree);
+                this.treeRepository.Save();
+                return tree.Id;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося додати дерево");
+            }
         }
 
-        public void UpdateTree(int id, string name)
+        public string UpdateTree(int id, string name)
         {
             Tree tree = this.treeRepository.GetById(id);
-
+            string message = string.Empty;
             if (tree != null)
             {
                 tree.Name = name;
 
                 this.treeRepository.Update(tree);
                 this.treeRepository.Save();
+                message = "Дерево успішно оновлено";
             }
+            else
+            {
+                message = "Не вдалося знайти дерево з таким id";
+            }
+            return message;
         }
 
         public void DeleteTree(int id)
         {
-            this.treeRepository.Remove(this.GetTreeById(id));
-            this.treeRepository.Save();
+            try
+            {
+                this.treeRepository.Remove(this.GetTreeById(id));
+                this.treeRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося видалити дерево з таким id");
+            }
         }
     }
 }
