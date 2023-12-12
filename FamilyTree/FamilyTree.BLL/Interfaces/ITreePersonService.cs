@@ -29,6 +29,14 @@
         /// <returns>An IEnumerable of Person objects associated with the family tree.</returns>
         IEnumerable<PersonInformation> GetTreePeopleByTreeId(int treeId);
 
+        TreePerson GetTreePerson(int treeId, int personId);
+
+        int GetPersonsNumber(int treeId);
+
+        int GetEventsNumber(int treeId);
+
+        int GetPhotosNumber(int treeId);
+
         /// <summary>
         /// Adds a new association of a person with a family tree.
         /// </summary>
@@ -42,12 +50,8 @@
         /// <param name="id">The unique identifier of the association to update.</param>
         /// <param name="treeId">The updated unique identifier of the family tree.</param>
         /// <param name="personId">The updated unique identifier of the person.</param>
-        void UpdateTreePerson(int id, int treeId, int personId);
+        string UpdateTreePerson(int id, int treeId, int personId);
 
-        /// <summary>
-        /// Deletes an association of a person with a family tree.
-        /// </summary>
-        /// <param name="id">The unique identifier of the association to delete.</param>
-        void DeleteTreePerson(int id);
+        void DeleteTreePerson(int treeId, int personId);
     }
 }

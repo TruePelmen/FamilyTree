@@ -47,7 +47,7 @@
                 </StackPanel>
                 <TextBlock Foreground="#363636" Margin="20,10,0,0" Text="Спеціальні записи" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
                 <Separator Margin="20,5,20,10" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                <ScrollViewer>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="341">
                     <StackPanel x:Name="specialRecorsPanel">
                         <StackPanel x:Name="addSpecialRecord" Width="400" Height="100" Orientation="Horizontal">
                             <Button x:Name="addSpecialRecordButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="80,0,10,0" Click="AddSpecialRecordButtonClick">

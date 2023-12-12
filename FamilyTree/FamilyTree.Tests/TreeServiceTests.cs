@@ -7,7 +7,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treesFromRepository = new List<Tree>
             {
@@ -29,7 +31,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treeId = 1;
             var treeFromRepository = new Tree { Id = treeId, Name = "Дерево Симеренків", PrimaryPerson = 1 };
@@ -48,7 +52,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treeId = 1;
             var treeFromRepository = new Tree { Id = treeId, Name = "Дерево Симеренків", PrimaryPerson = 1 };
@@ -67,7 +73,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treeToAdd = new Tree
             {
@@ -88,7 +96,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treeToAdd = new Tree
             {
@@ -112,7 +122,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var existingTreeId = 1;
             var existingTree = new Tree { Id = existingTreeId, Name = "Дерево Симеренків", PrimaryPerson = 1 };
@@ -133,7 +145,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
 
             var treeId = 1;
             var treeFromRepository = new Tree { Id = treeId, Name = "Дерево Симеренків", PrimaryPerson = 1 };
@@ -153,7 +167,9 @@
         {
             // Arrange
             var mockTreeRepository = new Mock<IGenericRepository<Tree>>();
-            var treeService = new TreeService(mockTreeRepository.Object);
+            var mockTreePersonService = new Mock<ITreePersonService>();
+            var mockPersonService = new Mock<IPersonService>();
+            var treeService = new TreeService(mockTreeRepository.Object, mockTreePersonService.Object, mockPersonService.Object);
             var treeId = 1;
             mockTreeRepository.Setup(repo => repo.GetById(treeId)).Throws(new Exception());
 

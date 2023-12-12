@@ -48,9 +48,15 @@
                 PersonId = personId,
                 MediaId = mediaId,
             };
-
-            this.mediaPersonRepository.Add(newMediaPerson);
-            this.mediaPersonRepository.Save();
+            try
+            {
+                this.mediaPersonRepository.Add(newMediaPerson);
+                this.mediaPersonRepository.Save();
+            }
+            catch (System.Exception)
+            {
+                throw new System.Exception("Не вдалося додати зв'язок між медіа та особою");
+            }
         }
 
         public void UpdateMediaPerson(int id, int personId, int mediaId)
@@ -69,8 +75,15 @@
 
         public void DeleteMediaPerson(int id)
         {
-            this.mediaPersonRepository.Remove(this.GetMediaPersonById(id));
-            this.mediaPersonRepository.Save();
+            try
+            {
+                this.mediaPersonRepository.Remove(this.GetMediaPersonById(id));
+                this.mediaPersonRepository.Save();
+            }
+            catch (System.Exception)
+            {
+                throw new System.Exception("Не вдалося видалити зв'язок між медіа та особою");
+            }
         }
     }
 }

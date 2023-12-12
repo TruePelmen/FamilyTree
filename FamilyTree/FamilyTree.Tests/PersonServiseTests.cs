@@ -1,6 +1,6 @@
 ﻿namespace FamilyTree.Tests
 {
-    public class PersonServiceTests
+    public class PersonServiseTests
     {
         [Fact]
         public void GetAllPeople_ShouldReturnPersonInformationList()
@@ -15,7 +15,7 @@
             var peopleFromRepository = new List<Person>
             {
                  new Person { Id = 1, FirstName = "Іван", LastName = "Франко", Gender = "male", BirthDate = new DateOnly(2000, 01, 01) },
-                 new Person { Id = 2, FirstName = "Ольга", LastName = "Франко", Gender = "female", MaidenName = "Хоружинська", BirthDate = new DateOnly(1864, 01, 01), DeathDate = new DateOnly(1944, 01, 01)},
+                 new Person { Id = 2, FirstName = "Ольга", LastName = "Хранко", Gender = "female", MaidenName = "Хоружинська", BirthDate = new DateOnly(1864, 01, 01), DeathDate = new DateOnly(1944, 01, 01)},
             };
 
             mockPersonRepository.Setup(repo => repo.GetAll()).Returns(peopleFromRepository);
@@ -174,7 +174,6 @@
             // Assert
             mockPersonRepository.Verify(repo => repo.Remove(It.IsAny<Person>()), Times.Once);
             mockPersonRepository.Verify(repo => repo.Save(), Times.Once);
-
         }
     }
 }

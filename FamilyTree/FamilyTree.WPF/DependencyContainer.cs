@@ -68,7 +68,6 @@
             services.AddTransient<ISpecialRecordRepository, SpecialRecordRepository>();
             services.AddTransient<ISpecialRecordService, SpecialRecordService>();
 
-
             // Register the application windows and user controls.
             services.AddSingleton<LoginWindow>();
             services.AddSingleton<RegistrationWindow>();
@@ -79,10 +78,14 @@
             services.AddTransient<PhotoWindow>();
             services.AddTransient<EventDetails>();
             services.AddTransient<UserControls.Tree>();
+            services.AddTransient<UserControls.UserRecord>();
             services.AddTransient<AddSpecialRecord>();
+            services.AddTransient<AddPersonWindow>();
             services.AddTransient<AddTree>();
             services.AddTransient<EditUserWindow>();
             services.AddTransient<Statistics>();
+            services.AddSingleton<SettingWindow>();
+            services.AddTransient<AddUserTreeRecordWindow>();
 
             // Logger
             services.AddSingleton<ILogger<LoginWindow>>(serviceProvider =>

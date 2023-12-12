@@ -9,6 +9,7 @@
     using System.Windows.Shapes;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
+    using FamilyTree.DAL.Models;
 
     public partial class Tree : UserControl
     {
@@ -22,16 +23,28 @@
         private IPersonService personService;
         private IRelationshipService relationshipService;
         private ITreeService treeService;
+        private ITreePersonService treePersonService;
 
-        public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService)
+
+        public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService, ITreePersonService treePersonService)
         {
             this.relationshipService = relationshipService;
             this.personService = personService;
+            this.treePersonService = treePersonService;
             this.InitializeComponent();
             this.childrenPanel.Loaded += this.ChildrenPanelLoaded;
             this.childrenPanel.SizeChanged += this.ChildrenPanelLoaded;
             this.maleFocus.DeletePerson += this.DeletePerson;
             this.femaleFocus.DeletePerson += this.DeletePerson;
+
+            this.maleFocus.PersonAddedFocus += this.FocusPersonAddedHandler;
+            this.femaleFocus.PersonAddedFocus += this.FocusPersonAddedHandler;
+
+            this.maleFather.PersonAdded += this.PersonAddedHandler;
+            this.maleMother.PersonAdded += this.PersonAddedHandler;
+            this.femaleFather.PersonAdded += this.PersonAddedHandler;
+            this.femaleMother.PersonAdded += this.PersonAddedHandler;
+
             this.numberOfChildren = 0;
             this.treeService = treeService;
         }
@@ -98,6 +111,7 @@
             newChild.Width = 180;
             newChild.Height = 100;
             newChild.MouseLeftButtonDown += this.CardMouseLeftButtonDown;
+            newChild.PersonAdded += this.PersonAddedHandler;
             this.childrenPanel.Children.Add(newChild);
             this.numberOfChildren++;
         }
@@ -256,6 +270,141 @@
                 this.RefocusTree();
                 this.TreeChanged?.Invoke(this, EventArgs.Empty);
             }
+        }
+
+        private void FocusPersonAddedHandler(object sender, int id)
+        {
+            this.treePersonService.AddTreePerson(this.TreeId, id);
+            PersonInformation person = this.personService.GetPersonById(id);
+            if (person.Gender == "male")
+            {
+                if (!this.maleFather.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "father-child");
+                }
+
+                if (!this.maleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleMother.IdPerson, person.Id, "mother-child");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, person.Id, "spouse");
+                }
+
+                foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+                {
+                    if (!child.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(child.IdPerson, person.Id, "father-child");
+                    }
+                }
+            }
+            else
+            {
+                if (!this.femaleFather.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "father-child");
+                }
+
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, person.Id, "mother-child");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleFocus.IdPerson, person.Id, "spouse");
+                }
+
+                foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+                {
+                    if (!child.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(child.IdPerson, person.Id, "mother-child");
+                    }
+                }
+            }
+
+            this.TreeChanged?.Invoke(this, EventArgs.Empty);
+            this.RedrawTree();
+        }
+
+        private void PersonAddedHandler(object sender, int id)
+        {
+            this.treePersonService.AddTreePerson(this.TreeId, id);
+            if ((sender as IPersonCard) == this.maleFather)
+            {
+                if (!this.maleMother.IsEmpty)
+                {
+                   this.relationshipService.AddRelationship(id, this.maleMother.IdPerson, "spouse");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFocus.IdPerson, "father-child");
+                }
+            }
+
+            if ((sender as IPersonCard) == this.maleMother)
+            {
+                if (!this.maleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFather.IdPerson, "spouse");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFocus.IdPerson, "mother-child");
+                }
+
+            }
+
+            if ((sender as IPersonCard) == this.femaleFather)
+            {
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleMother.IdPerson, "spouse");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFocus.IdPerson, "father-child");
+                }
+            }
+
+            if ((sender as IPersonCard) == this.femaleMother)
+            {
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFather.IdPerson, "spouse");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFocus.IdPerson, "mother-child");
+                }
+            }
+
+            foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+            {
+                if ((sender as IPersonCard) == child)
+                {
+                    if (!this.maleFocus.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(this.maleFocus.IdPerson, id, "father-child");
+                    }
+
+                    if (!this.femaleFocus.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, id, "mother-child");
+                    }
+                }
+            }
+
+            this.TreeChanged?.Invoke(this, EventArgs.Empty);
+            this.RedrawTree();
         }
 
         private void RefocusTree()
