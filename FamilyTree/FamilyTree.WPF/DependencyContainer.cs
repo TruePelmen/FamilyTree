@@ -80,6 +80,7 @@
             services.AddTransient<UserControls.Tree>();
             services.AddTransient<UserControls.UserRecord>();
             services.AddTransient<AddSpecialRecord>();
+            services.AddTransient<AddPersonWindow>();
             services.AddTransient<AddTree>();
             services.AddTransient<EditUserWindow>();
             services.AddSingleton<SettingWindow>();
