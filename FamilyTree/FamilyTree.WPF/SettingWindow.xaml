@@ -29,7 +29,7 @@
                 <StackPanel Background="Transparent" Orientation="Horizontal" Height="100" VerticalAlignment="Center" HorizontalAlignment="Left" Width="1200">
                     <TextBlock x:Name="userLoginBlock" Text="Frank" Style="{StaticResource MaterialDesignHeadline5TextBlock}" Margin="50,0,0,0" Foreground="White" VerticalAlignment="Center" Cursor="Hand" MouseLeftButtonDown="UserLoginBlockMouseLeftButtonDown"/>
                     <Image ToolTip="Дерево" Source="Images\ancestry.png" Style="{StaticResource iconApp}"  Margin="440 0 25 0"  Width="25" VerticalAlignment="Center" MouseLeftButtonDown="ImageMouseLeftButtonDown"/>
-                    <Image ToolTip="Статистики" Source="Images\diagram.png" Style="{StaticResource iconApp}"  Margin="25 0 25 0"  Width="25" VerticalAlignment="Center"/>
+                    <Image ToolTip="Статистики" Source="Images\diagram.png" Style="{StaticResource iconApp}"  Margin="25 0 25 0"  Width="25" VerticalAlignment="Center" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
                     <Image ToolTip="Збіги" Source="Images\gemini.png" Style="{StaticResource iconApp}"  Margin="25 0 25 0"  Width="25" VerticalAlignment="Center"/>
                     <Image ToolTip="Налаштування" Source="Images\settings.png"  Margin="25 0 0 0"  Width="40" VerticalAlignment="Center"/>
 

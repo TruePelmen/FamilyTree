@@ -152,5 +152,12 @@
         {
             this.Show();
         }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Statistics statistics = DependencyContainer.ServiceProvider.GetRequiredService<Statistics>();
+            statistics.TreeID = this.treeId;
+            statistics.ShowDialog();
+        }
     }
 }

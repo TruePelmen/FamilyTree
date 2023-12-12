@@ -215,5 +215,12 @@
             this.Exit?.Invoke(this, EventArgs.Empty);
             this.Hide();
         }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Statistics statistics = DependencyContainer.ServiceProvider.GetRequiredService<Statistics>();
+            statistics.TreeID = this.treeId;
+            statistics.ShowDialog();
+        }
     }
 }
