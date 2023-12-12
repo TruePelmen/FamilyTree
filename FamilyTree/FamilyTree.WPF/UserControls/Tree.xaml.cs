@@ -111,6 +111,7 @@
             newChild.Width = 180;
             newChild.Height = 100;
             newChild.MouseLeftButtonDown += this.CardMouseLeftButtonDown;
+            newChild.PersonAdded += this.PersonAddedHandler;
             this.childrenPanel.Children.Add(newChild);
             this.numberOfChildren++;
         }
@@ -274,51 +275,136 @@
         private void FocusPersonAddedHandler(object sender, int id)
         {
             this.treePersonService.AddTreePerson(this.TreeId, id);
+            PersonInformation person = this.personService.GetPersonById(id);
+            if (person.Gender == "male")
+            {
+                if (!this.maleFather.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "father-child");
+                }
+
+                if (!this.maleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleMother.IdPerson, person.Id, "mother-child");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, person.Id, "spouse");
+                }
+
+                foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+                {
+                    if (!child.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(child.IdPerson, person.Id, "father-child");
+                    }
+                }
+            }
+            else
+            {
+                if (!this.femaleFather.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "father-child");
+                }
+
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, person.Id, "mother-child");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(this.maleFocus.IdPerson, person.Id, "spouse");
+                }
+
+                foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+                {
+                    if (!child.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(child.IdPerson, person.Id, "mother-child");
+                    }
+                }
+            }
+
+            this.TreeChanged?.Invoke(this, EventArgs.Empty);
             this.RedrawTree();
-            //PersonInformation person = this.personService.GetPersonById(id);
-            //if (person.Gender == "male")
-            //{
-            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "father-child");
-            //    this.relationshipService.AddRelationship(this.maleMother.IdPerson, person.Id, "mother-child");
-            //    this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, person.Id, "spouse");
-            //}
-            //else
-            //{
-            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "father-child");
-            //    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, person.Id, "mother-child");
-            //    this.relationshipService.AddRelationship(this.maleFocus.IdPerson, person.Id, "spouse");
-            //}
         }
 
         private void PersonAddedHandler(object sender, int id)
         {
             this.treePersonService.AddTreePerson(this.TreeId, id);
+            if ((sender as IPersonCard) == this.maleFather)
+            {
+                if (!this.maleMother.IsEmpty)
+                {
+                   this.relationshipService.AddRelationship(id, this.maleMother.IdPerson, "spouse");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFocus.IdPerson, "father-child");
+                }
+            }
+
+            if ((sender as IPersonCard) == this.maleMother)
+            {
+                if (!this.maleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFather.IdPerson, "spouse");
+                }
+
+                if (!this.maleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.maleFocus.IdPerson, "mother-child");
+                }
+
+            }
+
+            if ((sender as IPersonCard) == this.femaleFather)
+            {
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleMother.IdPerson, "spouse");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFocus.IdPerson, "father-child");
+                }
+            }
+
+            if ((sender as IPersonCard) == this.femaleMother)
+            {
+                if (!this.femaleMother.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFather.IdPerson, "spouse");
+                }
+
+                if (!this.femaleFocus.IsEmpty)
+                {
+                    this.relationshipService.AddRelationship(id, this.femaleFocus.IdPerson, "mother-child");
+                }
+            }
+
+            foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+            {
+                if ((sender as IPersonCard) == child)
+                {
+                    if (!this.maleFocus.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(this.maleFocus.IdPerson, id, "father-child");
+                    }
+
+                    if (!this.femaleFocus.IsEmpty)
+                    {
+                        this.relationshipService.AddRelationship(this.femaleFocus.IdPerson, id, "mother-child");
+                    }
+                }
+            }
+
+            this.TreeChanged?.Invoke(this, EventArgs.Empty);
             this.RedrawTree();
-            //PersonInformation person = this.personService.GetPersonById(id);
-            //if (this.maleFather.IdPerson == person.Id)
-            //{
-            //    this.relationshipService.AddRelationship(person.Id, this.maleFocus.IdPerson, "father-child");
-            //    this.relationshipService.AddRelationship(this.maleMother.IdPerson, this.maleFocus.IdPerson, "mother-child");
-            //    this.relationshipService.AddRelationship(person.Id, this.maleMother.IdPerson, "spouse");
-            //}
-            //else if (this.maleMother.IdPerson == person.Id)
-            //{
-            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, this.maleFocus.IdPerson, "father-child");
-            //    this.relationshipService.AddRelationship(person.Id, this.maleFocus.IdPerson, "mother-child");
-            //    this.relationshipService.AddRelationship(this.maleFather.IdPerson, person.Id, "spouse");
-            //}
-            //else if (this.femaleFather.IdPerson == person.Id)
-            //{
-            //    this.relationshipService.AddRelationship(person.Id, this.femaleFocus.IdPerson, "father-child");
-            //    this.relationshipService.AddRelationship(this.femaleMother.IdPerson, this.femaleFocus.IdPerson, "mother-child");
-            //    this.relationshipService.AddRelationship(person.Id, this.femaleMother.IdPerson, "spouse");
-            //}
-            //else if (this.femaleMother.IdPerson == person.Id)
-            //{
-            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, this.femaleFocus.IdPerson, "father-child");
-            //    this.relationshipService.AddRelationship(person.Id, this.femaleFocus.IdPerson, "mother-child");
-            //    this.relationshipService.AddRelationship(this.femaleFather.IdPerson, person.Id, "spouse");
-            //}
         }
 
         private void RefocusTree()

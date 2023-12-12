@@ -9,10 +9,7 @@
     WindowStartupLocation="CenterScreen"
     AllowsTransparency="True"
     MouseDown="WindowMouseDown">
-    <Window.DataContext>
-        <l:AddUserTreeRecordViewModel/>
-    </Window.DataContext>
-        <Grid>
+    <Grid>
         <Border BorderBrush="#144509" BorderThickness="2" Background="White" CornerRadius="25">
             <Grid Margin="10,10,10,10">
                 <StackPanel>

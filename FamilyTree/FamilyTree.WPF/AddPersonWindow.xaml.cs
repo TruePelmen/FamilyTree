@@ -1,38 +1,32 @@
 ﻿namespace FamilyTree.WPF
 {
-    using System.Globalization;
     using System;
+    using System.Globalization;
     using System.Windows;
-    using FamilyTree.BLL.Interfaces;
     using System.Windows.Controls;
-    using System.Windows.Media;
-    using MaterialDesignThemes.Wpf;
     using System.Windows.Input;
-    using Microsoft.Win32;
-    using static System.Net.Mime.MediaTypeNames;
+    using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using Microsoft.Extensions.DependencyInjection;
     using FamilyTree.BLL;
-    using FamilyTree.DAL.Models;
-    using FamilyTree.WPF.UserControls;
+    using FamilyTree.BLL.Interfaces;
+    using MaterialDesignThemes.Wpf;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Win32;
 
     /// <summary>
     /// Interaction logic for AddPersonWindow.xaml.
     /// </summary>
     public partial class AddPersonWindow : Window
     {
-        private readonly ITreePersonService treePersonService;
-        private readonly ITreeService treeService;
         private readonly IPersonService personService;
 
-
-        public AddPersonWindow(ITreePersonService treePersonService, ITreeService treeService, IPersonService personService)
+        public AddPersonWindow(IPersonService personService)
         {
             this.InitializeComponent();
-            this.treePersonService = treePersonService;
-            this.treeService = treeService;
             this.personService = personService;
         }
+
+        public event EventHandler AddNewPerson;
 
         public int IdNewPerson { get; set; }
 
@@ -51,6 +45,7 @@
                 };
 
                 this.IdNewPerson = this.personService.AddPerson(person);
+                this.AddNewPerson?.Invoke(this, EventArgs.Empty);
                 this.Close();
             }
         }
@@ -75,6 +70,7 @@
                 string dateWithoutTime = dateString.Split(' ')[0];
                 return DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
             }
+
             return null;
         }
 
@@ -93,19 +89,6 @@
             else
             {
                 return true;
-            }
-        }
-
-        private void ChangeImage(object sender, MouseButtonEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif;*.bmp";
-            openFileDialog.InitialDirectory = "D:\\Lab\\enginLab\\FamilyTree\\FamilyTree\\FamilyTree.WPF\\Images";
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                string newImagePath = openFileDialog.FileName;
-                this.myImage.Source = new BitmapImage(new Uri(newImagePath));
             }
         }
 

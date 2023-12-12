@@ -239,7 +239,7 @@
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
-            addPersonWindow.Closed += (s, args) =>
+            addPersonWindow.AddNewPerson += (s, args) =>
             {
                 this.IdPerson = addPersonWindow.IdNewPerson;
                 this.PersonAddedFocus?.Invoke(this, this.IdPerson);
