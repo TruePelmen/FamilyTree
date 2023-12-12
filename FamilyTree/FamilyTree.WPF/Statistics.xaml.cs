@@ -44,7 +44,7 @@
             var statistics = this.GetYearStatistics(this.TreeID, includeBirth, includeDeath);
 
             // Оновлення графіку за допомогою даних статистики
-            var series = new LineSeries
+            var series = new StemSeries
             {
                 Title = "Birth",
                 MarkerType = MarkerType.Circle,
@@ -57,10 +57,11 @@
 
             if (includeDeath)
             {
-                var deathSeries = new LineSeries
+                var deathSeries = new StemSeries
                 {
                     Title = "Death",
                     MarkerType = MarkerType.Circle,
+                    Color = OxyColor.FromRgb(250, 250, 0),
                 };
                 foreach (var entry in statistics)
                 {
