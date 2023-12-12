@@ -83,6 +83,7 @@
             services.AddTransient<AddPersonWindow>();
             services.AddTransient<AddTree>();
             services.AddTransient<EditUserWindow>();
+            services.AddTransient<Statistics>();
             services.AddSingleton<SettingWindow>();
             services.AddTransient<AddUserTreeRecordWindow>();
 

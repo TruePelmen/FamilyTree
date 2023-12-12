@@ -30,9 +30,11 @@
 
             base.OnStartup(e);
             DependencyContainer.Initialize();
+            Statistics statistics = DependencyContainer.ServiceProvider.GetService<Statistics>();
+            statistics.Show();
+            //LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
+            //loginWindow.Show();
             Log.CloseAndFlush();
-            LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
-            loginWindow.Show();
         }
     }
 }
