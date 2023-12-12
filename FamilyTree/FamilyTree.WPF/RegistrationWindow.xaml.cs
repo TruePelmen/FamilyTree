@@ -116,9 +116,12 @@
                 PersonInformation person = new PersonInformation
                 {
                     LastName = this.lastNameTextBox.Text,
-                    FirstName = this.firstNameTextBox.Text,
-                    BirthDate = this.ParseDate(),
                     Gender = this.DetermineGender(),
+                    MaidenName = null,
+                    FirstName = this.firstNameTextBox.Text,
+                    OtherNameVariants = null,
+                    BirthDate = this.ParseDate(),
+                    DeathDate = null,
                 };
                 int personId = this.personService.AddPerson(person);
                 int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text, personId);

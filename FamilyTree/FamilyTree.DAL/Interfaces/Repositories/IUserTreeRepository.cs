@@ -15,6 +15,8 @@
 
         IEnumerable<UserTree> GetAllUserTreeByTreeId(int treeId);
 
+        IEnumerable<string> GetFreeUsersLoginByTreeId(int treeId);
+
         string GetAccessTypeByTreeIdAndUserLogin(int treeId, string login);
     }
 }

@@ -53,9 +53,15 @@
                 PersonId2 = personId2,
                 RelationshipType = relationshipType,
             };
-
-            this.relationshipRepository.Add(newRelationship);
-            this.relationshipRepository.Save();
+            try
+            {
+                this.relationshipRepository.Add(newRelationship);
+                this.relationshipRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося додати зв'язок");
+            }
         }
 
         public void UpdateRelationship(int id, int personId1, int personId2, string relationshipType)
@@ -75,8 +81,15 @@
 
         public void DeleteRelationship(int id)
         {
-            this.relationshipRepository.Remove(this.GetRelationshipById(id));
-            this.relationshipRepository.Save();
+            try
+            {
+                this.relationshipRepository.Remove(this.GetRelationshipById(id));
+                this.relationshipRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося видалити зв'язок");
+            }
         }
     }
 }

@@ -67,6 +67,29 @@
         }
 
         [Fact]
+        public void GetFreeUsersLoginByTreeId_ShouldReturnUserLoginList()
+        {
+            // Arrange
+            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
+            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
+
+            var treeId = 1;
+            var usersLoginFromRepository = new List<string>
+            {
+                "user1",
+                "user2"
+            };
+
+            mockUserTreeRepository.Setup(repo => repo.GetFreeUsersLoginByTreeId(treeId)).Returns(usersLoginFromRepository);
+
+            // Act
+            var result = userTreeService.GetFreeUsersLoginByTreeId(treeId);
+
+            // Assert
+            result.Should().BeEquivalentTo(usersLoginFromRepository);
+        }
+
+        [Fact]
         public void AddUserTree_ShouldAddUserTreeToRepository()
         {
             // Arrange

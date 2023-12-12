@@ -41,6 +41,11 @@
             return this.userTreeRepository.GetAllUserTreeByUserLogin(userLogin);
         }
 
+        public IEnumerable<string> GetFreeUsersLoginByTreeId(int treeId)
+        {
+            return this.userTreeRepository.GetFreeUsersLoginByTreeId(treeId);
+        }
+
         public string GetAccessTypeByUserLoginAndTreeId(string userLogin, int treeId)
         {
             return this.userTreeRepository.GetAccessTypeByTreeIdAndUserLogin(treeId, userLogin);

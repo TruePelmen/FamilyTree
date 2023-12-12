@@ -18,7 +18,7 @@
         private readonly IUserService userService;
         private readonly IUserTreeService userTreeService;
         private DispatcherTimer timer;
-        private string userLogin = "qwerty";
+        private string userLogin;
 
         public EditUserWindow(IUserService userService, IUserService userService1, IUserTreeService userTreeService)
         {
@@ -26,6 +26,13 @@
             this.userService = userService;
             this.userService1 = userService1;
             this.userTreeService = userTreeService;
+        }
+
+        public event EventHandler Exit;
+
+        public string UserLogin
+        {
+            get { return this.userLogin; } set { this.userLogin = value; }
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -55,6 +62,7 @@
                 {
                     this.userService.DeleteUser(this.userLogin);
                     this.userTreeService.DeleteUserTree(this.userLogin);
+                    this.Exit?.Invoke(this, EventArgs.Empty);
                     this.Close();
                 }
                 else
@@ -66,6 +74,7 @@
 
         private void LogoutButtonClick(object sender, RoutedEventArgs e)
         {
+            this.Exit?.Invoke(this, EventArgs.Empty);
             this.CreateLoginWindow();
         }
 

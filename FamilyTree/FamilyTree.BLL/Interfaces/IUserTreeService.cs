@@ -29,6 +29,10 @@
         /// <returns>An IEnumerable of Tree objects associated with the user.</returns>
         IEnumerable<Tree> GetAllTreeByUserLogin(string userLogin);
 
+        public IEnumerable<UserTree> GetAllUserTreeByTreeId(int treeId);
+
+        public IEnumerable<string> GetFreeUsersLoginByTreeId(int treeId);
+
         /// <summary>
         /// Retrieves the access type for a user and a specific family tree.
         /// </summary>

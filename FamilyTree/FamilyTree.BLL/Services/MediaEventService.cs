@@ -1,5 +1,6 @@
 ﻿namespace FamilyTree.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FamilyTree.BLL.Interfaces;
@@ -49,9 +50,15 @@
                 EventId = eventId,
                 MediaId = mediaId,
             };
-
-            this.mediaEventRepository.Add(newMediaEvent);
-            this.mediaEventRepository.Save();
+            try
+            {
+                this.mediaEventRepository.Add(newMediaEvent);
+                this.mediaEventRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося додати зв'язок між медіа та подією");
+            }
         }
 
         public void UpdateMediaEvent(int id, int? eventId, int mediaId)
@@ -70,8 +77,15 @@
 
         public void DeleteMediaEvent(int id)
         {
-            this.mediaEventRepository.Remove(this.GetMediaEventById(id));
-            this.mediaEventRepository.Save();
+            try
+            {
+                this.mediaEventRepository.Remove(this.GetMediaEventById(id));
+                this.mediaEventRepository.Save();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Не вдалося видалити зв'язок між медіа та подією");
+            }
         }
     }
 }

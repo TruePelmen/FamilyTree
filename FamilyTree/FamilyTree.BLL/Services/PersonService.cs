@@ -71,9 +71,8 @@
             };
 
             this.personRepository.Add(person);
-            int id = person.Id;
             this.personRepository.Save();
-            return id;
+            return person.Id;
         }
 
         public void UpdatePerson(PersonInformation personInformation)

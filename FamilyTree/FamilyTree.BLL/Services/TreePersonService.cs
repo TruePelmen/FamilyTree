@@ -1,5 +1,6 @@
 ﻿namespace FamilyTree.BLL.Services
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using FamilyTree.BLL.Interfaces;
@@ -26,9 +27,29 @@
                 new PersonInformation(person)).ToList();
         }
 
+        public int GetPersonsNumber(int treeId)
+        {
+            return this.treePersonRepository.GetPersonsNumber(treeId);
+        }
+
+        public int GetEventsNumber(int treeId)
+        {
+            return this.treePersonRepository.GetEventsNumber(treeId);
+        }
+
+        public int GetPhotosNumber(int treeId)
+        {
+            return this.treePersonRepository.GetPhotosNumber(treeId);
+        }
+
         public TreePerson GetTreePersonById(int id)
         {
             return this.treePersonRepository.GetById(id);
+        }
+
+        public TreePerson GetTreePerson(int treeId, int personId)
+        {
+            return this.treePersonRepository.GetTreePerson(treeId, personId);
         }
 
         public void AddTreePerson(int treeId, int personId)
@@ -39,14 +60,21 @@
                 PersonId = personId,
             };
 
-            this.treePersonRepository.Add(treePerson);
-            this.treePersonRepository.Save();
+            try
+            {
+                this.treePersonRepository.Add(treePerson);
+                this.treePersonRepository.Save();
+            }
+            catch (System.Exception)
+            {
+                throw new Exception("Не вдалося додати особу до дерева");
+            }
         }
 
-        public void UpdateTreePerson(int id, int treeId, int personId)
+        public string UpdateTreePerson(int id, int treeId, int personId)
         {
             TreePerson treePerson = this.treePersonRepository.GetById(id);
-
+            string message = string.Empty;
             if (treePerson != null)
             {
                 treePerson.TreeId = treeId;
@@ -54,13 +82,26 @@
 
                 this.treePersonRepository.Update(treePerson);
                 this.treePersonRepository.Save();
+                message = "Дерево успішно оновлено";
             }
+            else
+            {
+                message = "Дерево не знайдено";
+            }
+            return message;
         }
 
-        public void DeleteTreePerson(int id)
+        public void DeleteTreePerson(int treeId, int personId)
         {
-            this.treePersonRepository.Remove(this.GetTreePersonById(id));
-            this.treePersonRepository.Save();
+            try
+            {
+                this.treePersonRepository.Remove(this.treePersonRepository.GetTreePerson(treeId, personId));
+                this.treePersonRepository.Save();
+            }
+            catch (System.Exception)
+            {
+                throw new Exception("Не вдалося видалити особу з дерева");
+            }
         }
     }
 }

@@ -30,6 +30,8 @@
             this.treeService = treeService;
         }
 
+        public event EventHandler TreeCreated;
+
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -79,6 +81,7 @@
             var treeId = this.treeService.AddTree(this.treeNameTextBox.Text, primaryPersonId);
 
             MessageBox.Show($"Дерево роду '{this.treeNameTextBox.Text}' було успішно створено з основною особою {primaryPersonId}.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.TreeCreated?.Invoke(this, EventArgs.Empty);
 
             // Закриття вікна
             this.Close();
