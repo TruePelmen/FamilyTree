@@ -19,8 +19,6 @@
         private readonly ITreePersonService treePersonService;
         private readonly IPersonService personService;
 
-        public int TreeID { get; set; } = 12;
-
         public Statistics(ITreePersonService treePersonService, IPersonService personService)
         {
             this.InitializeComponent();
@@ -28,7 +26,12 @@
             // Ініціалізація сервісів
             this.treePersonService = treePersonService;
             this.personService = personService;
+
+            // Ініціалізуємо модель графіка
+            this.plotView.Model = new PlotModel();
         }
+
+        public int TreeID { get; set; } = 12;
 
         private void GenerateStatistics_Click(object sender, RoutedEventArgs e)
         {
@@ -38,7 +41,7 @@
             bool includeBirth = this.birthCheckBox.IsChecked ?? false;
             bool includeDeath = this.deathCheckBox.IsChecked ?? false;
 
-            var statistics = GetYearStatistics(TreeID, includeBirth, includeDeath);
+            var statistics = this.GetYearStatistics(this.TreeID, includeBirth, includeDeath);
 
             // Оновлення графіку за допомогою даних статистики
             var series = new LineSeries
