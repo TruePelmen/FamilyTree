@@ -171,14 +171,14 @@
             int fatherId = this.relationshipService.GetFatherIdByPersonId(this.Id);
             int motherId = this.relationshipService.GetMotherIdByPersonId(this.Id);
 
-            this.spouse = this.personService.GetShortInformationAboutPerson(this.relationshipService.GetSpouseIdByPersonId(this.Id));
-            this.father = this.personService.GetShortInformationAboutPerson(fatherId);
-            this.mother = this.personService.GetShortInformationAboutPerson(motherId);
+            this.spouse = this.personService.GetPersonById(this.relationshipService.GetSpouseIdByPersonId(this.Id));
+            this.father = this.personService.GetPersonById(fatherId);
+            this.mother = this.personService.GetPersonById(motherId);
 
             var children = this.relationshipService.GetChildrenIdByPersonId(this.Id);
             foreach (var child in children)
             {
-                this.children.Add(this.personService.GetShortInformationAboutPerson(child));
+                this.children.Add(this.personService.GetPersonById(child));
             }
 
             var childrenOfFather = this.relationshipService.GetChildrenIdByPersonId(fatherId);
@@ -189,7 +189,7 @@
             // Додаємо братів і сестер в колекцію siblings, перевіряючи, чи вони вже є у списку
             foreach (var childId in childrenOfFather.Concat(childrenOfMother))
             {
-                var sibling = this.personService.GetShortInformationAboutPerson(childId);
+                var sibling = this.personService.GetPersonById(childId);
                 if (sibling.Id != this.Id && !siblings.Any(s => s.Id == sibling.Id))
                 {
                     siblings.Add(sibling);

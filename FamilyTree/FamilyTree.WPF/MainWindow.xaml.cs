@@ -22,7 +22,6 @@
         private string userLogin;
         private int treeId;
         private UserControls.Tree familyTree;
-        private SettingWindow settingWindow;
 
         public MainWindow(ITreePersonService treePersonService, IUserTreeService userTreeService)
         {
@@ -30,8 +29,6 @@
             this.userTreeService = userTreeService;
             this.InitializeComponent();
             this.personsList.RowDoubleClick += this.PersonsListRowDoubleClick;
-            this.settingWindow = DependencyContainer.ServiceProvider.GetRequiredService<SettingWindow>();
-            this.settingWindow.Exit += this.Exit;
         }
 
         /// <summary>
@@ -142,15 +139,16 @@
 
         private void ImageMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.settingWindow.UserLogin = this.userLogin;
-            this.settingWindow.TreeId = this.treeId;
-            this.settingWindow.Show();
-            this.Hide();
+            SettingWindow settingWindow = DependencyContainer.ServiceProvider.GetRequiredService<SettingWindow>();
+            settingWindow.UserLogin = this.userLogin;
+            settingWindow.CloseWindow += this.SettingWindowCloseWindow;
+            settingWindow.Show();
+            this.Close();
         }
 
-        private void Exit(object sender, EventArgs e)
+        private void SettingWindowCloseWindow(object sender, EventArgs e)
         {
-            this.Show();
+            this.Close();
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

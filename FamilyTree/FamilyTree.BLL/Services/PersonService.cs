@@ -28,24 +28,6 @@
 
         public PersonInformation GetPersonById(int id)
         {
-            PersonInformation personInformation = this.GetShortInformationAboutPerson(id);
-            var birthEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "birth").FirstOrDefault();
-            if (birthEvent != null)
-            {
-                personInformation.BirthPlace = birthEvent.EventPlace;
-            }
-
-            var deathEvent = this.eventService.GetAllEventsByPersonIdAndEventType(id, "death").FirstOrDefault();
-            if (deathEvent != null)
-            {
-                personInformation.DeathPlace = deathEvent.EventPlace;
-            }
-
-            return personInformation;
-        }
-
-        public PersonInformation GetShortInformationAboutPerson(int id)
-        {
             var person = this.personRepository.GetById(id);
             PersonInformation personInformation = new PersonInformation(person);
             var mainPhoto = this.mediaPersonService.GetMainPhotoByPersonId(id);
@@ -68,6 +50,8 @@
                 OtherNameVariants = personInformation.OtherNameVariants,
                 BirthDate = personInformation.BirthDate,
                 DeathDate = personInformation.DeathDate,
+                BirthPlace = personInformation.BirthPlace,
+                DeathPlace = personInformation.DeathPlace,
             };
 
             this.personRepository.Add(person);
@@ -88,6 +72,8 @@
                 person.OtherNameVariants = personInformation.OtherNameVariants;
                 person.BirthDate = personInformation.BirthDate;
                 person.DeathDate = personInformation.DeathDate;
+                person.BirthPlace = personInformation.BirthPlace;
+                person.DeathPlace = personInformation.DeathPlace;
 
                 this.personRepository.Update(person);
                 this.personRepository.Save();

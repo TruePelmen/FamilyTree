@@ -39,8 +39,11 @@
                     LastName = this.LastNameTextBox.Text,
                     FirstName = this.FirstNameTextBox.Text,
                     MaidenName = this.MaidenNameTextBox.Text,
+                    OtherNameVariants = this.OtherNameTextBox.Text,
                     BirthDate = this.ParseDate(this.dateOfBirth),
+                    BirthPlace = this.placeBirthTextBox.Text,
                     DeathDate = this.ParseDate(this.dateOfDeath),
+                    DeathPlace = this.deathPlaceTextBox.Text,
                     Gender = this.DetermineGender(),
                 };
 
@@ -153,10 +156,25 @@
             this.OtherNameTextBox.Text = null;
             this.dateOfBirth.Text = null;
             this.dateOfDeath.Text = null;
+            this.placeBirthTextBox.Text = null;
+            this.deathPlaceTextBox.Text = null;
             this.maleOption.IsSelected = false;
             this.femaleOption.IsSelected = false;
             this.MaidenNameTextBox.IsReadOnly = true;
             this.genderWarning.Visibility = Visibility.Collapsed;
+        }
+
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
 
         private void AddEventButtonClick(object sender, RoutedEventArgs e)

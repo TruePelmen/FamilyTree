@@ -21,13 +21,6 @@
         /// <returns>The Person object with the specified identifier, or null if not found.</returns>
         PersonInformation GetPersonById(int id);
 
-        /// <summary>
-        /// Retrieves short information about a person in the family tree.
-        /// </summary>
-        /// <param name="id">The unique identifier of the person.</param>
-        /// <returns>A PersonCardInformation object containing concise information about the person.</returns>
-        PersonInformation GetShortInformationAboutPerson(int id);
-
         int AddPerson(PersonInformation person);
 
         void UpdatePerson(PersonInformation person);

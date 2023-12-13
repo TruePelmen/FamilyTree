@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Input;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.BLL.Services;
     using OxyPlot;
@@ -32,6 +33,24 @@
         }
 
         public int TreeID { get; set; } = 12;
+
+        private void WindowMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
+        private void BtnMinimizeClick(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void BtnCloseClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
         private void GenerateStatistics_Click(object sender, RoutedEventArgs e)
         {

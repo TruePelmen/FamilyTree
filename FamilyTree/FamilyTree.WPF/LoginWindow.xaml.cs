@@ -148,7 +148,7 @@
             MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.UserLogin = login;
             mainWindow.Show();
-            this.Hide();
+            this.Close();
         }
     }
 }

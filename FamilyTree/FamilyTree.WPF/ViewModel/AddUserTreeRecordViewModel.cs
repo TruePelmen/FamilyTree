@@ -1,16 +1,19 @@
-﻿using FamilyTree.BLL.Interfaces;
-using Serilog;
-using System.Collections.Generic;
-using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Linq;
-
-namespace FamilyTree.WPF.ViewModel
+﻿namespace FamilyTree.WPF.ViewModel
 {
-    public class AddUserTreeRecordViewModel : INotifyPropertyChanged
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Input;
+    using FamilyTree.BLL.Interfaces;
+    using Serilog;
+
+    public class AddUserTreeRecordViewModel : ViewModelBase
     {
         private readonly IUserTreeService userTreeService;
+        private int treeId;
+        private List<string> usersList;
+        private string selectedUser;
+        private string accessType;
 
         public AddUserTreeRecordViewModel(IUserTreeService userTreeService)
         {
@@ -19,20 +22,17 @@ namespace FamilyTree.WPF.ViewModel
             CancelCommand = new RelayCommand(Cancel);
         }
 
-        private int treeId;
         public int TreeId
         {
             get { return treeId; }
             set
             {
                 treeId = value;
-                OnPropertyChanged();
                 UsersList = userTreeService.GetFreeUsersLoginByTreeId(treeId).ToList();
                 SelectedUser = UsersList.FirstOrDefault();
             }
         }
 
-        private List<string> usersList;
         public List<string> UsersList
         {
             get { return usersList; }
@@ -43,7 +43,6 @@ namespace FamilyTree.WPF.ViewModel
             }
         }
 
-        private string selectedUser;
         public string SelectedUser
         {
             get { return selectedUser; }
@@ -54,7 +53,6 @@ namespace FamilyTree.WPF.ViewModel
             }
         }
 
-        private string accessType;
         public string AccessType
         {
             get { return accessType; }
@@ -65,8 +63,8 @@ namespace FamilyTree.WPF.ViewModel
             }
         }
 
-        public RelayCommand SaveCommand { get; }
-        public RelayCommand CancelCommand { get; }
+        public ICommand SaveCommand { get; }
+        public ICommand CancelCommand { get; }
 
         private bool CanSave(object parameter) => true;
 
@@ -93,14 +91,8 @@ namespace FamilyTree.WPF.ViewModel
             CloseAction?.Invoke();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         public event EventHandler SuccessfulAdditionRecord;
         public Action CloseAction { get; set; }
     }
 }
+

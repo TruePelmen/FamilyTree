@@ -131,7 +131,7 @@
                 MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
                 mainWindow.UserLogin = this.loginTextBox.Text;
                 mainWindow.Show();
-                this.Hide();
+                this.Close();
             }
         }
 
@@ -180,7 +180,7 @@
         {
             LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();
             loginWindow.Show();
-            this.Hide();
+            this.Close();
         }
 
         private void LastNameTextBoxLostFocus(object sender, RoutedEventArgs e)

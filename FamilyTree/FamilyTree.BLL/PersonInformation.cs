@@ -17,6 +17,8 @@
                 this.FirstName = person.FirstName;
                 this.BirthDate = person.BirthDate;
                 this.DeathDate = person.DeathDate;
+                this.BirthPlace = person.BirthPlace;
+                this.DeathPlace = person.DeathPlace;
                 this.Id = person.Id;
                 this.MaidenName = person.MaidenName;
                 this.OtherNameVariants = person.OtherNameVariants;

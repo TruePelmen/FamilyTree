@@ -49,7 +49,7 @@
         private void GetEvent()
         {
             this.eventInformation = this.eventService.GetEventById(this.eventId);
-            this.typeTextBlock.Text = this.eventInformation.FullEventType + " " + this.personService.GetShortInformationAboutPerson(this.eventInformation.PersonId).FullName;
+            this.typeTextBlock.Text = this.eventInformation.FullEventType + " " + this.personService.GetPersonById(this.eventInformation.PersonId).FullName;
             this.dateTextBlock.Text = this.eventInformation.EventDate?.ToString("dd.MM.yyyy");
             this.placeTextBlock.Text = this.eventInformation.EventPlace;
             this.descriptionTextBlock.Text = this.eventInformation.Description;
@@ -104,11 +104,11 @@
                 SpecialRecord specialRecordCard = new SpecialRecord(specialRecord);
                 if (i % 2 == 0)
                 {
-                    specialRecordCard.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CDD7CB"));
+                    specialRecordCard.infoPanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CDD7CB"));
                 }
                 else
                 {
-                    specialRecordCard.Background = Brushes.White;
+                    specialRecordCard.infoPanel.Background = Brushes.White;
                 }
 
                 var addSpecialRecord = this.addSpecialRecord;

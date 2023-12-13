@@ -14,7 +14,6 @@
                             x:Name="nameTextBlock" 
                             FontWeight="SemiBold"
                             Foreground="#144509"
-                            MouseLeftButtonDown="NameTextBlockMouseLeftButtonDown"
                             Style="{StaticResource сlickableTextBlockStyle}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -52,7 +51,7 @@
                                 <TextBlock x:Name="dateOfDeathValue" Grid.Row="2" Style="{StaticResource smallText}" Padding="0,7,0,0" Grid.ColumnSpan="2" Margin="113,0,0,0" Text="Невідомо" Visibility="Hidden" />
                                 <TextBlock x:Name="placeOfDeathValue" Grid.Column="1" Grid.Row="3" Style="{StaticResource smallText}" Padding="0,7,0,0" TextTrimming="WordEllipsis" Text="Невідомо" Visibility="Hidden"/>
 
-                                <Button Content="Редагувати" Grid.Column="0" Grid.Row="4" x:Name="editButton" Style="{StaticResource buttonMainGreen}" Height="30" Margin="-1,10,28,5" Click="EditButtonClick" FontSize="10"/>
+                                <Button Content="Профіль" Grid.Column="0" Grid.Row="4" x:Name="profileButton" Style="{StaticResource buttonMainGreen}" Height="30" Margin="-1,10,28,5" Click="ProfileButtonClick"  FontSize="10"/>
                                 <Button Content="Видалити" Grid.Row="4" x:Name="deleteButton" Style="{StaticResource buttonMain}"  Height="30" Margin="95,10,7,5" Grid.ColumnSpan="2" Click="DeleteButtonClick" FontSize="10"/>
                             </Grid>
                         </StackPanel>

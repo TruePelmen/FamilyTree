@@ -21,19 +21,17 @@
                     <Image Source="Images/minimize.png" Width="20" Margin="0 7 40 0" Style="{StaticResource iconApp}" MouseLeftButtonDown="BtnMinimizeClick"/>
                 </Grid>
                 <StackPanel Width="220"
-                    Grid.Row="2"
                     Orientation="Vertical"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Height="540">
-                    <Image Source="Images/logo.png" 
-                   Width="88" Height="95"/>
                     <TextBlock Style ="{StaticResource text}" 
                        Text="Змінити пароль"
                        Foreground="#144509"
                        FontSize="28"
                        FontWeight="SemiBold"
                        HorizontalAlignment="Center"
-                       />
+                       Margin="0,60,0,20"/>
+                   
                     <TextBlock
                                Style="{StaticResource text}"><Run Language="uk-ua" Text="Пароль"/></TextBlock>
                     <PasswordBox  x:Name="firstPassTextBox"
@@ -47,7 +45,8 @@
                         Width="170"
                         Height="40"
                         Click="ConfirmButtonClick" 
-                        Style="{StaticResource buttonMainGreen}"/>
+                        Style="{StaticResource buttonMainGreen}"
+                            Margin="0,10,0,0"/>
                     <TextBlock x:Name="messageTextBlock"
                                Text="Неправильний пароль"
                                Margin="0,15,0,15"
@@ -60,8 +59,9 @@
                         Content="Вийти з акаунту" 
                         Width="170"
                         Height="40"
+                        Margin="0,20,0,0"
                         Click="LogoutButtonClick" 
-                        Style="{StaticResource buttonMainGreen}"/>
+                        Style="{StaticResource buttonMain}"/>
                     <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         Margin="0,15,0,0"/>

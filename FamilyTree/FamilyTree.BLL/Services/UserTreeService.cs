@@ -85,12 +85,19 @@
             }
         }
 
-        public void DeleteUserTree(int id)
+        public void DeleteUserTree(int treeId, string userLogin)
         {
             try
             {
-                this.userTreeRepository.Remove(this.GetUserTreeById(id));
-                this.userTreeRepository.Save();
+                foreach (var userTree in this.GetAllUserTreeByUserLogin(userLogin))
+                {
+                    if (userTree.TreeId == treeId)
+                    {
+                        this.userTreeRepository.Remove(userTree);
+                        this.userTreeRepository.Save();
+                        return;
+                    }
+                }
             }
             catch (Exception)
             {

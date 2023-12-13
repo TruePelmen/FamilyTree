@@ -178,6 +178,12 @@
                 entity.Property(e => e.OtherNameVariants)
                     .HasColumnType("character varying")
                     .HasColumnName("other_name_variants");
+                entity.Property(e => e.BirthPlace)
+                    .HasColumnType("character varying")
+                    .HasColumnName("birth_place");
+                entity.Property(e => e.DeathPlace)
+                    .HasColumnType("character varying")
+                    .HasColumnName("death_place");
             });
 
             modelBuilder.Entity<Relationship>(entity =>

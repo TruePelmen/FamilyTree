@@ -6,30 +6,19 @@
              xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
              mc:Ignorable="d" 
              Width="600">
-    <Grid Background="White">
+    <StackPanel>
+        <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+        <Grid x:Name="infoPanel">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130"/>
             <ColumnDefinition Width="70"/>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <TextBlock Grid.Column="0" Grid.Row="0" Text="Тип" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="0" Text="Номер будинку" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="2" Grid.Row="0" Text="Священник" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold"  VerticalAlignment="Center"  />
-        <TextBlock Grid.Column="3" Grid.Row="0" Text="Опис" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" VerticalAlignment="Center" />
         <TextBlock Grid.Column="0" Grid.Row="2" x:Name="typeTextBlock" Text="Перепис населення" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Top"/>
         <TextBlock Grid.Column="1" Grid.Row="2" x:Name="numberTextBlock" Text="Невідомо" Style="{StaticResource MaterialDesignCaptionTextBlock}"  TextWrapping="Wrap"/>
         <TextBlock Grid.Column="2" Grid.Row="2" x:Name="priestTextBlock" Text="Відсутній" Style="{StaticResource MaterialDesignCaptionTextBlock}" TextWrapping="Wrap"/>
         <TextBlock Grid.Column="3" Grid.Row="2" x:Name="descriptionTextBlock" Text="Відсутній" Style="{StaticResource MaterialDesignCaptionTextBlock}" TextWrapping="Wrap"/>
-        <Separator Grid.Column="0" Grid.Row="1" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-        <Separator Grid.Column="1" Grid.Row="1" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-        <Separator Grid.Column="2" Grid.Row="1" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-        <Separator Grid.Column="3" Grid.Row="1" Style="{StaticResource MaterialDesignDarkSeparator}"/>
     </Grid>
+    </StackPanel>
 </UserControl>

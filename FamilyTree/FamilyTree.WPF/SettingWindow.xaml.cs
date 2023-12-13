@@ -39,6 +39,8 @@
 
         public event EventHandler Exit;
 
+        public event EventHandler CloseWindow;
+
         public string UserLogin
         {
             get
@@ -49,6 +51,7 @@
             set
             {
                 this.userLogin = value;
+                this.userLoginBlock.Text = this.userLogin;
                 this.TreeId = this.userTreeService.GetAllTreeByUserLogin(this.userLogin).FirstOrDefault().Id;
                 this.FillTreesList();
             }
@@ -92,16 +95,12 @@
             if (this.userTreeService.GetAccessTypeByUserLoginAndTreeId(this.userLogin, this.treeId) == "edit")
             {
                 this.accessType.Text = "Редагування";
-                this.deleteTree.Visibility = Visibility.Visible;
-                this.addTree.Visibility = Visibility.Visible;
                 this.addUser.Visibility = Visibility.Visible;
                 this.isEditable = true;
             }
             else
             {
                 this.accessType.Text = "Перегляд";
-                this.deleteTree.Visibility = Visibility.Hidden;
-                this.addTree.Visibility = Visibility.Hidden;
                 this.addUser.Visibility = Visibility.Hidden;
                 this.isEditable = false;
             }
@@ -155,7 +154,7 @@
 
         private void TreeCreated(object sender, EventArgs e)
         {
-            this.userTreeService.AddUserTree(this.userLogin, this.TreeId, "edit");
+            this.userTreeService.AddUserTree(this.userLogin, (sender as AddTree).TreeId, "edit");
             this.FillTreesList();
             this.listOfTrees.SelectedIndex = this.listOfTrees.Items.Count - 1;
         }
@@ -170,6 +169,7 @@
 
         private void EditUserWindowExit(object sender, EventArgs e)
         {
+            this.CloseWindow?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
 
@@ -178,7 +178,15 @@
             MessageBoxResult result = MessageBox.Show("Ви впевнені, що хочете видалити дерево?", "Видалення дерева", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {
-                this.treeService.DeleteTree(this.TreeId);
+                if (this.isEditable)
+                {
+                    this.treeService.DeleteTree(this.TreeId);
+                }
+                else
+                {
+                    this.userTreeService.DeleteUserTree(this.TreeId, this.userLogin);
+                }
+
                 this.FillTreesList();
                 this.listOfTrees.SelectedIndex = 0;
             }
@@ -212,8 +220,10 @@
 
         private void ImageMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Exit?.Invoke(this, EventArgs.Empty);
-            this.Hide();
+            MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.UserLogin = this.userLogin;
+            mainWindow.Show();
+            this.Close();
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

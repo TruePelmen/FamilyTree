@@ -43,6 +43,12 @@
                 Record = specialRecord.Record,
                 EventId = specialRecord.EventId,
             };
+
+            if (this.AreSpecialRecordsOfTypeExistForEvent(specialRecord.EventId, specialRecord))
+            {
+                throw new Exception("Спеціальний запис з такими даними вже існує");
+            }
+
             try
             {
                 this.specialRecordRepository.Add(newSpecialRecord);
@@ -91,10 +97,11 @@
             }
         }
 
-        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType)
+        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, SpecialRecordInformation specialRecord)
         {
             var specialRecords = this.GetAllSpecialRecordsForEvent(eventId);
-            return specialRecords.Any(record => record.RecordType == recordType);
+            return specialRecords.Any(record => record.RecordType == specialRecord.RecordType && record.HouseNumber == specialRecord.HouseNumber
+            && record.Priest == specialRecord.Priest && record.Record == specialRecord.Record);
         }
     }
 }

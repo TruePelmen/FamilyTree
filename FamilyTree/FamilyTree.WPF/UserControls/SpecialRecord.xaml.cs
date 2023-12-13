@@ -25,9 +25,20 @@
         {
             this.InitializeComponent();
             this.typeTextBlock.Text = specialRecord.FullRecordType;
-            this.numberTextBlock.Text = specialRecord.HouseNumber.ToString();
-            this.priestTextBlock.Text = specialRecord.Priest;
-            this.descriptionTextBlock.Text = specialRecord.Record;
+            if (specialRecord.HouseNumber != null)
+            {
+                this.numberTextBlock.Text = specialRecord.HouseNumber.ToString();
+            }
+
+            if (specialRecord.Priest != null)
+            {
+                this.priestTextBlock.Text = specialRecord.Priest;
+            }
+
+            if (specialRecord.Record != null)
+            {
+                this.descriptionTextBlock.Text = specialRecord.Record;
+            }
         }
     }
 }

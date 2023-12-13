@@ -72,10 +72,12 @@
                 if (this.accessType == "edit")
                 {
                     this.accessTypeTextBlock.Text = "Редагування";
+                    this.IsEditable = true;
                 }
                 else if (this.accessType == "view")
                 {
                     this.accessTypeTextBlock.Text = "Перегляд";
+                    this.IsEditable = false;
                 }
             }
         }
@@ -93,7 +95,8 @@
 
         private void DeleteButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.userTreeService.DeleteUserTree(this.Id);
+            var userTree = this.userTreeService.GetUserTreeById(this.Id);
+            this.userTreeService.DeleteUserTree(userTree.TreeId, userTree.UserLogin);
             this.DeleteUserRecord?.Invoke(this, e);
         }
 

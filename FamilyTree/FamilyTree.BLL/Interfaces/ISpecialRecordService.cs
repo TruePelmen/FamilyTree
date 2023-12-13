@@ -34,6 +34,6 @@
         /// <param name="id">The unique identifier of the special record to delete.</param>
         void DeleteSpecialRecord(int id);
 
-        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, string recordType);
+        public bool AreSpecialRecordsOfTypeExistForEvent(int eventId, SpecialRecordInformation specialRecord);
     }
 }

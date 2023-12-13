@@ -29,9 +29,9 @@
             this.personService = personService;
             this.specialRecordService = specialRecordService;
         }
-        
+
         public event EventHandler AddSpecialRecordEvent;
-        
+
         public int EventId
         {
             get
@@ -62,7 +62,7 @@
         {
             this.Close();
         }
-        
+
         private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -90,12 +90,6 @@
                     recordType = "population census";
                     break;
             }
-            
-            if (this.specialRecordService.AreSpecialRecordsOfTypeExistForEvent(this.EventId, recordType))
-            {
-                MessageBox.Show($"Для цієї події вже існують записи типу '{recordType}'. Додавання нового запису заборонено.", "Помилка", MessageBoxButton.OK, MessageBoxImage.Information);
-                return;
-            }
 
             int? houseNumber = int.Parse(this.recordPlaceTextBox.Text);
             string priest = this.recordPriestTextBox.Text;
@@ -105,12 +99,23 @@
                 RecordType = recordType,
                 HouseNumber = houseNumber,
                 Priest = priest,
+                Record = record,
                 EventId = this.EventId,
             };
-            this.specialRecordService.AddSpecialRecord(specialRecord);
+
+            try
+            {
+                this.specialRecordService.AddSpecialRecord(specialRecord);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error while adding special record");
+                MessageBox.Show($"Помилка при додаванні спеціального запису: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             this.AddSpecialRecordEvent.Invoke(this, new EventArgs());
             this.Close();
-
         }
 
         private void RecordTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

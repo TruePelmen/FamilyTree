@@ -48,16 +48,25 @@
 
         public int GetPhotosNumber(int treeId)
         {
-            int totalPhotos = this.context.TreePeople
-            .Where(tp => tp.TreeId == treeId)
-            .Join(this.context.People, tp => tp.PersonId, p => p.Id, (tp, p) => new { TreePerson = tp, Person = p })
-            .GroupJoin(this.context.MediaPeople, tp => tp.Person.Id, mediaPerson => mediaPerson.PersonId, (tp, mediaPeople) => new { TreePerson = tp.TreePerson, Person = tp.Person, MediaPeople = mediaPeople })
-            .SelectMany(tp => tp.MediaPeople.DefaultIfEmpty(), (tp, mediaPerson) => new { TreePerson = tp.TreePerson, Person = tp.Person, MediaPerson = mediaPerson })
-            .GroupJoin(this.context.MediaEvents, tp => tp.MediaPerson.MediaId, mediaEvent => mediaEvent.MediaId, (tp, mediaEvents) => new { TreePerson = tp.TreePerson, Person = tp.Person, MediaPerson = tp.MediaPerson, MediaEvents = mediaEvents })
-            .SelectMany(tp => tp.MediaEvents.DefaultIfEmpty(), (tp, mediaEvent) => mediaEvent)
-            .Count();
+            int personsPhoto = 0;
 
-            return totalPhotos;
+            var treePeople = this.GetTreePeopleByTreeId(treeId);
+
+            foreach (var person in treePeople)
+            {
+                var mediaEvents = this.context.MediaEvents
+                .Include(me => me.Event)
+                .Include(me => me.Media)
+                .Where(me => me.Event != null && me.Event.PersonId == person.Id)
+                .ToList();
+
+                personsPhoto += mediaEvents
+                    .Where(me => me.Media.MediaType == "photo")
+                    .Select(me => me.Media)
+                    .Count();
+            }
+
+            return personsPhoto;
         }
     }
 }

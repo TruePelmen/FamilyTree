@@ -16,7 +16,7 @@
                            Foreground="#144509"
                            TextTrimming="CharacterEllipsis"
                            Style="{StaticResource сlickableTextBlockStyle}"
-                           MouseLeftButtonDown="NameTextBlockMouseLeftButtonDown"/>
+                           />
                 <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90"/>

@@ -47,9 +47,21 @@
                 </StackPanel>
                 <TextBlock Foreground="#363636" Margin="20,10,0,0" Text="Спеціальні записи" Style="{StaticResource MaterialDesignHeadline6TextBlock}"/>
                 <Separator Margin="20,5,20,10" Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="341">
+                <Grid Width="600">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="70"/>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Тип" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="Номер будинку" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" Grid.Row="0" Text="Священник" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold"  VerticalAlignment="Center"  />
+                    <TextBlock Grid.Column="3" Grid.Row="0" Text="Опис" Style="{StaticResource MaterialDesignBody2TextBlock}" FontWeight="SemiBold" VerticalAlignment="Center" />
+                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="300">
                     <StackPanel x:Name="specialRecorsPanel">
-                        <StackPanel x:Name="addSpecialRecord" Width="400" Height="100" Orientation="Horizontal">
+                        <StackPanel Margin="0,0,0,30" x:Name="addSpecialRecord" Width="400" Height="100" Orientation="Horizontal">
                             <Button x:Name="addSpecialRecordButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="80,0,10,0" Click="AddSpecialRecordButtonClick">
                                 <fa:ImageAwesome Icon="Plus" Width="10" Height="10" Foreground="White" />
                             </Button>

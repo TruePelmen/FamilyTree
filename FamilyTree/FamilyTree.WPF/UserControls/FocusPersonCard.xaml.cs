@@ -229,13 +229,6 @@
             }
         }
 
-        private void EditButtonClick(object sender, RoutedEventArgs e)
-        {
-            EditWindow editWindow = DependencyContainer.ServiceProvider.GetRequiredService<EditWindow>();
-            editWindow.Id = this.IdPerson;
-            editWindow.Show();
-        }
-
         private void AddButtonClick(object sender, RoutedEventArgs e)
         {
             AddPersonWindow addPersonWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddPersonWindow>();
@@ -248,7 +241,7 @@
             addPersonWindow.Show();
         }
 
-        private void NameTextBlockMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ProfileButtonClick(object sender, RoutedEventArgs e)
         {
             ProfileWindow profileWindow = DependencyContainer.ServiceProvider.GetRequiredService<ProfileWindow>();
             profileWindow.Id = this.IdPerson;

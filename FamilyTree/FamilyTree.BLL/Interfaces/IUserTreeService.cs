@@ -58,11 +58,7 @@
         /// <param name="accessType">The updated access type.</param>
         void UpdateUserTree(int id, string userLogin, int treeId, string accessType);
 
-        /// <summary>
-        /// Deletes a user-tree association from the system.
-        /// </summary>
-        /// <param name="id">The unique identifier of the user-tree association to delete.</param>
-        void DeleteUserTree(int id);
+        void DeleteUserTree(int treeId, string userLogin);
 
         void DeleteUserTree(string login);
     }

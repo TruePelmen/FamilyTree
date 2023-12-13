@@ -23,6 +23,10 @@
 
         public DateOnly? DeathDate { get; set; }
 
+        public string? BirthPlace { get; set; }
+
+        public string? DeathPlace { get; set; }
+
         public virtual ICollection<Event> Events { get; set; } = new List<Event>();
 
         public virtual ICollection<MediaPerson> MediaPeople { get; set; } = new List<MediaPerson>();

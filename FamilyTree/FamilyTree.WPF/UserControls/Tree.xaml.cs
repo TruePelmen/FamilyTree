@@ -118,19 +118,59 @@
 
         private void CheckAccessType()
         {
+            this.AdjustDisplayFocusCardToAccessType(this.maleFocus);
+            this.AdjustDisplayFocusCardToAccessType(this.femaleFocus);
+            this.AdjustDisplayPersonCardToAccessType(this.maleFather);
+            this.AdjustDisplayPersonCardToAccessType(this.maleMother);
+            this.AdjustDisplayPersonCardToAccessType(this.femaleFather);
+            this.AdjustDisplayPersonCardToAccessType(this.femaleMother);
+            foreach (PersonCard child in this.childrenPanel.Children.OfType<PersonCard>())
+            {
+                this.AdjustDisplayPersonCardToAccessType(child);
+            }
+        }
+
+        private void AdjustDisplayFocusCardToAccessType(FocusPersonCard personCard)
+        {
             if (this.accessType == "edit")
             {
-                this.maleFocus.editButton.Visibility = Visibility.Visible;
-                this.femaleFocus.editButton.Visibility = Visibility.Visible;
-                this.maleFocus.deleteButton.Visibility = Visibility.Visible;
-                this.femaleFocus.deleteButton.Visibility = Visibility.Visible;
+                if (!personCard.IsEmpty)
+                {
+                    personCard.deleteButton.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    personCard.emptyPanel.Visibility = Visibility.Visible;
+                }
             }
             else
             {
-                this.maleFocus.editButton.Visibility = Visibility.Hidden;
-                this.femaleFocus.editButton.Visibility = Visibility.Hidden;
-                this.maleFocus.deleteButton.Visibility = Visibility.Hidden;
-                this.femaleFocus.deleteButton.Visibility = Visibility.Hidden;
+                if (!personCard.IsEmpty)
+                {
+                    personCard.deleteButton.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    personCard.emptyPanel.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+
+        private void AdjustDisplayPersonCardToAccessType(PersonCard personCard)
+        {
+            if (this.accessType == "edit")
+            {
+                if (personCard.IsEmpty)
+                {
+                    personCard.emptyPanel.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                if (personCard.IsEmpty)
+                {
+                    personCard.emptyPanel.Visibility = Visibility.Hidden;
+                }
             }
         }
 
@@ -151,40 +191,50 @@
                 this.maleFocus.IdPerson = this.idFocusPerson;
                 this.maleFocus.RenewPersonCard(person);
                 this.maleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPerson);
-                this.maleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleFather.IdPerson));
+                this.maleFather.RenewPersonCard(this.personService.GetPersonById(this.maleFather.IdPerson));
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
-                this.maleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleMother.IdPerson));
+                this.maleMother.RenewPersonCard(this.personService.GetPersonById(this.maleMother.IdPerson));
                 this.femaleFocus.IdPerson = this.idFocusPersonSpounse;
                 this.femaleFocus.RenewPersonCard(this.personService.GetPersonById(this.idFocusPersonSpounse));
                 this.femaleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
-                this.femaleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleFather.IdPerson));
+                this.femaleFather.RenewPersonCard(this.personService.GetPersonById(this.femaleFather.IdPerson));
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
-                this.femaleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleMother.IdPerson));
+                this.femaleMother.RenewPersonCard(this.personService.GetPersonById(this.femaleMother.IdPerson));
             }
             else
             {
                 this.femaleFocus.IdPerson = this.idFocusPerson;
                 this.femaleFocus.RenewPersonCard(person);
                 this.femaleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPerson);
-                this.femaleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleFather.IdPerson));
+                this.femaleFather.RenewPersonCard(this.personService.GetPersonById(this.femaleFather.IdPerson));
                 this.femaleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPerson);
-                this.femaleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.femaleMother.IdPerson));
+                this.femaleMother.RenewPersonCard(this.personService.GetPersonById(this.femaleMother.IdPerson));
                 this.maleFocus.IdPerson = this.idFocusPersonSpounse;
                 this.maleFocus.RenewPersonCard(this.personService.GetPersonById(this.idFocusPersonSpounse));
                 this.maleFather.IdPerson = this.relationshipService.GetFatherIdByPersonId(this.idFocusPersonSpounse);
-                this.maleFather.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleFather.IdPerson));
+                this.maleFather.RenewPersonCard(this.personService.GetPersonById(this.maleFather.IdPerson));
                 this.maleMother.IdPerson = this.relationshipService.GetMotherIdByPersonId(this.idFocusPersonSpounse);
-                this.maleMother.RenewPersonCard(this.personService.GetShortInformationAboutPerson(this.maleMother.IdPerson));
+                this.maleMother.RenewPersonCard(this.personService.GetPersonById(this.maleMother.IdPerson));
             }
 
             var children = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPerson).ToList();
-            var spouseChildren = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPersonSpounse).ToList();
             this.AddChild();
-            for (int i = 0; i < children.Count; ++i)
+            if (this.idFocusPersonSpounse > 0)
             {
-                if (spouseChildren.Contains(children[i]))
+                var spouseChildren = this.relationshipService.GetChildrenIdByPersonId(this.idFocusPersonSpounse).ToList();
+                for (int i = 0; i < children.Count; ++i)
                 {
-                    this.AddChild(this.personService.GetShortInformationAboutPerson(children[i]));
+                    if (spouseChildren.Contains(children[i]))
+                    {
+                        this.AddChild(this.personService.GetPersonById(children[i]));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < children.Count; ++i)
+                {
+                    this.AddChild(this.personService.GetPersonById(children[i]));
                 }
             }
         }
@@ -349,7 +399,7 @@
 
             if ((sender as IPersonCard) == this.maleMother)
             {
-                if (!this.maleMother.IsEmpty)
+                if (!this.maleFather.IsEmpty)
                 {
                     this.relationshipService.AddRelationship(id, this.maleFather.IdPerson, "spouse");
                 }
@@ -376,7 +426,7 @@
 
             if ((sender as IPersonCard) == this.femaleMother)
             {
-                if (!this.femaleMother.IsEmpty)
+                if (!this.femaleFather.IsEmpty)
                 {
                     this.relationshipService.AddRelationship(id, this.femaleFather.IdPerson, "spouse");
                 }
