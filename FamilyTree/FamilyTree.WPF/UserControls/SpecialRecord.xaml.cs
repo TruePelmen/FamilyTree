@@ -33,8 +33,6 @@
 
         public event EventHandler<int> Delete;
 
-        public event EventHandler<int> Update;
-
         public SpecialRecordInformation SpecialRecordInfo
         {
             get
@@ -83,7 +81,7 @@
             this.savePanel.Visibility = Visibility.Visible;
         }
 
-        private void BackButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        private void ShowInfoPanel()
         {
             this.descriptionTextBlock.Visibility = Visibility.Visible;
             this.descriptionTextBox.Visibility = Visibility.Hidden;
@@ -93,6 +91,11 @@
             this.priestTextBox.Visibility = Visibility.Hidden;
             this.editPanel.Visibility = Visibility.Visible;
             this.savePanel.Visibility = Visibility.Hidden;
+        }
+
+        private void BackButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            this.ShowInfoPanel();
         }
 
         private void SaveButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
@@ -107,7 +110,8 @@
                 EventId = this.specialRecord.EventId,
             };
             this.specialRecordService.UpdateSpecialRecord(specialRecord);
-            this.Update?.Invoke(this, this.specialRecord.Id);
+            this.SpecialRecordInfo = specialRecord;
+            this.ShowInfoPanel();
         }
     }
 }

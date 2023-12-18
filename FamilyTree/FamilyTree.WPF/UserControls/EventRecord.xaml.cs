@@ -23,6 +23,7 @@
     public partial class EventRecord : UserControl
     {
         private int eventid;
+        private bool isDeletionCompleted = false;
 
         public EventRecord(EventInformation eventInformation)
         {
@@ -81,14 +82,18 @@
 
         private void UserControlMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EventDetails eventWindow = DependencyContainer.ServiceProvider.GetRequiredService<EventDetails>();
-            eventWindow.UpdateEvent += this.UpdateEvent;
-            eventWindow.EventId = this.eventid;
-            eventWindow.ShowDialog();
+            if (!this.isDeletionCompleted)
+            {
+                EventDetails eventWindow = DependencyContainer.ServiceProvider.GetRequiredService<EventDetails>();
+                eventWindow.UpdateEvent += this.UpdateEvent;
+                eventWindow.EventId = this.eventid;
+                eventWindow.ShowDialog();
+            }
         }
 
         private void DeleteButtonMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            this.isDeletionCompleted = true;
             MessageBoxResult result = MessageBox.Show("Ви дійсно бажаєте видалити цю подію?", "Видалення події", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (result == MessageBoxResult.Yes)
             {

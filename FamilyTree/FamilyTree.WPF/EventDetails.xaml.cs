@@ -117,7 +117,6 @@
 
                 var addSpecialRecord = this.addSpecialRecord;
                 specialRecordCard.Delete += this.DeleteSpecialRecord;
-                specialRecordCard.Update += this.UpdateSpecialRecord;
                 this.specialRecorsPanel.Children.Remove(addSpecialRecord);
                 this.specialRecorsPanel.Children.Add(specialRecordCard);
                 this.specialRecorsPanel.Children.Add(addSpecialRecord);
@@ -128,14 +127,6 @@
         private void DeleteSpecialRecord(object sender, int id)
         {
             this.specialRecordService.DeleteSpecialRecord(id);
-            this.specialRecorsPanel.Children.Remove(this.addSpecialRecord);
-            this.specialRecorsPanel.Children.Clear();
-            this.specialRecorsPanel.Children.Add(this.addSpecialRecord);
-            this.GetSpesialRecords();
-        }
-
-        private void UpdateSpecialRecord(object sender, int id)
-        {
             this.specialRecorsPanel.Children.Remove(this.addSpecialRecord);
             this.specialRecorsPanel.Children.Clear();
             this.specialRecorsPanel.Children.Add(this.addSpecialRecord);
