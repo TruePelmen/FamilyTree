@@ -17,9 +17,9 @@
             this.InitializeComponent();
         }
 
-        public int IdPerson { get; set; }
-
         public event EventHandler<int> PersonAdded;
+
+        public int IdPerson { get; set; }
 
         public bool IsEmpty
         {

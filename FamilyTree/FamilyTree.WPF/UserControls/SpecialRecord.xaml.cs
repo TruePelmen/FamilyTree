@@ -15,30 +15,99 @@
     using System.Windows.Navigation;
     using System.Windows.Shapes;
     using FamilyTree.BLL;
+    using FamilyTree.BLL.Interfaces;
 
     /// <summary>
     /// Interaction logic for SpecialRecord.xaml
     /// </summary>
     public partial class SpecialRecord : UserControl
     {
-        public SpecialRecord(SpecialRecordInformation specialRecord)
+        private readonly ISpecialRecordService specialRecordService;
+        private SpecialRecordInformation specialRecord;
+
+        public SpecialRecord(ISpecialRecordService specialRecordService)
         {
+            this.specialRecordService = specialRecordService;
             this.InitializeComponent();
-            this.typeTextBlock.Text = specialRecord.FullRecordType;
-            if (specialRecord.HouseNumber != null)
+        }
+
+        public event EventHandler<int> Delete;
+
+        public event EventHandler<int> Update;
+
+        public SpecialRecordInformation SpecialRecordInfo
+        {
+            get
             {
-                this.numberTextBlock.Text = specialRecord.HouseNumber.ToString();
+                return this.specialRecord;
             }
 
-            if (specialRecord.Priest != null)
+            set
             {
-                this.priestTextBlock.Text = specialRecord.Priest;
-            }
+                this.specialRecord = value;
+                this.typeTextBlock.Text = this.specialRecord.FullRecordType;
+                if (this.specialRecord.HouseNumber != null)
+                {
+                    this.numberTextBlock.Text = this.specialRecord.HouseNumber.ToString();
+                }
 
-            if (specialRecord.Record != null)
-            {
-                this.descriptionTextBlock.Text = specialRecord.Record;
+                if (this.specialRecord.Priest != null)
+                {
+                    this.priestTextBlock.Text = this.specialRecord.Priest;
+                }
+
+                if (this.specialRecord.Record != null)
+                {
+                    this.descriptionTextBlock.Text = this.specialRecord.Record;
+                }
             }
+        }
+
+        private void DeleteButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            this.Delete?.Invoke(this, this.specialRecord.Id);
+        }
+
+        private void EditButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            this.descriptionTextBlock.Visibility = Visibility.Hidden;
+            this.descriptionTextBox.Visibility = Visibility.Visible;
+            this.descriptionTextBox.Text = this.descriptionTextBlock.Text;
+            this.numberTextBlock.Visibility = Visibility.Hidden;
+            this.numberTextBox.Visibility = Visibility.Visible;
+            this.numberTextBox.Text = this.numberTextBlock.Text;
+            this.priestTextBlock.Visibility = Visibility.Hidden;
+            this.priestTextBox.Visibility = Visibility.Visible;
+            this.priestTextBox.Text = this.priestTextBlock.Text;
+            this.editPanel.Visibility = Visibility.Hidden;
+            this.savePanel.Visibility = Visibility.Visible;
+        }
+
+        private void BackButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            this.descriptionTextBlock.Visibility = Visibility.Visible;
+            this.descriptionTextBox.Visibility = Visibility.Hidden;
+            this.numberTextBlock.Visibility = Visibility.Visible;
+            this.numberTextBox.Visibility = Visibility.Hidden;
+            this.priestTextBlock.Visibility = Visibility.Visible;
+            this.priestTextBox.Visibility = Visibility.Hidden;
+            this.editPanel.Visibility = Visibility.Visible;
+            this.savePanel.Visibility = Visibility.Hidden;
+        }
+
+        private void SaveButtonMouseLeftButtonDown(object sender, RoutedEventArgs e)
+        {
+            SpecialRecordInformation specialRecord = new SpecialRecordInformation
+            {
+                Id = this.specialRecord.Id,
+                RecordType = this.specialRecord.RecordType,
+                HouseNumber = int.Parse(this.numberTextBox.Text),
+                Priest = this.priestTextBox.Text,
+                Record = this.descriptionTextBox.Text,
+                EventId = this.specialRecord.EventId,
+            };
+            this.specialRecordService.UpdateSpecialRecord(specialRecord);
+            this.Update?.Invoke(this, this.specialRecord.Id);
         }
     }
 }

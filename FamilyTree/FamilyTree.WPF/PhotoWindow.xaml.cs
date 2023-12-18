@@ -141,6 +141,7 @@
             {
                 date = null;
             }
+
             return date;
         }
 

@@ -23,6 +23,8 @@
         public AddPersonWindow(IPersonService personService)
         {
             this.InitializeComponent();
+            this.maleOption.Path = "Male";
+            this.femaleOption.Path = "Female";
             this.personService = personService;
         }
 
@@ -102,7 +104,7 @@
 
         private void BtnCloseClick(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            this.Close();
         }
 
         private void LastNameTextBoxLostFocus(object sender, RoutedEventArgs e)

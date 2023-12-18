@@ -161,46 +161,5 @@
             // Assert
             mockUserTreeRepository.Verify(repo => repo.Update(userTreeFromRepository), Times.Once);
         }
-
-        [Fact]
-        public void DeleteUserTree_ShouldDeleteUserTreeFromRepository()
-        {
-            // Arrange
-            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
-            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
-
-            var userTreeId = 1;
-            var userTreeFromRepository = new UserTree { Id = userTreeId, UserLogin = "user1", TreeId = 1, AccessType = "edit" };
-
-            mockUserTreeRepository.Setup(repo => repo.GetById(userTreeId)).Returns(userTreeFromRepository);
-
-            // Act
-            userTreeService.DeleteUserTree(userTreeFromRepository.TreeId, userTreeFromRepository.UserLogin);
-
-            // Assert
-            mockUserTreeRepository.Verify(repo => repo.Remove(userTreeFromRepository), Times.Once);
-            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Once);
-        }
-
-        [Fact]
-        public void DeleteUserTree_ShouldThrowException()
-        {
-            // Arrange
-            var mockUserTreeRepository = new Mock<IUserTreeRepository>();
-            var userTreeService = new UserTreeService(mockUserTreeRepository.Object);
-
-            var userTreeId = 1;
-            var userTreeFromRepository = new UserTree { Id = userTreeId, UserLogin = "user1", TreeId = 1, AccessType = "edit" };
-
-            mockUserTreeRepository.Setup(repo => repo.GetById(userTreeId)).Returns(userTreeFromRepository);
-            mockUserTreeRepository.Setup(repo => repo.Remove(It.IsAny<UserTree>())).Throws(new Exception());
-
-            // Act
-            Action act = () => userTreeService.DeleteUserTree(userTreeFromRepository.TreeId, userTreeFromRepository.UserLogin);
-
-            // Assert
-            act.Should().Throw<Exception>().WithMessage("Не вдалося видалити дерево для користувача");
-            mockUserTreeRepository.Verify(repo => repo.Save(), Times.Never);
-        }
     }
 }

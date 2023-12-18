@@ -1,7 +1,6 @@
 ﻿<Window x:Class="FamilyTree.WPF.AddTree"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         Title="Додати Дерево Роду" Height="400" Width="500"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -30,13 +29,13 @@
                         </Grid.RowDefinitions>
                         <TextBlock Text="Головна особа" Margin="0,0,0,5" Style="{StaticResource text}" Grid.Row="0"/>
                         <Button x:Name="addPersonButton" Content="Додати Особу" Click="AddPersonButton_Click" Margin="0,10,10,0" Style="{StaticResource buttonMain}" Height="40" Width="150" Grid.Row="1"/>
-                        <Grid x:Name="primaryPersonPanel"  Grid.Row="1" Visibility="Hidden">
+                        <Grid x:Name="primaryPersonPanel" Visibility="Hidden"  Grid.Row="1" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock x:Name="primaryPersonTextBlock" Margin="0,10,10,0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" Height="40" Width="220" Grid.Column="0" Foreground="#363636" TextTrimming="CharacterEllipsis"/>
-                            <fa:ImageAwesome HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="deleteButton" Icon="Remove" Width="18" Height="18" Style="{StaticResource iconApp}" Foreground="#363636" MouseLeftButtonDown="DeleteButtonMouseLeftButtonDown"  Grid.Column="1"/>
+                            <Image HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="deleteButton" Source="./Images/close.png" Width="30" Height="30" Style="{StaticResource iconApp}" MouseLeftButtonDown="DeleteButtonMouseLeftButtonDown"  Grid.Column="1"/>
                         </Grid>
                     </Grid>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">

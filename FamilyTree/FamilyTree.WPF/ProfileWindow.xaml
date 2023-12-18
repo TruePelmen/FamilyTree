@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FamilyTree.WPF"
-        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -82,7 +81,7 @@
                             <StackPanel Margin="10" x:Name="eventsPanel">
                                 <StackPanel x:Name="addEventRecord" Width="400" Height="100" Orientation="Horizontal">
                                     <Button x:Name="addEventButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="120,0,10,0" Click="AddEventButtonClick">
-                                        <fa:ImageAwesome Icon="Plus" Width="10" Height="10" Foreground="White" />
+                                        <Image Source="./Images/plus-.png" Width="10" Height="10"/>
                                     </Button>
                                     <TextBlock Text="Додати подію" Foreground="#363636" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
@@ -94,7 +93,7 @@
                             <WrapPanel x:Name="photoPanel">
                                 <StackPanel Margin="30,20,20,20" Width="150" Height="200"  x:Name="addPhoto" Orientation="Horizontal">
                                     <Button x:Name="addPhotoButton" Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="25" Width="25" Margin="5,0,10,0" Click="AddPhotoButtonClick">
-                                        <fa:ImageAwesome Icon="Plus" Width="10" Height="10" Foreground="White" />
+                                        <Image Source="./Images/plus-.png" Width="10" Height="10" />
                                     </Button>
                                     <TextBlock  Width="150" Text="Додати фото" TextWrapping="Wrap" Foreground="#363636" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>

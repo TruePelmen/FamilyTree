@@ -19,6 +19,7 @@
         private readonly ISpecialRecordService specialRecordService;
         private readonly IPersonService personService;
         private int eventId;
+        private bool isEditMode;
         private EventInformation eventInformation;
 
         public EventDetails(IMediaEventService mediaEventService, ISpecialRecordService specialRecordService, IEventService eventService, IPersonService personService)
@@ -29,6 +30,8 @@
             this.eventService = eventService;
             this.personService = personService;
         }
+
+        public event EventHandler UpdateEvent;
 
         public int EventId
         {
@@ -101,7 +104,8 @@
            int i = 1;
            foreach (SpecialRecordInformation specialRecord in specialRecords)
             {
-                SpecialRecord specialRecordCard = new SpecialRecord(specialRecord);
+                SpecialRecord specialRecordCard = DependencyContainer.ServiceProvider.GetRequiredService<SpecialRecord>();
+                specialRecordCard.SpecialRecordInfo = specialRecord;
                 if (i % 2 == 0)
                 {
                     specialRecordCard.infoPanel.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CDD7CB"));
@@ -112,11 +116,30 @@
                 }
 
                 var addSpecialRecord = this.addSpecialRecord;
+                specialRecordCard.Delete += this.DeleteSpecialRecord;
+                specialRecordCard.Update += this.UpdateSpecialRecord;
                 this.specialRecorsPanel.Children.Remove(addSpecialRecord);
                 this.specialRecorsPanel.Children.Add(specialRecordCard);
                 this.specialRecorsPanel.Children.Add(addSpecialRecord);
                 i++;
             }
+        }
+
+        private void DeleteSpecialRecord(object sender, int id)
+        {
+            this.specialRecordService.DeleteSpecialRecord(id);
+            this.specialRecorsPanel.Children.Remove(this.addSpecialRecord);
+            this.specialRecorsPanel.Children.Clear();
+            this.specialRecorsPanel.Children.Add(this.addSpecialRecord);
+            this.GetSpesialRecords();
+        }
+
+        private void UpdateSpecialRecord(object sender, int id)
+        {
+            this.specialRecorsPanel.Children.Remove(this.addSpecialRecord);
+            this.specialRecorsPanel.Children.Clear();
+            this.specialRecorsPanel.Children.Add(this.addSpecialRecord);
+            this.GetSpesialRecords();
         }
 
         private void AddSpecialRecordButtonClick(object sender, RoutedEventArgs e)
@@ -133,6 +156,56 @@
             eventDetails.EventId = this.eventId;
             eventDetails.ShowDialog();
             this.Close();
+        }
+
+        private DateOnly? ParseDate()
+        {
+            if (this.dateTextBox.Text != string.Empty)
+            {
+                string[] date = this.dateTextBox.Text.Split('.');
+                return new DateOnly(int.Parse(date[2]), int.Parse(date[1]), int.Parse(date[0]));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (!this.isEditMode)
+            {
+                this.isEditMode = true;
+                this.dateTextBlock.Visibility = Visibility.Hidden;
+                this.dateTextBox.Text = this.dateTextBlock.Text;
+                this.placeTextBlock.Visibility = Visibility.Hidden;
+                this.placeTextBox.Text = this.placeTextBlock.Text;
+                this.descriptionTextBlock.Visibility = Visibility.Hidden;
+                this.descriptionTextBox.Text = this.descriptionTextBlock.Text;
+                this.dateTextBox.Visibility = Visibility.Visible;
+                this.placeTextBox.Visibility = Visibility.Visible;
+                this.descriptionTextBox.Visibility = Visibility.Visible;
+                this.editButton.Content = "Зберегти";
+            }
+            else
+            {
+                this.isEditMode = false;
+                this.dateTextBlock.Visibility = Visibility.Visible;
+                this.dateTextBlock.Text = this.dateTextBox.Text;
+                this.placeTextBlock.Visibility = Visibility.Visible;
+                this.placeTextBlock.Text = this.placeTextBox.Text;
+                this.descriptionTextBlock.Visibility = Visibility.Visible;
+                this.descriptionTextBlock.Text = this.descriptionTextBox.Text;
+                this.dateTextBox.Visibility = Visibility.Hidden;
+                this.placeTextBox.Visibility = Visibility.Hidden;
+                this.descriptionTextBox.Visibility = Visibility.Hidden;
+                this.editButton.Content = "Редагувати";
+                this.eventInformation.EventDate = this.ParseDate();
+                this.eventInformation.EventPlace = this.placeTextBox.Text;
+                this.eventInformation.Description = this.descriptionTextBox.Text;
+                this.eventService.UpdateEvent(this.eventInformation);
+                this.UpdateEvent?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

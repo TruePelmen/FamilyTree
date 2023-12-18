@@ -114,7 +114,6 @@
             }
         }
 
-
         public ICommand SaveCommand => new RelayCommand(this.Save);
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

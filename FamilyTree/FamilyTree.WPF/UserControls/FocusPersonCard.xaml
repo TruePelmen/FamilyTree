@@ -1,8 +1,7 @@
 ﻿<UserControl x:Class="FamilyTree.WPF.UserControls.FocusPersonCard"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              Height="215" Width="310">
@@ -60,7 +59,7 @@
                 </StackPanel>
                 <StackPanel x:Name="emptyPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                     <Button Style="{StaticResource MaterialDesignFloatingActionLightButton}" Height="40" Width="40" Click="AddButtonClick">
-                        <fa:ImageAwesome Icon="Plus" Width="20" Height="20" Foreground="White"/>
+                        <Image Source="../Images/plus-.png" Width="20" Height="20" />
                     </Button>
                     <TextBlock Text="Додати особу" Foreground="#363636" VerticalAlignment="Center" Margin="10 0 20 0" FontSize="24" FontWeight="SemiBold"/>
                 </StackPanel>

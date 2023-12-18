@@ -367,12 +367,21 @@
                 this.eventsPanel.Children.Remove(addEvent);
                 EventRecord eventRecord = new EventRecord(personEvent);
                 eventRecord.DeleteEvent += this.EventRecordDeleteEvent;
+                eventRecord.UpdateEvent += this.EventRecordUpdateEvent;
                 this.eventsPanel.Children.Add(eventRecord);
                 Separator separator = new Separator();
                 separator.Style = (Style)this.FindResource("MaterialDesignDarkSeparator");
                 this.eventsPanel.Children.Add(separator);
                 this.eventsPanel.Children.Add(addEvent);
             }
+        }
+
+        private void EventRecordUpdateEvent(object sender, EventArgs e)
+        {
+            var addEvent = this.addEventRecord;
+            this.eventsPanel.Children.Clear();
+            this.eventsPanel.Children.Add(addEvent);
+            this.ShowPersonEvents();
         }
 
         private void EventRecordDeleteEvent(object sender, EventArgs e)

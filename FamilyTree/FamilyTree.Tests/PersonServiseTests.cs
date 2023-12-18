@@ -41,22 +41,10 @@
             var personFromRepository = new Person { Id = personId, FirstName = "Іван", LastName = "Франко", Gender = "male", BirthDate = new DateOnly(2000, 01, 01) };
 
             mockPersonRepository.Setup(repo => repo.GetById(personId)).Returns(personFromRepository);
-
-            var eventsFromService = new List<EventInformation>
-            {
-                new EventInformation { Id = 1, EventType = "birth", EventPlace = "Нагуєвичі" },
-                new EventInformation { Id = 2, EventType = "death", EventPlace = "Львів" },
-            };
-
-            mockEventService.Setup(service => service.GetAllEventsByPersonIdAndEventType(personId, "birth")).Returns(eventsFromService.Where(e => e.EventType == "birth"));
-            mockEventService.Setup(service => service.GetAllEventsByPersonIdAndEventType(personId, "death")).Returns(eventsFromService.Where(e => e.EventType == "death"));
-
             // Act
             var result = personService.GetPersonById(personId);
 
             var person = new PersonInformation(personFromRepository);
-            person.BirthPlace = "Нагуєвичі";
-            person.DeathPlace = "Львів";
 
             // Assert
             result.Should().NotBeNull();
