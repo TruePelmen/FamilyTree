@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Windows;
     using System.Windows.Documents;
@@ -21,6 +22,7 @@
         private readonly IMediaEventService mediaEventService;
         private readonly IMediaPersonService mediaPersonService;
         private readonly IPersonService personService;
+        private bool isEditMode;
         private int id;
 
         public PhotoWindow(IMediaService mediaService, IMediaEventService mediaEventService, IMediaPersonService mediaPersonService, IPersonService personService)
@@ -123,6 +125,57 @@
                 this.mediaService.DeleteMedia(this.id);
                 this.DeletePhoto.Invoke(this, EventArgs.Empty);
                 this.Close();
+            }
+        }
+
+        private DateOnly? ParseDate()
+        {
+            DateOnly? date;
+            string dateString = this.dateDatePicker.SelectedDate.ToString();
+            string dateWithoutTime = dateString.Split(' ')[0];
+            try
+            {
+                date = DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                date = null;
+            }
+            return date;
+        }
+
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (!this.isEditMode)
+            {
+                this.isEditMode = true;
+                this.dateTextBlock.Visibility = Visibility.Hidden;
+                this.dateDatePicker.Text = this.dateTextBlock.Text;
+                this.placeTextBlock.Visibility = Visibility.Hidden;
+                this.placeTextBox.Text = this.placeTextBlock.Text;
+                this.descriptionTextBlock.Visibility = Visibility.Hidden;
+                this.descriptionTextBox.Text = this.descriptionTextBlock.Text;
+                this.dateDatePicker.Visibility = Visibility.Visible;
+                this.placeTextBox.Visibility = Visibility.Visible;
+                this.descriptionTextBox.Visibility = Visibility.Visible;
+                this.editButton.Content = "Зберегти";
+            }
+            else
+            {
+                this.isEditMode = false;
+                this.dateTextBlock.Visibility = Visibility.Visible;
+                this.placeTextBlock.Visibility = Visibility.Visible;
+                this.descriptionTextBlock.Visibility = Visibility.Visible;
+                this.dateDatePicker.Visibility = Visibility.Hidden;
+                this.placeTextBox.Visibility = Visibility.Hidden;
+                this.descriptionTextBox.Visibility = Visibility.Hidden;
+                this.editButton.Content = "Редагувати";
+                Photo photo = this.mediaService.GetMediaById(this.id);
+                photo.Date = this.ParseDate();
+                photo.Place = this.placeTextBox.Text;
+                photo.Description = this.descriptionTextBox.Text;
+                this.mediaService.UpdateMedia(photo);
+                this.GetPhoto();
             }
         }
     }

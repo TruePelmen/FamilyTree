@@ -44,21 +44,26 @@
                             </Grid.RowDefinitions>
                             <TextBlock Grid.Column="0" Grid.Row="0" Text="Дата" Style="{StaticResource MaterialDesignCaptionTextBlock}" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Grid.Row="0" Text="Невідомо" x:Name="dateTextBlock" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Місце" Style="{StaticResource MaterialDesignCaptionTextBlock}" FontWeight="SemiBold"/>
+                            <DatePicker Grid.Column="1" Grid.Row="0" x:Name="dateDatePicker" Style="{StaticResource MaterialDesignDatePicker}"  Visibility="Hidden"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Text="Місце" Style="{StaticResource MaterialDesignCaptionTextBlock}" VerticalAlignment="Center" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Grid.Row="1" Text="Невідомо" x:Name="placeTextBlock"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            <TextBox Grid.Column="1" Grid.Row="1" x:Name="placeTextBox" Style="{StaticResource MaterialDesignFilledTextBox}" Visibility="Hidden"/>
                         </Grid>
                         <TextBlock Margin="0,20,0,0" Text="Опис" Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
                         <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
-                        <TextBlock Text="Відсутній" x:Name="descriptionTextBlock" TextWrapping="Wrap"/>
+                        <Grid>
+                            <TextBlock Text="Відсутній" x:Name="descriptionTextBlock" TextWrapping="Wrap"/>
+                            <TextBox x:Name="descriptionTextBox" Style="{StaticResource MaterialDesignFilledTextBox}" Visibility="Hidden" TextWrapping="Wrap" Width="180"/>
+                        </Grid>
                         <TextBlock Margin="0,20,0,0" Text="Пов'язані особи" Style="{StaticResource MaterialDesignHeadline6TextBlock}" />
-                        <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
+                            <Separator Style="{StaticResource MaterialDesignDarkSeparator}"/>
                         <ScrollViewer>
                             <StackPanel x:Name="personPanel"/>
                         </ScrollViewer>
                     </StackPanel>
                 </ScrollViewer>
                 <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1" Orientation="Horizontal">
-                    <Button Margin="10" Height="40" Style="{StaticResource buttonMainGreen}" Content="Редагувати"/>
+                    <Button x:Name="editButton"  Margin="10" Height="40" Style="{StaticResource buttonMainGreen}" Content="Редагувати" Click="EditButtonClick"/>
                     <Button Margin="10" Height="40" Style="{StaticResource buttonMain}" Content="Видалити" Click="ButtonClick"/>
                 </StackPanel>
             </Grid>

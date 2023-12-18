@@ -175,7 +175,7 @@
             mockUserTreeRepository.Setup(repo => repo.GetById(userTreeId)).Returns(userTreeFromRepository);
 
             // Act
-            userTreeService.DeleteUserTree(userTreeId);
+            userTreeService.DeleteUserTree(userTreeFromRepository.TreeId, userTreeFromRepository.UserLogin);
 
             // Assert
             mockUserTreeRepository.Verify(repo => repo.Remove(userTreeFromRepository), Times.Once);
@@ -196,7 +196,7 @@
             mockUserTreeRepository.Setup(repo => repo.Remove(It.IsAny<UserTree>())).Throws(new Exception());
 
             // Act
-            Action act = () => userTreeService.DeleteUserTree(userTreeId);
+            Action act = () => userTreeService.DeleteUserTree(userTreeFromRepository.TreeId, userTreeFromRepository.UserLogin);
 
             // Assert
             act.Should().Throw<Exception>().WithMessage("Не вдалося видалити дерево для користувача");

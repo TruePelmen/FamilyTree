@@ -2,47 +2,23 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using System.Linq;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Input;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
+    using FamilyTree.WPF.ViewModel;
     using Serilog;
 
-    /// <summary>
-    /// Interaction logic for AddUserTreeRecordWindow.xaml
-    /// </summary>
     public partial class AddUserTreeRecordWindow : Window
     {
-        private readonly IUserTreeService userTreeService;
-        private string accessType;
-        private int treeId;
-        private List<string> usersList;
+        public readonly AddUserTreeRecordViewModel ViewModel;
 
         public AddUserTreeRecordWindow(IUserTreeService userTreeService)
         {
             this.InitializeComponent();
-            this.userTreeService = userTreeService;
-        }
-
-        public event EventHandler SuccessfulAdditionRecord;
-
-        public int TreeId
-        {
-            get
-            {
-                return this.treeId;
-            }
-
-            set
-            {
-                this.treeId = value;
-                this.usersList = this.userTreeService.GetFreeUsersLoginByTreeId(this.treeId).ToList();
-                this.userComboBox.ItemsSource = this.usersList;
-                this.userComboBox.SelectedItem = this.usersList.FirstOrDefault();
-            }
+            this.ViewModel = new AddUserTreeRecordViewModel(userTreeService);
+            this.DataContext = this.ViewModel;
+            this.ViewModel.SuccessfulAdditionRecord += this.ViewModel_SuccessfulAdditionRecord;
         }
 
         private void WindowMouseDown(object sender, MouseButtonEventArgs e)
@@ -63,25 +39,12 @@
             this.Close();
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private void SaveCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            switch (((ComboBoxItem)this.accessTypeComboBox.SelectedItem).Content.ToString())
-            {
-                case "Редагування":
-                    this.accessType = "edit";
-                    break;
-                case "Перегляд":
-                    this.accessType = "view";
-                    break;
-            }
-
-            this.userTreeService.AddUserTree(this.userComboBox.SelectedItem.ToString(), this.TreeId, this.accessType);
-            Log.Information("UserTree record was successfully added =)");
-            this.SuccessfulAdditionRecord?.Invoke(this, EventArgs.Empty);
-            this.Close();
+            this.ViewModel.SaveCommand.Execute(null);
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        private void ViewModel_SuccessfulAdditionRecord(object sender, EventArgs e)
         {
             this.Close();
         }

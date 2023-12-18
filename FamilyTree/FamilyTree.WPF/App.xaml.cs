@@ -19,15 +19,6 @@
             .CreateLogger();
             Log.Information("The app started its work");
 
-            //ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-            //{
-            //    LoggerConfiguration loggerConfiguration = new LoggerConfiguration()
-            //        .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
-            //        .WriteTo.Debug();
-            //    builder.AddSerilog(loggerConfiguration.CreateLogger());
-            //});
-            //ILogger<AddSpecialRecord> logger = loggerFactory.CreateLogger<AddSpecialRecord>();
-
             base.OnStartup(e);
             DependencyContainer.Initialize();
             LoginWindow loginWindow = DependencyContainer.ServiceProvider.GetRequiredService<LoginWindow>();

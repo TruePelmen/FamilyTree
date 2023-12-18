@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
+             xmlns:l="clr-namespace:FamilyTree.WPF.UserControls"
+             xmlns:local="clr-namespace:FamilyTree.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="400"
              MouseEnter="UserControlMouseEnter"
@@ -16,15 +17,17 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#CDD7CB" />
+                    
                 </Trigger>
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="90"/>
             <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="year" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignHeadline4TextBlock}" Foreground="#144509"/>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -36,5 +39,6 @@
             <TextBlock x:Name="place" Style="{StaticResource MaterialDesignTextBlock}" FontSize="12"/>
             <TextBlock x:Name="date" Style="{StaticResource MaterialDesignTextBlock}" FontSize="12"/>
         </StackPanel>
+        <Image Grid.Column="3" x:Name="deleteButton" Source="../Images/close.png" Width="20" Height="20" Style="{StaticResource iconApp}" MouseLeftButtonDown="DeleteButtonMouseLeftButtonDown" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

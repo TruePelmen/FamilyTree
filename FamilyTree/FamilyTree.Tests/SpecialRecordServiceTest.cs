@@ -209,17 +209,17 @@
             var specialRecordService = new SpecialRecordService(mockSpecialRecordRepository.Object);
 
             var eventId = 1;
-            var recordType = "metric book";
+            SpecialRecordInformation record = new SpecialRecordInformation { Id = 1, RecordType = "metric book", HouseNumber = 12, Priest = "Іван Вербицький", Record = "Деталі запису", EventId = eventId };
 
             var specialRecordsFromRepository = new List<SpecialRecord>
             {
-                new SpecialRecord { Id = 1, RecordType = recordType, HouseNumber = 12, Priest = "Іван Вербицький", Record = "Деталі запису", EventId = eventId }
+                new SpecialRecord { Id = 1, RecordType = "metric book", HouseNumber = 12, Priest = "Іван Вербицький", Record = "Деталі запису", EventId = eventId }
             };
 
             mockSpecialRecordRepository.Setup(repo => repo.GetAllSpecialRecordsForEvent(eventId)).Returns(specialRecordsFromRepository);
 
             // Act
-            var result = specialRecordService.AreSpecialRecordsOfTypeExistForEvent(eventId, recordType);
+            var result = specialRecordService.AreSpecialRecordsOfTypeExistForEvent(eventId, record);
 
             // Assert
             result.Should().BeTrue();
@@ -233,7 +233,7 @@
             var specialRecordService = new SpecialRecordService(mockSpecialRecordRepository.Object);
 
             var eventId = 1;
-            var recordType = "metric book";
+            SpecialRecordInformation record = new SpecialRecordInformation { Id = 1, RecordType = "metric book", HouseNumber = 12, Priest = "Іван Вербицький", Record = "Деталі запису", EventId = eventId };
 
             var specialRecordsFromRepository = new List<SpecialRecord>
             {
@@ -243,7 +243,7 @@
             mockSpecialRecordRepository.Setup(repo => repo.GetAllSpecialRecordsForEvent(eventId)).Returns(specialRecordsFromRepository);
 
             // Act
-            var result = specialRecordService.AreSpecialRecordsOfTypeExistForEvent(eventId, recordType);
+            var result = specialRecordService.AreSpecialRecordsOfTypeExistForEvent(eventId, record);
 
             // Assert
             result.Should().BeFalse();

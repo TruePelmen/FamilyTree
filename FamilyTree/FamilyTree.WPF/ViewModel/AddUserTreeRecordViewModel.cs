@@ -2,97 +2,137 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Windows.Input;
     using FamilyTree.BLL.Interfaces;
     using Serilog;
+    using YourNamespace;
 
-    public class AddUserTreeRecordViewModel : ViewModelBase
+    public class AddUserTreeRecordViewModel : INotifyPropertyChanged
     {
         private readonly IUserTreeService userTreeService;
         private int treeId;
         private List<string> usersList;
         private string selectedUser;
-        private string accessType;
+        private string accessType = "edit";
+        private bool controlsEnabled = true;
 
         public AddUserTreeRecordViewModel(IUserTreeService userTreeService)
         {
             this.userTreeService = userTreeService;
-            SaveCommand = new RelayCommand(Save, CanSave);
-            CancelCommand = new RelayCommand(Cancel);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public event EventHandler SuccessfulAdditionRecord;
 
         public int TreeId
         {
-            get { return treeId; }
+            get
+            {
+                return this.treeId;
+            }
+
             set
             {
-                treeId = value;
-                UsersList = userTreeService.GetFreeUsersLoginByTreeId(treeId).ToList();
-                SelectedUser = UsersList.FirstOrDefault();
+                if (this.treeId != value)
+                {
+                    this.treeId = value;
+                    this.OnPropertyChanged();
+                    this.LoadUsersList();
+                }
             }
         }
 
         public List<string> UsersList
         {
-            get { return usersList; }
+            get
+            {
+                return this.usersList;
+            }
+
             set
             {
-                usersList = value;
-                OnPropertyChanged();
+                if (this.usersList != value)
+                {
+                    this.usersList = value;
+                    this.OnPropertyChanged();
+                }
             }
         }
 
         public string SelectedUser
         {
-            get { return selectedUser; }
+            get
+            {
+                return this.selectedUser;
+            }
+
             set
             {
-                selectedUser = value;
-                OnPropertyChanged();
+                if (this.selectedUser != value)
+                {
+                    this.selectedUser = value;
+                    this.OnPropertyChanged();
+                }
             }
         }
 
         public string AccessType
         {
-            get { return accessType; }
+            get
+            {
+                return this.accessType;
+            }
+
             set
             {
-                accessType = value;
-                OnPropertyChanged();
+                if (this.accessType != value)
+                {
+                    this.accessType = value;
+                    this.OnPropertyChanged();
+                }
             }
         }
 
-        public ICommand SaveCommand { get; }
-        public ICommand CancelCommand { get; }
-
-        private bool CanSave(object parameter) => true;
-
-        private void Save(object parameter)
+        public bool ControlsEnabled
         {
-            switch (AccessType)
+            get
             {
-                case "Редагування":
-                    AccessType = "edit";
-                    break;
-                case "Перегляд":
-                    AccessType = "view";
-                    break;
+                return this.controlsEnabled;
             }
 
-            userTreeService.AddUserTree(SelectedUser, TreeId, AccessType);
-            Log.Information("UserTree record was successfully added =)");
-            SuccessfulAdditionRecord?.Invoke(this, EventArgs.Empty);
-            CloseAction?.Invoke();
+            set
+            {
+                if (this.controlsEnabled != value)
+                {
+                    this.controlsEnabled = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
-        private void Cancel(object parameter)
+
+        public ICommand SaveCommand => new RelayCommand(this.Save);
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            CloseAction?.Invoke();
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public event EventHandler SuccessfulAdditionRecord;
-        public Action CloseAction { get; set; }
+        private void LoadUsersList()
+        {
+            this.UsersList = this.userTreeService.GetFreeUsersLoginByTreeId(this.TreeId).ToList();
+            this.SelectedUser = this.UsersList.FirstOrDefault();
+        }
+
+        private void Save()
+        {
+            this.userTreeService.AddUserTree(this.SelectedUser, this.TreeId, this.AccessType);
+            Log.Information("UserTree record was successfully added =)");
+            this.SuccessfulAdditionRecord?.Invoke(this, EventArgs.Empty);
+        }
     }
 }
-

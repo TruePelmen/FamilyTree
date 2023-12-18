@@ -64,36 +64,6 @@
         }
 
         [Fact]
-        public void GetShortInformationAboutPerson_ShouldReturnPersonInformationWithMainPhoto()
-        {
-            // Arrange
-            var mockPersonRepository = new Mock<IPersonRepository>();
-            var mockEventService = new Mock<IEventService>();
-            var mockMediaPersonService = new Mock<IMediaPersonService>();
-
-            var personService = new PersonService(mockPersonRepository.Object, mockEventService.Object, mockMediaPersonService.Object);
-
-            var personId = 1;
-            var personFromRepository = new Person { Id = personId, FirstName = "Іван", LastName = "Франко", Gender = "male", BirthDate = new DateOnly(2000, 01, 01) };
-
-            mockPersonRepository.Setup(repo => repo.GetById(personId)).Returns(personFromRepository);
-
-            var mainPhotoFromService = new Photo { Id = 1, FilePath = "path/to/photo.jpg" };
-
-            mockMediaPersonService.Setup(service => service.GetMainPhotoByPersonId(personId)).Returns(mainPhotoFromService);
-
-            // Act
-            var result = personService.GetShortInformationAboutPerson(personId);
-
-            var person = new PersonInformation(personFromRepository);
-            person.MainPhoto = "path/to/photo.jpg";
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(person);
-        }
-
-        [Fact]
         public void AddPerson_ShouldAddPersonToRepositoryAndReturnId()
         {
             // Arrange

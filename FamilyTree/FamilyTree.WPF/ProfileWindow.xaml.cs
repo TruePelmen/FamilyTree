@@ -42,8 +42,8 @@
             this.personService = personService;
             this.children = new List<PersonInformation>();
             this.siblings = new List<PersonInformation>();
-            this.photos = new List<Photo>();
             this.events = new List<EventInformation>();
+            this.photos = new List<Photo>();
             this.mediaEventService = mediaEventService;
             this.mediaPersonService = mediaPersonService;
             this.eventService = eventService;
@@ -320,6 +320,7 @@
 
         private void GetAllEvents()
         {
+            this.events.Clear();
             this.events.AddRange(this.eventService.GetEventsByPersonId(this.Id));
             var spouseEvents = this.eventService.GetAllEventsByPersonIdAndEventType(this.relationshipService.GetSpouseIdByPersonId(this.Id), "death");
             foreach (var spouseEvent in spouseEvents)
@@ -351,7 +352,7 @@
             }
 
             this.events = this.events.OrderBy(e => e.EventDate).ToList();
-            if (this.personInformation.DeathDate != null)
+            if (this.personInformation.DeathDate != null && this.events.Count != 0)
             {
                 this.events = this.events.Where(e => e.EventDate <= this.personInformation.DeathDate).OrderBy(e => e.EventDate).ToList();
             }
@@ -365,12 +366,22 @@
                 var addEvent = this.addEventRecord;
                 this.eventsPanel.Children.Remove(addEvent);
                 EventRecord eventRecord = new EventRecord(personEvent);
+                eventRecord.DeleteEvent += this.EventRecordDeleteEvent;
                 this.eventsPanel.Children.Add(eventRecord);
                 Separator separator = new Separator();
                 separator.Style = (Style)this.FindResource("MaterialDesignDarkSeparator");
                 this.eventsPanel.Children.Add(separator);
                 this.eventsPanel.Children.Add(addEvent);
             }
+        }
+
+        private void EventRecordDeleteEvent(object sender, EventArgs e)
+        {
+            this.eventService.DeleteEvent((sender as EventRecord).Id);
+            var addEvent = this.addEventRecord;
+            this.eventsPanel.Children.Clear();
+            this.eventsPanel.Children.Add(addEvent);
+            this.ShowPersonEvents();
         }
 
         private void AddEventButtonClick(object sender, RoutedEventArgs e)

@@ -21,7 +21,7 @@
                 <Image Source="Images\logo_white.png" Margin="0 0 0 40" Width="160" Height="160"/>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="24" Text="Давайте знайомитись" Foreground="White"/>
                 <TextBlock TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Margin="0 20 0 20" Foreground="White" Text="Реєстрація - перший крок у дослідженні вашого сімейного минулого"/>
-                <fa:ImageAwesome Icon="AngleRight" Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
+                <fa:ImageAwesome Icon="AngleRight"  Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
             </StackPanel>
         </Border>
         <Border Grid.Column="1" Padding="20" MouseDown="BorderMouseDown" Background="#ffffff" CornerRadius="0 25 25 0">

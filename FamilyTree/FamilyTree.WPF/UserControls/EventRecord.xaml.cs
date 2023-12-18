@@ -36,7 +36,14 @@
 
             if (eventInformation.Age != null)
             {
-                this.age.Text = eventInformation.Age.ToString();
+                if (eventInformation.Age == 0)
+                {
+                    this.age.Text = "-";
+                }
+                else if (eventInformation.Age != 0)
+                {
+                    this.age.Text = eventInformation.Age.ToString();
+                }
             }
 
             if (eventInformation.EventType != null)
@@ -47,6 +54,16 @@
             if (eventInformation.EventPlace != null)
             {
                 this.place.Text = eventInformation.EventPlace;
+            }
+        }
+
+        public event EventHandler DeleteEvent;
+
+        public int Id
+        {
+            get
+            {
+                return this.eventid;
             }
         }
 
@@ -65,6 +82,15 @@
             EventDetails eventWindow = DependencyContainer.ServiceProvider.GetRequiredService<EventDetails>();
             eventWindow.EventId = this.eventid;
             eventWindow.ShowDialog();
+        }
+
+        private void DeleteButtonMouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Ви дійсно бажаєте видалити цю подію?", "Видалення події", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                this.DeleteEvent?.Invoke(this, EventArgs.Empty);
+            }
         }
     }
 }

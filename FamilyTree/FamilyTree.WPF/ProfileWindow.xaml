@@ -45,22 +45,31 @@
                 <WrapPanel>
                     <StackPanel Margin="0, 10, 20, 0" >
                         <TextBlock FontWeight="SemiBold" Text="Прізвище"></TextBlock>
-                        <TextBlock x:Name="lastNameTextBox"/>
-                    </StackPanel>
+                            <Grid>
+                                <TextBlock x:Name="lastNameTextBox"/>
+                            </Grid>
+                        </StackPanel>
                     <StackPanel Margin="0, 10, 20, 0">
                         <TextBlock FontWeight="SemiBold" Text="Ім'я"></TextBlock>
-                        <TextBlock x:Name="firstNameTextBox"/>
-                    </StackPanel >
+                            <Grid>
+                                <TextBlock x:Name="firstNameTextBox"/>
+                            </Grid>
+                        </StackPanel >
                     <StackPanel Margin="0, 10, 20, 0">
                         <TextBlock x:Name="maidenTextBlock"  FontWeight="SemiBold" Text="Дівоче прізвище" Visibility="Hidden"></TextBlock>
-                         <TextBlock x:Name="maidenNameTextBox"/>
-                    </StackPanel>
+                            <Grid>
+                                <TextBlock x:Name="maidenNameTextBox"/>
+                            </Grid>
+                        </StackPanel>
                     <StackPanel Margin="0, 10, 20, 0">
                         <TextBlock  x:Name="otherName"  FontWeight="SemiBold" Text="Інші варіанти імені" Visibility="Hidden"></TextBlock>
-                        <TextBlock x:Name="otherNameTextBox"/>
-                    </StackPanel>
+                            <Grid>
+                                <TextBlock x:Name="otherNameTextBox"/>
+                            </Grid>
+                        </StackPanel>
                 </WrapPanel>
-            </StackPanel>
+                    <Button x:Name="editButton" Style="{StaticResource buttonMainGreen}" Content="Редагувати" Width="120" Height="40" Margin="-20,120,0,0"/>
+                </StackPanel>
         </StackPanel>
         </Border>
         <Border Grid.Column="1" CornerRadius="0,25,25,0" Background="White">

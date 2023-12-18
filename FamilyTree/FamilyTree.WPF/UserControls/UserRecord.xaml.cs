@@ -72,12 +72,10 @@
                 if (this.accessType == "edit")
                 {
                     this.accessTypeTextBlock.Text = "Редагування";
-                    this.IsEditable = true;
                 }
                 else if (this.accessType == "view")
                 {
                     this.accessTypeTextBlock.Text = "Перегляд";
-                    this.IsEditable = false;
                 }
             }
         }

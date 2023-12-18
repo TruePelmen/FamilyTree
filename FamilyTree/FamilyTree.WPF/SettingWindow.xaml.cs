@@ -37,8 +37,6 @@
             this.treeService = treeService;
         }
 
-        public event EventHandler Exit;
-
         public event EventHandler CloseWindow;
 
         public string UserLogin
@@ -208,8 +206,8 @@
         private void AddUserClick(object sender, RoutedEventArgs e)
         {
             AddUserTreeRecordWindow addUserTreeRecordWindow = DependencyContainer.ServiceProvider.GetRequiredService<AddUserTreeRecordWindow>();
-            addUserTreeRecordWindow.TreeId = this.TreeId;
-            addUserTreeRecordWindow.SuccessfulAdditionRecord += this.AddUserTreeRecordWindowSuccessfulAdditionRecord;
+            addUserTreeRecordWindow.ViewModel.TreeId = this.TreeId;
+            addUserTreeRecordWindow.ViewModel.SuccessfulAdditionRecord += this.AddUserTreeRecordWindowSuccessfulAdditionRecord;
             addUserTreeRecordWindow.ShowDialog();
         }
 

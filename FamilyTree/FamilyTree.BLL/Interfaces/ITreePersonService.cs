@@ -44,12 +44,6 @@
         /// <param name="personId">The unique identifier of the person to associate with the tree.</param>
         void AddTreePerson(int treeId, int personId);
 
-        /// <summary>
-        /// Updates an existing association of a person with a family tree.
-        /// </summary>
-        /// <param name="id">The unique identifier of the association to update.</param>
-        /// <param name="treeId">The updated unique identifier of the family tree.</param>
-        /// <param name="personId">The updated unique identifier of the person.</param>
         string UpdateTreePerson(int id, int treeId, int personId);
 
         void DeleteTreePerson(int treeId, int personId);
