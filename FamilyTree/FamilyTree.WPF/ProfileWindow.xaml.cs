@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
+    using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
@@ -136,13 +139,21 @@
             {
                 if (this.personInformation.Gender == "male")
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                    this.photo.Source = this.ChangeMainPhoto("man.png");
                 }
                 else
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                    this.photo.Source = this.ChangeMainPhoto("woman.png");
                 }
             }
+        }
+
+        private ImageSource ChangeMainPhoto(string mainPhotoRelativePath)
+        {
+            string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string relativePath = Path.Combine("../../..", "Images", mainPhotoRelativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDirectory, relativePath));
+            return new BitmapImage(new Uri(fullPath));
         }
 
         private void GetNameInformation()

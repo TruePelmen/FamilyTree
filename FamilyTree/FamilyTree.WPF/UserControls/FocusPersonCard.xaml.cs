@@ -2,6 +2,8 @@
 {
     using System;
     using System.Globalization;
+    using System.IO;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -64,11 +66,11 @@
         {
             if (gender == "male")
             {
-                this.ChangeMainPhoto("C:/Users/olesy/OneDrive/Документи/GitHub/ProgramEngineeringProject-/FamilyTree/FamilyTree.WPF/Images/man.png");
+                this.ChangeMainPhoto("man.png");
             }
             else
             {
-                this.ChangeMainPhoto("C:/Users/olesy/OneDrive/Документи/GitHub/ProgramEngineeringProject-/FamilyTree/FamilyTree.WPF/Images/woman.png");
+                this.ChangeMainPhoto("woman.png");
             }
         }
 
@@ -166,9 +168,12 @@
             this.placeOfDeathValue.Text = placeOfDeath;
         }
 
-        private void ChangeMainPhoto(string mainPhotoPath)
+        private void ChangeMainPhoto(string mainPhotoRelativePath)
         {
-            this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
+            string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string relativePath = Path.Combine("../../..", "Images", mainPhotoRelativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDirectory, relativePath));
+            this.personImage.Source = new BitmapImage(new Uri(fullPath));
         }
 
         private void RenewInformation(PersonInformation person)
