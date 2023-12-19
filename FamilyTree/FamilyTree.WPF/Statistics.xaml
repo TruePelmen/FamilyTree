@@ -1,0 +1,49 @@
+﻿<Window x:Class="FamilyTree.WPF.Statistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        MouseDown="WindowMouseDown"
+        mc:Ignorable="d" Height="450" Width="800">
+    <Border BorderBrush="#144509" BorderThickness="2" CornerRadius="25" Background="White">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,15,0">
+                <Image Source="Images\minimize.png" Width="20" Margin="0 7 10 0" MouseLeftButtonDown="BtnMinimizeClick" Style="{StaticResource iconApp}"/>
+                <Image Source="Images\close.png" Width="25" Margin="0 4 5 0" MouseLeftButtonDown="BtnCloseClick" Style="{StaticResource iconApp}"/>
+            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="385*"/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="330"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Statistic Options -->
+                    <CheckBox x:Name="birthCheckBox" Style="{StaticResource MaterialDesignLightCheckBox}" Content="Дати народження" Grid.Column="1" Margin="30,10,10,10"/>
+                    <CheckBox x:Name="deathCheckBox" Style="{StaticResource MaterialDesignLightCheckBox}" Content="Дати смерті" Grid.Column="2" Margin="10,10,10,10"/>
+
+                    <!-- Generate Statistics Button -->
+                    <Button HorizontalAlignment="Left" Content="Створити графік" Style="{StaticResource buttonMainGreen}" Width="200" Height="40" Click="GenerateStatistics_Click" Grid.Column="3" Margin="30,10,10,10"/>
+                </Grid>
+                <!-- OxyPlot PlotView for displaying the chart -->
+                <oxy:PlotView x:Name="plotView" Grid.Row="1" Margin="10,10,10,10" Grid.ColumnSpan="2"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>
