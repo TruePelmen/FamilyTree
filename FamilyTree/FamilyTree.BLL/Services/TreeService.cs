@@ -110,6 +110,5 @@
                 throw new Exception($"Не вдалося видалити дерево з id {id}. Помилка: {ex.Message}", ex);
             }
         }
-
     }
 }

@@ -22,7 +22,6 @@
         public static ILoggerFactory LoggerFactory;
 
         public static ServiceProvider ServiceProvider { get; private set; }
-
         /// <summary>
         /// Initializes the service provider and registers services.
         /// </summary>
@@ -81,6 +80,7 @@
             services.AddTransient<EventDetails>();
             services.AddTransient<UserControls.Tree>();
             services.AddTransient<UserControls.UserRecord>();
+            services.AddTransient<UserControls.SpecialRecord>();
             services.AddTransient<AddSpecialRecord>();
             services.AddTransient<AddPersonWindow>();
             services.AddTransient<AddTree>();

@@ -25,7 +25,6 @@
         private ITreeService treeService;
         private ITreePersonService treePersonService;
 
-
         public Tree(IPersonService personService, IRelationshipService relationshipService, ITreeService treeService, ITreePersonService treePersonService)
         {
             this.relationshipService = relationshipService;
@@ -408,7 +407,6 @@
                 {
                     this.relationshipService.AddRelationship(id, this.maleFocus.IdPerson, "mother-child");
                 }
-
             }
 
             if ((sender as IPersonCard) == this.femaleFather)

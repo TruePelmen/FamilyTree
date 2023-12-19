@@ -105,7 +105,6 @@
 
             this.personsNumber.Text = this.treePersonService.GetPersonsNumber(this.TreeId).ToString();
             this.eventsNumber.Text = this.treePersonService.GetEventsNumber(this.TreeId).ToString();
-            this.photosNumber.Text = this.treePersonService.GetPhotosNumber(this.TreeId).ToString();
         }
 
         private void FillTreesList()

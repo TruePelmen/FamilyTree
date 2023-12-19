@@ -4,7 +4,6 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="clr-namespace:FamilyTree.WPF"
-	xmlns:fa="http://schemas.fontawesome.io/icons/"
 	xmlns:uc="clr-namespace:FamilyTree.WPF.UserControls"
         mc:Ignorable="d" Height="650" Width="800" Background="Transparent" 
         WindowStyle="None" 
@@ -21,7 +20,7 @@
                 <Image Source="Images\logo_white.png" Margin="0 0 0 40" Width="160" Height="160"/>
                 <TextBlock TextAlignment="Center" FontWeight="SemiBold" FontSize="24" Text="Давайте знайомитись" Foreground="White"/>
                 <TextBlock TextWrapping="Wrap" FontSize="16" TextAlignment="Center" Margin="0 20 0 20" Foreground="White" Text="Реєстрація - перший крок у дослідженні вашого сімейного минулого"/>
-                <fa:ImageAwesome Icon="AngleRight"  Width="25" Height="25" Foreground="White" Margin="3 0 0 0"/>
+                <Image Source="./Images/angle-right.png"  Width="25" Height="25"  Margin="3 0 0 0"/>
             </StackPanel>
         </Border>
         <Border Grid.Column="1" Padding="20" MouseDown="BorderMouseDown" Background="#ffffff" CornerRadius="0 25 25 0">
@@ -72,8 +71,8 @@
                                 FontSize="11"
                                 Style="{StaticResource text}" Height="80"/>
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2" Margin="0 10">
-                        <uc:MyOption Text="Чоловік" Icon="Male" x:Name="maleOption" />
-                        <uc:MyOption Text="Жінка" Icon="Female" x:Name="femaleOption"/> 
+                        <uc:MyOption Text="Чоловік" x:Name="maleOption" />
+                        <uc:MyOption Text="Жінка" x:Name="femaleOption"/> 
                     </StackPanel>
                     <Grid Grid.Column="1" Grid.Row="7" Margin="0 40 0 0">
                         <Grid.ColumnDefinitions>

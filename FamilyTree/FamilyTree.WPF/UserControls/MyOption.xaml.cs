@@ -1,7 +1,10 @@
 ﻿namespace FamilyTree.WPF.UserControls
 {
+    using System;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
 
     /// <summary>
     /// Custom user control "MyOption" for displaying a choice option.
@@ -17,11 +20,6 @@
         /// Property to set or get the value indicating the selection state of this element.
         /// </summary>
         public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(MyOption));
-
-        /// <summary>
-        /// Property to set or get the FontAwesome icon that will be displayed next to the text of this element.
-        /// </summary>
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(FontAwesome.WPF.FontAwesomeIcon), typeof(MyOption));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyOption"/> class.
@@ -41,21 +39,27 @@
         }
 
         /// <summary>
-        /// Gets or sets the FontAwesome icon that will be displayed next to the text of this element.
-        /// </summary>
-        public FontAwesome.WPF.FontAwesomeIcon Icon
-        {
-            get { return (FontAwesome.WPF.FontAwesomeIcon)this.GetValue(IconProperty); }
-            set { this.SetValue(IconProperty, value); }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether this option is selected.
         /// </summary>
         public bool IsSelected
         {
             get { return (bool)this.GetValue(IsSelectedProperty); }
             set { this.SetValue(IsSelectedProperty, value); }
+        }
+
+        public string Path
+        {
+            set
+            {
+                if (value == "Male")
+                {
+                    this.icon.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man (1).png"));
+                }
+                else
+                {
+                    this.icon.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman (1).png"));
+                }
+            }
         }
     }
 }

@@ -46,6 +46,8 @@
             this.userTreeService = userTreeService;
             this.personService = personService;
             this.treePersonService = treePersonService;
+            this.maleOption.Path = "Male";
+            this.femaleOption.Path = "Female";
         }
 
         private void InitializeUI()

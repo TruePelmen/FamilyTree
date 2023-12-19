@@ -144,13 +144,4 @@
             }
         }
     }
-
-    public class YearStatistics
-    {
-        public int Year { get; set; }
-
-        public int BirthCount { get; set; }
-
-        public int DeathCount { get; set; }
-    }
 }
