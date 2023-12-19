@@ -1,6 +1,8 @@
 ﻿namespace FamilyTree.WPF.UserControls
 {
     using System;
+    using System.IO;
+    using System.Reflection;
     using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -48,12 +50,20 @@
             string relativePart = relative.Split(' ')[1];
             if (relativePart == "чоловік" || relativePart == "батько" || relativePart == "син" || relativePart == "брат")
             {
-                this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                this.photo.Source = this.ChangeMainPhoto("man.png");
             }
             else
             {
-                this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                this.photo.Source = this.ChangeMainPhoto("woman.png");
             }
+        }
+
+        private ImageSource ChangeMainPhoto(string mainPhotoRelativePath)
+        {
+            string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string relativePath = Path.Combine("../../..", "Images", mainPhotoRelativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDirectory, relativePath));
+            return new BitmapImage(new Uri(fullPath));
         }
 
         private void UserControlMouseEnter(object sender, MouseEventArgs e)
