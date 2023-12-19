@@ -18,7 +18,6 @@
         private readonly IUserService userService;
         private DispatcherTimer timer;
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginWindow"/> class.
         /// </summary>
