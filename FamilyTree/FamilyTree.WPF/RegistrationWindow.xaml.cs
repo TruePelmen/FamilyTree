@@ -129,6 +129,10 @@
                 int treeId = this.treeService.AddTree("Дерево " + this.lastNameTextBox.Text, personId);
                 this.userTreeService.AddUserTree(this.loginTextBox.Text, treeId, "edit");
                 this.treePersonService.AddTreePerson(treeId, personId);
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Debug()
+                    .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
                 Log.Information("User was successfully registrated =)");
                 MainWindow mainWindow = DependencyContainer.ServiceProvider.GetRequiredService<MainWindow>();
                 mainWindow.UserLogin = this.loginTextBox.Text;

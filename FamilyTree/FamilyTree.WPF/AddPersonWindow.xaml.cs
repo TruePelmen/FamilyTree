@@ -12,6 +12,8 @@
     using MaterialDesignThemes.Wpf;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Win32;
+    using Serilog;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     /// <summary>
     /// Interaction logic for AddPersonWindow.xaml.
@@ -48,7 +50,11 @@
                     DeathPlace = this.deathPlaceTextBox.Text,
                     Gender = this.DetermineGender(),
                 };
-
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Debug()
+                    .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+                Log.Information("Person was added successfully");
                 this.IdNewPerson = this.personService.AddPerson(person);
                 this.AddNewPerson?.Invoke(this, EventArgs.Empty);
                 this.Close();

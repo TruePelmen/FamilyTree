@@ -17,10 +17,11 @@
         /// <summary>
         /// Gets the service provider instance for dependency injection.
         /// </summary>
+        /// 
+
         public static ILoggerFactory LoggerFactory;
 
         public static ServiceProvider ServiceProvider { get; private set; }
-
         /// <summary>
         /// Initializes the service provider and registers services.
         /// </summary>
