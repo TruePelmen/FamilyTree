@@ -1,6 +1,8 @@
 ﻿namespace FamilyTree.WPF.UserControls
 {
     using System;
+    using System.IO;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -17,9 +19,9 @@
             this.InitializeComponent();
         }
 
-        public int IdPerson { get; set; }
-
         public event EventHandler<int> PersonAdded;
+
+        public int IdPerson { get; set; }
 
         public bool IsEmpty
         {
@@ -39,11 +41,11 @@
         {
             if (gender == "male")
             {
-                this.ChangeMainPhoto("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png");
+                this.ChangeMainPhoto("man.png");
             }
             else
             {
-                this.ChangeMainPhoto("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png");
+                this.ChangeMainPhoto("woman.png");
             }
         }
 
@@ -81,9 +83,12 @@
             this.yearOfLife.Text = $"({dateOfBirth.Year} - {dateOfDeath.Year})";
         }
 
-        public void ChangeMainPhoto(string mainPhotoPath)
+        public void ChangeMainPhoto(string mainPhotoRelativePath)
         {
-            this.personImage.Source = new BitmapImage(new Uri(mainPhotoPath));
+            string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string relativePath = Path.Combine("../../..", "Images", mainPhotoRelativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDirectory, relativePath));
+            this.personImage.Source = new BitmapImage(new Uri(fullPath));
         }
 
         public void RenewPersonCard(PersonInformation person)

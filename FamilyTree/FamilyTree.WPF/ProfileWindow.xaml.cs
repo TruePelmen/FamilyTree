@@ -3,11 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Documents;
     using System.Windows.Input;
+    using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
@@ -138,13 +141,21 @@
             {
                 if (this.personInformation.Gender == "male")
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                    this.photo.Source = this.ChangeMainPhoto("man.png");
                 }
                 else
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                    this.photo.Source = this.ChangeMainPhoto("woman.png");
                 }
             }
+        }
+
+        private ImageSource ChangeMainPhoto(string mainPhotoRelativePath)
+        {
+            string baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string relativePath = Path.Combine("../../..", "Images", mainPhotoRelativePath);
+            string fullPath = Path.GetFullPath(Path.Combine(baseDirectory, relativePath));
+            return new BitmapImage(new Uri(fullPath));
         }
 
         private void GetNameInformation()
@@ -369,12 +380,21 @@
                 this.eventsPanel.Children.Remove(addEvent);
                 EventRecord eventRecord = new EventRecord(personEvent);
                 eventRecord.DeleteEvent += this.EventRecordDeleteEvent;
+                eventRecord.UpdateEvent += this.EventRecordUpdateEvent;
                 this.eventsPanel.Children.Add(eventRecord);
                 Separator separator = new Separator();
                 separator.Style = (Style)this.FindResource("MaterialDesignDarkSeparator");
                 this.eventsPanel.Children.Add(separator);
                 this.eventsPanel.Children.Add(addEvent);
             }
+        }
+
+        private void EventRecordUpdateEvent(object sender, EventArgs e)
+        {
+            var addEvent = this.addEventRecord;
+            this.eventsPanel.Children.Clear();
+            this.eventsPanel.Children.Add(addEvent);
+            this.ShowPersonEvents();
         }
 
         private void EventRecordDeleteEvent(object sender, EventArgs e)

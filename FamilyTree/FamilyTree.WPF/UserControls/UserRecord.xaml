@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:local="clr-namespace:FamilyTree.WPF.UserControls"
              mc:Ignorable="d" 
              Height="60" Width="500">
@@ -20,13 +19,13 @@
             <ComboBoxItem Content="Редагування"/>
             <ComboBoxItem Content="Перегляд"/>
         </ComboBox>
-        <StackPanel Grid.Column="2" x:Name="editPanel" Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <fa:ImageAwesome x:Name="editButton" Icon="Edit" Margin="20,10,10,0" Width="30" Height="30" Style="{StaticResource iconApp}" Foreground="#363636" MouseLeftButtonDown="EditButtonMouseLeftButtonDown"/>
-            <fa:ImageAwesome x:Name="deleteButton" Icon="Remove" Margin="10,10,20,0" Width="23" Height="23" Style="{StaticResource iconApp}" Foreground="#363636" MouseLeftButtonDown="DeleteButtonMouseLeftButtonDown"/>
+        <StackPanel Grid.Column="2" x:Name="editPanel" Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <Image x:Name="editButton" Source="../Images/edit.png" Margin="20,10,10,0" Width="30" Height="30" Style="{StaticResource iconApp}" MouseLeftButtonDown="EditButtonMouseLeftButtonDown"/>
+            <Image x:Name="deleteButton" Source="../Images/close.png" Margin="10,6,20,0" Width="35" Height="35" Style="{StaticResource iconApp}" MouseLeftButtonDown="DeleteButtonMouseLeftButtonDown"/>
         </StackPanel>
         <StackPanel Grid.Column="2" x:Name="savePanel" Orientation="Horizontal" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Hidden">
-            <fa:ImageAwesome x:Name="saveButton" Icon="Check" Margin="20,10,10,0" Width="30" Height="30" Style="{StaticResource iconApp}" Foreground="#363636" MouseLeftButtonDown="SaveButtonMouseLeftButtonDown"/>
-            <fa:ImageAwesome x:Name="backButton" Icon="ArrowRight"  Margin="10,10,20,0" Width="23" Height="23" Style="{StaticResource iconApp}" Foreground="#363636" MouseLeftButtonDown="BackButtonMouseLeftButtonDown"/>
+            <Image x:Name="saveButton" Source="../Images/check.png" Margin="20,10,10,0" Width="30" Height="30" Style="{StaticResource iconApp}" MouseLeftButtonDown="SaveButtonMouseLeftButtonDown"/>
+            <Image x:Name="backButton" Source="../Images/back.png"  Margin="10,10,20,0" Width="30" Height="30" Style="{StaticResource iconApp}" MouseLeftButtonDown="BackButtonMouseLeftButtonDown"/>
         </StackPanel>
     </Grid>
 </UserControl>
