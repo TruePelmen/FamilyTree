@@ -64,11 +64,11 @@
         {
             if (gender == "male")
             {
-                this.ChangeMainPhoto("C:/Users/olesy/OneDrive/Документи/GitHub/ProgramEngineeringProject-/FamilyTree/FamilyTree.WPF/Images/man.png");
+                this.ChangeMainPhoto("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png");
             }
             else
             {
-                this.ChangeMainPhoto("C:/Users/olesy/OneDrive/Документи/GitHub/ProgramEngineeringProject-/FamilyTree/FamilyTree.WPF/Images/woman.png");
+                this.ChangeMainPhoto("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png");
             }
         }
 

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -11,6 +12,7 @@
     using FamilyTree.BLL;
     using FamilyTree.BLL.Interfaces;
     using FamilyTree.WPF.UserControls;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
     /// <summary>
@@ -108,7 +110,7 @@
             this.nameTextBlock.Text = this.personInformation.FullName;
             if (this.personInformation.BirthDate != null)
             {
-                this.bithDateTextBlock.Text = this.personInformation.BirthDate?.ToString("dd.MM.yyyy");
+                this.birthDateTextBlock.Text = this.personInformation.BirthDate?.ToString("dd.MM.yyyy");
             }
 
             if (this.personInformation.BirthPlace != null)
@@ -136,11 +138,11 @@
             {
                 if (this.personInformation.Gender == "male")
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                    this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
                 }
                 else
                 {
-                    this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                    this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
                 }
             }
         }
@@ -400,8 +402,117 @@
             this.Close();
         }
 
+        private bool isEditMode = false;
+
+        private void EditButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (!this.isEditMode)
+            {
+                // Перехід у режим редагування
+                this.isEditMode = true;
+
+                // Приховуємо текстові блоки та виводимо тексти у відповідні текстові поля для редагування
+                this.lastNameTextBox.Visibility = Visibility.Hidden;
+                this.firstNameTextBox.Visibility = Visibility.Hidden;
+                this.maidenNameTextBox.Visibility = Visibility.Hidden;
+                this.otherNameTextBox.Visibility = Visibility.Hidden;
+                this.deathPlaceTextBlock.Visibility = Visibility.Hidden;
+                this.birthPlaceTextBlock.Visibility = Visibility.Hidden;
+                this.deathDateTextBlock.Visibility = Visibility.Hidden;
+                this.birthDateTextBlock.Visibility = Visibility.Hidden;
+
+                this.lastNameTextBoxEdit.Text = this.lastNameTextBox.Text;
+                this.firstNameTextBoxEdit.Text = this.firstNameTextBox.Text;
+                this.maidenNameTextBoxEdit.Text = this.maidenNameTextBox.Text;
+                this.otherNameTextBoxEdit.Text = this.otherNameTextBox.Text;
+                this.deathPlaceTextBlockEdit.Text = this.deathPlaceTextBlock.Text;
+                this.birthPlaceTextBlockEdit.Text = this.birthPlaceTextBlock.Text;
+                this.bithDatePicker.Text = this.birthDateTextBlock.Text;
+                this.deathDatePicker.Text = this.deathDateTextBlock.Text;
+
+
+                this.lastNameTextBoxEdit.Visibility = Visibility.Visible;
+                this.firstNameTextBoxEdit.Visibility = Visibility.Visible;
+                this.maidenNameTextBoxEdit.Visibility = Visibility.Visible;
+                this.otherNameTextBoxEdit.Visibility = Visibility.Visible;
+                this.bithDatePicker.Visibility = Visibility.Visible;
+                this.deathDatePicker.Visibility = Visibility.Visible;
+                this.birthPlaceTextBlockEdit.Visibility = Visibility.Visible;
+                this.deathPlaceTextBlockEdit.Visibility = Visibility.Visible;
+
+                // Змінюємо вигляд кнопки
+                this.editButton.Content = "Зберегти";
+            }
+            else
+            {
+                // Вихід з режиму редагування та оновлення інформації
+                this.isEditMode = false;
+
+                // Виводимо оновлені дані у відповідні текстові блоки
+                this.lastNameTextBox.Text = this.lastNameTextBoxEdit.Text;
+                this.firstNameTextBox.Text = this.firstNameTextBoxEdit.Text;
+                this.maidenNameTextBox.Text = this.maidenNameTextBoxEdit.Text;
+                this.otherNameTextBox.Text = this.otherNameTextBoxEdit.Text;
+                this.deathPlaceTextBlock.Text = this.deathPlaceTextBlockEdit.Text;
+                this.birthPlaceTextBlock.Text = this.birthPlaceTextBlockEdit.Text;
+                this.birthDateTextBlock.Text = this.bithDatePicker.Text;
+                this.deathDateTextBlock.Text = this.deathDatePicker.Text;
+
+                // Приховуємо текстові поля для редагування та виводимо текстові блоки
+                this.lastNameTextBoxEdit.Visibility = Visibility.Hidden;
+                this.firstNameTextBoxEdit.Visibility = Visibility.Hidden;
+                this.maidenNameTextBoxEdit.Visibility = Visibility.Hidden;
+                this.otherNameTextBoxEdit.Visibility = Visibility.Hidden;
+                this.bithDatePicker.Visibility = Visibility.Hidden;
+                this.deathDatePicker.Visibility = Visibility.Hidden;
+                this.birthPlaceTextBlockEdit.Visibility = Visibility.Hidden;
+                this.deathPlaceTextBlockEdit.Visibility = Visibility.Hidden;
+
+                this.lastNameTextBox.Visibility = Visibility.Visible;
+                this.firstNameTextBox.Visibility = Visibility.Visible;
+                this.maidenNameTextBox.Visibility = Visibility.Visible;
+                this.otherNameTextBox.Visibility = Visibility.Visible;
+                this.deathPlaceTextBlock.Visibility = Visibility.Visible;
+                this.birthPlaceTextBlock.Visibility = Visibility.Visible;
+                this.deathDateTextBlock.Visibility = Visibility.Visible;
+                this.birthDateTextBlock.Visibility = Visibility.Visible;
+
+                // Змінюємо вигляд кнопки
+                this.editButton.Content = "Редагувати";
+
+                // Оновлюємо дані в базі даних (потрібно додати відповідні методи сервісу)
+                PersonInformation p = this.personService.GetPersonById(this.id);
+                p.LastName = this.lastNameTextBox.Text;
+                p.FirstName = this.firstNameTextBox.Text;
+                p.MaidenName = this.maidenNameTextBox.Text;
+                p.OtherNameVariants = this.otherNameTextBox.Text;
+                p.DeathDate = this.ParseDate(this.deathDateTextBlock.Text);
+                p.BirthDate = this.ParseDate(this.birthDateTextBlock.Text);
+                p.DeathPlace = this.deathPlaceTextBlock.Text;
+                p.BirthPlace = this.birthPlaceTextBlock.Text;
+                this.personService.UpdatePerson(p);
+            }
+        }
+
+        private DateOnly? ParseDate(string dateString)
+        {
+            DateOnly? date;
+            string dateWithoutTime = dateString.Split(' ')[0];
+            try
+            {
+                date = DateOnly.ParseExact(dateWithoutTime, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch (Exception)
+            {
+                date = null;
+            }
+
+            return date;
+        }
+
         private void AddPhotoButtonClick(object sender, RoutedEventArgs e)
         {
         }
+
     }
 }
