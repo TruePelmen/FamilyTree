@@ -48,11 +48,11 @@
             string relativePart = relative.Split(' ')[1];
             if (relativePart == "чоловік" || relativePart == "батько" || relativePart == "син" || relativePart == "брат")
             {
-                this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
+                this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\man.png"));
             }
             else
             {
-                this.photo.Source = new BitmapImage(new Uri("C:\\Users\\olesy\\OneDrive\\Документи\\GitHub\\ProgramEngineeringProject-\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
+                this.photo.Source = new BitmapImage(new Uri("C:\\University\\SoftwareEngineering\\18.12.2023\\FamilyTree\\FamilyTree.WPF\\Images\\woman.png"));
             }
         }
 
