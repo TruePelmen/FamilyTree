@@ -15,6 +15,7 @@
     using System.Windows.Shapes;
     using FamilyTree.BLL.Interfaces;
     using Microsoft.Extensions.DependencyInjection;
+    using Serilog;
 
     /// <summary>
     /// Interaction logic for AddTree.xaml
@@ -96,6 +97,12 @@
 
             MessageBox.Show($"Дерево роду '{this.treeNameTextBox.Text}' було успішно створено з основною особою {this.primaryPersonId}.", "Інформація", MessageBoxButton.OK, MessageBoxImage.Information);
             this.TreeCreated?.Invoke(this, EventArgs.Empty);
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Debug()
+                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+            Log.Information("Tree was added successfully");
 
             // Закриття вікна
             this.Close();

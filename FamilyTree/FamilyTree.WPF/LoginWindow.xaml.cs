@@ -8,6 +8,7 @@
     using FamilyTree.BLL.Interfeces;
     using Microsoft.Extensions.DependencyInjection;
     using Serilog;
+    using Serilog.Events;
 
     /// <summary>
     /// Represents the login window of the application.
@@ -16,6 +17,7 @@
     {
         private readonly IUserService userService;
         private DispatcherTimer timer;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginWindow"/> class.
@@ -72,6 +74,10 @@
                 bool isAuthenticated = this.userService.AuthenticateUser(this.userTextBox.Text, this.passwordTextBox.Password);
                 if (isAuthenticated)
                 {
+                    Log.Logger = new LoggerConfiguration()
+                        .WriteTo.Debug()
+                        .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+                        .CreateLogger();
                     Log.Information("User successfully signed in =)");
                     this.CreateMainWindow(this.userTextBox.Text);
                 }

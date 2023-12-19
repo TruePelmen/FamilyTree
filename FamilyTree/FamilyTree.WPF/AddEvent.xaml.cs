@@ -99,6 +99,10 @@
                     Age = eventAge,
                 };
                 this.eventService.AddEvent(eventInformation);
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Debug()
+                    .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
                 Log.Information("Event was successfully added =)");
                 this.SuccessfulAdditionEvent?.Invoke(this, EventArgs.Empty);
                 this.Close();

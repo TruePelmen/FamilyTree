@@ -4,6 +4,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Serilog;
+    using Serilog.Events;
 
     /// <summary>
     /// Interaction logic for App.xaml.
@@ -14,9 +15,9 @@
         protected override void OnStartup(StartupEventArgs e)
         {
             Log.Logger = new LoggerConfiguration()
-            .WriteTo.Debug()
-            .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+                .WriteTo.Debug()
+                .WriteTo.File("logs.txt", rollingInterval: RollingInterval.Day, restrictedToMinimumLevel: LogEventLevel.Warning)
+                .CreateLogger();
             Log.Information("The app started its work");
 
             base.OnStartup(e);
