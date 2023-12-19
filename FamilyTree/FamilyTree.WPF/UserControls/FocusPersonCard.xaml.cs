@@ -128,7 +128,7 @@
 
         private void ChangeDateOfBirth(DateOnly dateOfBirth)
         {
-            this.yearOfLife.Text = $"( - {dateOfBirth.Year})";
+            this.yearOfLife.Text = $"({dateOfBirth.Year})";
             this.dateOfDeathLabel.Visibility = Visibility.Hidden;
             this.placeOfDeathLabel.Visibility = Visibility.Hidden;
             this.dateOfBirthValue.Text = dateOfBirth.ToString("dd.MM.yyyy");
@@ -136,7 +136,7 @@
 
         private void ChangeDateOfDeath(DateOnly dateOfDeath)
         {
-            this.yearOfLife.Text = $"({dateOfDeath.Year})";
+            this.yearOfLife.Text = $"( - {dateOfDeath.Year})";
             this.dateOfDeathLabel.Visibility = Visibility.Visible;
             this.dateOfDeathValue.Text = dateOfDeath.ToString("dd.MM.yyyy");
         }
